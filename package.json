@@ -1,0 +1,29 @@
+{
+  "name": "mcode_cql",
+  "version": "0.1.0",
+  "description": "mCODE CQL library",
+  "directories": {
+    "test": "test"
+  },
+  "jest": {
+    "verbose": true
+  },
+  "scripts": {
+    "test": "yarn jest",
+    "build_test": "yarn build & yarn test",
+    "convert": "node scripts/.js",
+    "build": "node scripts/build.js"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "cql-exec-fhir": "^1.3.0",
+    "cql-execution": "^1.4.1",
+    "cql-translation-service-client": "0.5.0",
+    "jest": "",
+    "request": ""
+  },
+  "author": "",
+  "license": "Apache-2.0"
+}
