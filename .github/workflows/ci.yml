@@ -1,0 +1,46 @@
+name: Continuous Integration
+on: [push, pull_request]
+
+jobs:
+  lint:
+    name: Check lint
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: install --frozen-lockfile
+    - uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: lint
+  prettier:
+    name: Check prettier 
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: install --frozen-lockfile
+    - uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: prettier
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: install --frozen-lockfile
+    - uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: test:unit

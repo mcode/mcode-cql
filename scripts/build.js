@@ -1,92 +1,70 @@
-let fs = require('fs')
-let request = require('request');
-let Client = require("cql-translation-service-client").Client
+const fs = require('fs');
+const path = require('path');
+const { Client } = require('cql-translation-service-client');
 
-// sample header= "multipart/form-data;boundary=Boundary_1"
-// get the part after "boundary=" and before any subsequent ;
-const extractMultipartBoundary = /.*;boundary=(Boundary.*);?.*/g;
+const TRANSLATION_SERVICE_URL = 'http://localhost:8080/cql/translator';
 
-const extractMultipartFileName = /Content-Disposition: form-data; name="([^"]+)"/;
+const client = new Client(TRANSLATION_SERVICE_URL);
 
-// eveything between { } including newlines. [^] is like . but matches newline
-const extractJSONContent = /(\{[^]*\})/;
+/**
+ * Translate all cql
+ *
+ * @returns {Object} ELM from translator
+ */
+async function translateCQL() {
+  const cqlPath = path.resolve(path.join(__dirname), '../src');
+  const cqlFiles = fs.readdirSync(cqlPath).filter((f) => path.extname(f) === '.cql');
+  const cqlRequestBody = {};
 
-let url = 'http://moonshot-dev.mitre.org:8080/cql/translator'
-let cqlClient = new Client(url);
-let dir = 'src/'
-let buildPath = 'build/'
+  cqlFiles.forEach((f) => {
+    cqlRequestBody[path.basename(f, '.cql')] = {
+      cql: fs.readFileSync(path.join(cqlPath, f), 'utf8'),
+    };
+  });
 
-let formatName = function (file) {
-  return file;
+  const elm = await client.convertCQL(cqlRequestBody);
+  return elm;
 }
 
-let listFiles = function (path) {
-  let items = fs.readdirSync(path)
-  let formData = {}
-  for (var i = 0; i < items.length; i++) {
-    let name = formatName(items[i])
-    if(name.endsWith(".cql")){
-      formData[name] = fs.createReadStream(dir + '/' + items[i])
-    }
+/**
+ * Find any errors found in the ELM annotation
+ *
+ * @param {Object} elm ELM JSON to look for errors in
+ * @returns {Array} annotations with severity error
+ */
+function processErrors(elm) {
+  const errors = [];
+
+  // Check annotations for errors. If no annotations, no errors
+  if (elm.library.annotation) {
+    elm.library.annotation.forEach((a) => {
+      if (a.errorSeverity === 'error') {
+        errors.push(a);
+      }
+    });
   }
-  return formData;
+
+  return errors;
 }
 
-let writeFile = function (file, data) {
-  if(!fs.existsSync(buildPath)){ fs.mkdirSync(buildPath)};
-  let fullName = buildPath + file;
-  fs.writeFileSync(fullName, data)
-}
-
-let errorCheck = function (annotations) {
-  if (annotations && annotations.length > 0) {
-    return false
-  }
-  return true;
-}
-
-let formData = {libraries: listFiles(dir)}
-cqlClient.convertCQL(formData).then((elm) =>{
-  let keys = Object.keys(elm.libraries)
-  for(k in keys){
-    writeFile(keys[k] + ".json", JSON.stringify(elm.libraries[keys[k]]));
-  }
-  //let json  = JSON.parse(elm);
-  
-  console.log(elm);
-  
-});//
-// let error = false;
-// request.post({
-//   url: url,
-//   formData: formData
-// }, function (err, httpResponse, body) {
-//   if(err){
-//     console.log(err);
-//   }
-//   const header = httpResponse.headers['content-type'];
-//   let boundary = '';
-//   if (header) {
-//     // sample header= "multipart/form-data;boundary=Boundary_1"
-//     const result = extractMultipartBoundary.exec(header);
-//     boundary = result ? `--${result[1]}` : '';
-//   }
-
-//   body.split(boundary).forEach((line) => {
-//     const body = extractJSONContent.exec(line);
-//     if (body) {
-//       const elmName = extractMultipartFileName.exec(line);
-//       if (elmName && elmName[1]) {
-//         let json  = JSON.parse(body[1]);
-//         writeFile(elmName[1] + ".json", body[1])
-//         if (json.library.annotation) {
-//             error = true;
-//         }
-//       }
-//     }
-//   });
-//   if (error) {
-//     console.error("There were errors in the cql to elm conversion")
-//     process.exit(1)
-//   }
-// });
+translateCQL()
+  .then((libraries) => {
+    const buildPath = path.join(__dirname, '../build');
+    Object.entries(libraries).forEach(([libName, elm]) => {
+      const errors = processErrors(elm);
+      if (errors.length === 0) {
+        const elmPath = path.join(buildPath, `${libName}.json`);
+        fs.writeFileSync(elmPath, JSON.stringify(elm), 'utf8');
+        console.log(`Wrote ELM to ${elmPath}`);
+      } else {
+        console.error('Error translating to ELM');
+        console.error(errors);
+        process.exit(1);
+      }
+    });
+  })
+  .catch((e) => {
+    console.error(`HTTP error translating CQL: ${e.message}`);
+    console.error(e.stack);
+    process.exit(1);
+  });
