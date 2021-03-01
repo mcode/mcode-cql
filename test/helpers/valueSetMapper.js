@@ -1,4 +1,11 @@
 /**
+ * Translate ValueSet resources into CodeService map object
+ * cql-execution has no concept of a FHIR ValueSet, only an enumeration of codes by some OID
+ * iterate through the codes listed in a FHIR ValueSet and map to the required object
+ * see https://github.com/cqframework/cql-execution/blob/master/src/cql-code-service.js
+ *
+ * NOTE: This uses the `compose` attribue of the ValueSet to get code. This is incorrect and
+ * should be using the `expansion`. But current mCODE ValueSets have `compose` only
  *
  * @param {Array} valueSetResources array of FHIR ValueSet JSON resources
  * @returns {Object} valueSetMap for CodeService in cql-execution
