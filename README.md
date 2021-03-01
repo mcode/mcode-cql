@@ -25,7 +25,7 @@ This script will do the following:
 2. Translate all CQL in the `./src` directory into ELM JSON and write it to `./build`
 3. Run the unit tests present in `./test`
 
-To only do steps 1. and 2. above without starting a new container:
+To only do steps 2. and 3. above without starting a new container:
 
 ```bash
 yarn test -n
