@@ -25,6 +25,7 @@ async function translateCQL() {
   const elm = await client.convertCQL(cqlRequestBody);
   return elm;
 }
+
 /**
  * Find any errors found in the ELM annotation
  *
@@ -33,11 +34,15 @@ async function translateCQL() {
  */
 function processErrors(elm) {
   const errors = [];
-  elm.library.annotation.forEach((a) => {
-    if (a.errorSeverity === 'error') {
-      errors.push(a);
-    }
-  });
+
+  // Check annotations for errors. If no annotations, no errors
+  if (elm.library.annotation) {
+    elm.library.annotation.forEach((a) => {
+      if (a.errorSeverity === 'error') {
+        errors.push(a);
+      }
+    });
+  }
 
   return errors;
 }

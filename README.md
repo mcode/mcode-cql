@@ -25,6 +25,12 @@ This script will do the following:
 2. Translate all CQL in the `./src` directory into ELM JSON and write it to `./build`
 3. Run the unit tests present in `./test`
 
+To only do steps 1. and 2. above without starting a new container:
+
+```bash
+yarn test -n
+```
+
 ### Unit Tests
 
 The unit tests will make assertions based on the execution results of the mCODE CQL for a given patient. Before any unit tests are run, the CQL is executed using [cql-execution](https://github.com/cqframework/cql-execution/) and [cql-exec-fhir](https://github.com/cqframework/cql-exec-fhir), and the execution results are stored in a variable to be used for assertions in the unit tests.
