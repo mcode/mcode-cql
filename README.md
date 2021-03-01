@@ -2,6 +2,9 @@
 
 ## Testing
 
+![testing architecture](https://user-images.githubusercontent.com/16297930/109518787-963a4f00-7a78-11eb-8a0f-5be82a011bb7.png)
+
+
 ### Prerequisites
 
 * [Docker](https://docker.com)
