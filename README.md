@@ -50,6 +50,17 @@ docker run -d -p 8080:8080 cqframework/cql-translation-service
 yarn translate
 ```
 
-''' asurance tests
-yarn test:assurance 
+### Utility Function Assurance Testing
+
+The `assurance` folder contains unit tests and relevant fixtures used for testing the functionality of the helper functions used in the testing harness. 
+
+Example CQL for assurance testing lives in the `assurance/fixtures/cql` subdirectory. To build this CQL into ELM, spin up a cql-translation-service docker container and run the `yarn:translate` script:
+``` bash
+docker run -d -p 8080:8080 cqframework/cql-translation-service
+yarn translate:assurance
+```
+
+To only run the utility function unit tests while excluding mCODE assertion tests, run the `test:assurance` script:
+``` bash
+yarn test:assurance
 ```

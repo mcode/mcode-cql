@@ -22,7 +22,7 @@ beforeEach(() => {
   patientBundle = loadJSONFixture(__dirname, './fixtures/patients/test-patient-1.json');
 });
 
-test('Should properly recognize resources in execution', () => {
+test('Should properly match on resources in execution', () => {
   const expectedCondition = patientBundle.entry[0].resource;
   const executionResults = execute([elm], patientBundle, valueSetMap, 'testLib');
   const patientID = '123';
@@ -30,6 +30,16 @@ test('Should properly recognize resources in execution', () => {
   expect(executionResults.patientResults[patientID].Condition).toHaveLength(1);
   // eslint-disable-next-line no-underscore-dangle
   expect(executionResults.patientResults[patientID].Condition[0]._json).toEqual(expectedCondition);
+});
+
+test('Should exclude resources with values outside of the valueSet Map during execution', () => {
+  // Changing the expected code within the valueSetMap to a code not included in the patient bundle
+  valueSetMap.SteamVS[1][0].code = 'second-example-code';
+  const executionResults = execute([elm], patientBundle, valueSetMap, 'testLib');
+  const patientID = '123';
+
+  // There should be no matching Condition resources within the execution results
+  expect(executionResults.patientResults[patientID].Condition).toHaveLength(0);
 });
 
 test('Should properly load patient resource from bundle', () => {
