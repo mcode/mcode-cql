@@ -49,3 +49,7 @@ To only translate the CQL and not do the rest of the build/test steps, spin up a
 docker run -d -p 8080:8080 cqframework/cql-translation-service
 yarn translate
 ```
+
+''' asurance tests
+yarn test:assurance 
+```
