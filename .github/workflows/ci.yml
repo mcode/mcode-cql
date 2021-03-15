@@ -54,7 +54,5 @@ jobs:
         node-version: '12.x'
     - run: pwd
     - run: chmod +x ./test/run_tests.sh
-    - uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: test
+    - run: ./test/run_tests.sh
 
