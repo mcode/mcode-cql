@@ -43,5 +43,4 @@ jobs:
         cmd: install --frozen-lockfile
     - run: chmod +x ./test/run_tests.sh
     - run: yarn test
-    - run: yarn translate:assurance
     - run: yarn test:assurance
