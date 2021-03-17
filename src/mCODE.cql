@@ -1,125 +1,111 @@
 library mCODE version '1'
 
 using FHIR version '4.0.0'
-include FHIRHelpers version '4.0.0' called FHIRHelpers
-// CODESYSTEMS
+
 codesystem "SNOMEDCT": 'http://snomed.info/sct'
 codesystem "LOINC": 'http://loinc.org'
 codesystem "RXNORM": 'http://www.nlm.nih.gov/research/umls/rxnorm'
 codesystem "V20074": 'http://terminology.hl7.org/CodeSystem/v2-0074'
 codesystem "OBSCAT": 'http://terminology.hl7.org/CodeSystem/observation-category'
 
-valueset "Comorbid Conditions": 'ComorbidConditionVS'
-valueset "Primary Cancer Conditions": 'PrimaryCancerConditionsVS'
-valueset "Secondary Cancer Conditions": 'ComorbidConditionsVS'
-valueset  "Primary cancers": 'PrimaryCancerConditionsVS'
-valueset "Secondary cancers": 'SecondaryCancerCondtionsVS' 
-valueset  "Tumor marker tests": 'TumorMarkersVS' 
-valueset "Radiation procedures": 'RadiationProceduresVS'
-valueset "Surgical procedures": 'SurgicalProceduresVS'
-valueset "Genetic Specimen Type": 'GeneticSpecimenTypeVS' 
-valueset "Cancer Medications": 'CancerMedicationsVs'
-// FHIR CODES
+valueset "Cancer Body Location Value Set": 'mcode-cancer-body-location-vs'
+valueset "Cancer Disease Status Evidence Type Value Set": 'mcode-cancer-disease-status-evidence-type-vs'
+valueset "Cancer Disorder Value Set": 'mcode-cancer-disorder-vs'
+valueset "Cancer-Related Surgical Procedure Value Set": 'mcode-cancer-related-surgical-procedure-vs'
+valueset "Cancer Staging System Value Set": 'mcode-cancer-staging-system-vs'
+valueset "ClinVar Value Set": 'mcode-clinvar-vs'
+valueset "Comorbid Condition Value Set": 'mcode-comorbid-condition-vs'
+valueset "Condition Status Trend Value Set": 'mcode-condition-status-trend-vs'
+valueset "Genetic Specimen Type Value Set": 'mcode-genetic-specimen-type-vs'
+valueset "HUGO Gene Nomenclature Committee Gene Names Value Set": 'mcode-hgnc-vs'
+valueset "Human Genome Variation Society Sequence Variant Nomenclature Value Set": 'mcode-hgvs-vs'
+valueset "Histology Morphology Behavior Value Set": 'mcode-histology-morphology-behavior-vs'
+valueset "Laterality Value Set": 'mcode-laterality-vs'
+valueset "Primary or Uncertain Behavior Cancer Disorder Value Set": 'mcode-primary-or-uncertain-behavior-cancer-disorder-vs'
+valueset "Radiation Procedure Value Set": 'mcode-radiation-procedure-vs'
+valueset "Radiation Target Body Site Value Set": 'mcode-radiation-target-body-site-vs'
+valueset "Secondary Cancer Disorder Value Set": 'mcode-secondary-cancer-disorder-vs'
+valueset "TNM Distant Metastases Category Value Set": 'mcode-tnm-distant-metastases-category-vs'
+valueset "TNM Primary Tumor Category Value Set": 'mcode-tnm-primary-tumor-category-vs'
+valueset "TNM Regional Nodes Category Value Set": 'mcode-tnm-regional-nodes-category-vs'
+valueset "TNM Stage Group Value Set": 'mcode-tnm-stage-group-vs'
+valueset "Treatment Intent Value Set": 'mcode-treatment-intent-vs'
+valueset "Treatment Termination Reason Value Set": 'mcode-treatment-termination-reason-vs'
+valueset "TumorMarkerTestVS": 'mcode-tumor-marker-test-vs'
+valueset "Units of Length Value Set": 'mcode-units-of-length-vs'
 
-code "ECOG performance code": '89262-0' from "LOINC" display 'ECOG Performance Status [Interpretation]'
-code "Karnofsky performance code": '89245-5' from "LOINC" display 'Karnofsky Performance Status [Interpretation]'
-code "TNM clinical stage group code": '21908-9' from "LOINC" display 'Stage group.clinical Cancer'
-code "TNM clinical primary tumor code": '21905-5' from "LOINC" display 'Primary tumor.clinical [Class] Cancer'
-code "TNM clinical regional nodes code": '21906-3' from "LOINC" display 'Regional lymph nodes.clinical [Class] Cancer'
-code "TNM clinical distant metastases code": '21907-1' from "LOINC" display 'Distant metastases.clinical [Class] Cancer'
-code "TNM pathologic stage group code": '21902-2' from "LOINC" display 'Stage group.pathology Cancer'
-code "TNM pathologic primary tumor code": '21899-0' from "LOINC" display 'Primary tumor.pathology Cancer'
-code "TNM pathologic regional nodes code": '21900-6' from "LOINC" display 'Regional lymph nodes.pathology [Class] Cancer'
-code "TNM pathologic distant metastases code": '21901-4' from "LOINC" display 'Distant metastases.pathology [Class] Cancer'
-code "Genomics report code": 'GE' from "V20074"
-code "Genetic variant tested code": '41103-3' from "LOINC" display 'Gene XXX mutations found in Blood or Tissue by Molecular genetics method'
-code "Genetic variant found code": '69548-6' from "LOINC" display 'Genetic variant assessment'
-code "Genetic variant found genomic source class code": '48002-0' from "LOINC"
-code "Genetic variant found identifier code": '48003-8' from "LOINC"
-code "Genetic variant found HGVS name code": '82154-6' from "LOINC"
-code "Genetic variant found description code": '47998-0' from "LOINC"
-code "Cancer disease status code": '88040-1' from "LOINC" display 'Response to cancer treatment'
+code "CancerDiseaseStatus Code": '88040-1' from "LOINC"
+code "CancerGeneticVariant Code": '69548-6' from "LOINC"
+code "CancerGenomicsReport Code": '81247-9' from "LOINC"
+code "ECOGPerformanceStatus Code": '89247-1' from "LOINC"
+code "GenomicRegionStudied Code": '53041-0' from "LOINC"
+code "KarnofskyPerformanceStatus Code": '89243-0' from "LOINC"
+code "TNMClinicalDistantMetastasesCategory Code": '21907-1' from "LOINC"
+code "TNMClinicalPrimaryTumorCategory Code": '21905-5' from "LOINC"
+code "TNMClinicalRegionalNodesCategory Code": '21906-3' from "LOINC"
+code "TNMClinicalStageGroup Code": '21908-9' from "LOINC"
+code "TNMPathologicalDistantMetastasesCategory Code": '21901-4' from "LOINC"
+code "TNMPathologicalPrimaryTumorCategory Code": '21899-0' from "LOINC"
+code "TNMPathologicalRegionalNodesCategory Code": '21900-6' from "LOINC"
+code "TNMPathologicalStageGroup Code": '21902-2' from "LOINC"
 
+define "CancerDiseaseStatus":
+	[Observation: "CancerDiseaseStatus Code"]
 
+define "CancerGenomicsReport":
+	[DiagnosticReport: "CancerGenomicsReport Code"]
 
+define "CancerRelatedRadiationProcedure":
+	[Procedure: "Radiation Procedure Value Set"]
 
-concept "ECOG performance score" : { "ECOG performance code"}
-concept "Karnofsky performance score" : { "Karnofsky performance code"}
+define "CancerRelatedSurgicalProcedure":
+	[Procedure: "Cancer-Related Surgical Procedure Value Set"]
 
-concept "Genetic variant found genomic source class": { "Genetic variant found genomic source class code" }
-concept "Genetic variant found identifier": { "Genetic variant found identifier code" } 
-concept "Genetic variant found HGVS name": { "Genetic variant found HGVS name code" }
-concept "Genetic variant found description": { "Genetic variant found description code" }
+define "ComorbidCondition":
+	[Condition: "Comorbid Condition Value Set"]
 
+define "ECOGPerformanceStatus":
+	[Observation: "ECOGPerformanceStatus Code"]
 
-   
-context Patient
+define "GeneticSpecimen":
+	[Specimen: "Genetic Specimen Type Value Set"]
 
-// mCODE Profile Statements
-define "Patient":
-   [Patient]
+define "GenomicRegionStudied":
+	[Observation: "GenomicRegionStudied Code"]
 
-define "Comorbid Condition":
-    [Condition : "Comorbid Conditions"] 
+define "KarnofskyPerformanceStatus":
+	[Observation: "KarnofskyPerformanceStatus Code"]
 
-define "Karnofsky Performance":
-    [Observation: "Karnofsky performance score"]
+define "PrimaryCancerCondition":
+	[Condition: "Primary or Uncertain Behavior Cancer Disorder Value Set"]
 
-define "ECOG Performance":
-    [Observation:  "ECOG performance code"]
+define "SecondaryCancerCondition":
+	[Condition: "Secondary Cancer Disorder Value Set"]
 
-define "Primary Cancer Condition":
-    [Condition:  "Primary cancers"] Cancer
-  
-define "Secondary Cancer Condition":
-    [Condition: "Secondary cancers"] Cancer
+define "TNMClinicalDistantMetastasesCategory":
+	[Observation: "TNMClinicalDistantMetastasesCategory Code"]
 
-define "TNM Clinical Stage Group":
-    [Observation: "TNM clinical stage group code"] 
+define "TNMClinicalPrimaryTumorCategory":
+	[Observation: "TNMClinicalPrimaryTumorCategory Code"]
 
-define "TNM Clinical Primary Tumor":
-    [Observation: "TNM clinical primary tumor code"]
+define "TNMClinicalRegionalNodesCategory":
+	[Observation: "TNMClinicalRegionalNodesCategory Code"]
 
-define "TNM Clinical Regional Nodes":
-    [Observation: "TNM clinical regional nodes code"]
+define "TNMClinicalStageGroup":
+	[Observation: "TNMClinicalStageGroup Code"]
 
-define "TNM Clinical Distant Metastases":
-    [Observation: "TNM clinical distant metastases code"]
+define "TNMPathologicalDistantMetastasesCategory":
+	[Observation: "TNMPathologicalDistantMetastasesCategory Code"]
 
-define "TNM Pathologic Stage Group":
-    [Observation: "TNM pathologic stage group code"]
+define "TNMPathologicalPrimaryTumorCategory":
+	[Observation: "TNMPathologicalPrimaryTumorCategory Code"]
 
-define "TNM Pathologic Primary Tumor":
-    [Observation: "TNM pathologic primary tumor code"]
+define "TNMPathologicalRegionalNodesCategory":
+	[Observation: "TNMPathologicalRegionalNodesCategory Code"]
 
-define "TNM Pathologic Regional Nodes":
-    [Observation: "TNM pathologic regional nodes code"]
+define "TNMPathologicalStageGroup":
+	[Observation: "TNMPathologicalStageGroup Code"]
 
-define "TNM Pathologic Distant Metastases":
-    [Observation: "TNM pathologic distant metastases code"]
-
-define "Genetic Specimen":
-  [Specimen: "Genetic Specimen Type"]
-
-define "Genetic Variant Tested":
-    [Observation: "Genetic variant tested code"]
-
-define "Genetic Variant Found":
-    [Observation: "Genetic variant found code"]
-
-define "Tumor Marker Test":
-    [Observation:  "Tumor marker tests"] TumorMarker
-
-define "Cancer Related Radiation Procedure":
-    [Procedure: "Radiation procedures"]
-
-define "Cancer Related Surgical Procedure":
-    [Procedure:  "Surgical procedures"] 
-
-define "Cancer Related Medication Statement":
-    [MedicationStatement: "Cancer Medications"]
-
-define "Cancer Disease Status":
-    [Observation: "Cancer disease status code"]
-
+define "TumorMarker":
+	[Observation: "TumorMarkerTestVS"]
 

@@ -1,0 +1,220 @@
+{
+    "resourceType": "Bundle",
+    "type": "transaction",
+    "entry": [
+      {
+        "fullUrl": "resource:mCODEPatientExample02",
+        "resource": {
+          "resourceType": "Patient",
+          "id": "mCODEPatientExample02",
+          "meta": {
+            "profile": [
+              "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-patient"
+            ]
+          },
+          "text": {
+            "status": "generated",
+            "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: mCODEPatientExample02</p><p><b>meta</b>: </p><p><b>identifier</b>: Medical record number = m456 (USUAL)</p><p><b>name</b>: Eve A. Anyperson </p><p><b>gender</b>: female</p><p><b>birthDate</b>: 1955-05-20</p><p><b>address</b>: 456 Smith Lane Anytown MA 12345 US </p><h3>Contacts</h3><table class=\"grid\"><tr><td>-</td><td><b>Telecom</b></td></tr><tr><td>*</td><td>ph: 999-999-9999(HOME)</td></tr></table><h3>Communications</h3><table class=\"grid\"><tr><td>-</td><td><b>Language</b></td></tr><tr><td>*</td><td>English <span style=\"background: LightGoldenRodYellow\">(Details : {urn:ietf:bcp:47 code 'en-US' = 'English (Region=United States))</span></td></tr></table></div>"
+          },
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "ombCategory",
+                  "valueCoding": {
+                    "system": "urn:oid:2.16.840.1.113883.6.238",
+                    "code": "1002-5"
+                  }
+                },
+                {
+                  "url": "text",
+                  "valueString": "Lakota and Crow"
+                }
+              ],
+              "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race"
+            },
+            {
+              "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex",
+              "valueCode": "F"
+            }
+          ],
+          "identifier": [
+            {
+              "use": "usual",
+              "type": {
+                "coding": [
+                  {
+                    "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                    "code": "MR"
+                  }
+                ]
+              },
+              "system": "http://hospital.example.org",
+              "value": "m456"
+            }
+          ],
+          "name": [
+            {
+              "family": "Anyperson",
+              "given": [
+                "Eve",
+                "A."
+              ]
+            }
+          ],
+          "gender": "female",
+          "birthDate": "1955-05-20",
+          "address": [
+            {
+              "line": [
+                "456 Smith Lane"
+              ],
+              "city": "Anytown",
+              "state": "MA",
+              "postalCode": "12345",
+              "country": "US"
+            }
+          ],
+          "contact": [
+            {
+              "telecom": [
+                {
+                  "system": "phone",
+                  "value": "999-999-9999",
+                  "use": "home"
+                },
+                {
+                  "system": "email",
+                  "value": "eve.anyperson@example.com"
+                }
+              ]
+            }
+          ],
+          "communication": [
+            {
+              "language": {
+                "coding": [
+                  {
+                    "system": "urn:ietf:bcp:47",
+                    "code": "en-US"
+                  }
+                ],
+                "text": "English"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "fullUrl": "urn:uuid:mCODECancerGeneticVariantExample02",
+        "resource": {
+          "resourceType": "Observation",
+          "id": "mCODECancerGeneticVariantExample02",
+          "meta": {
+            "profile": [
+              "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-genetic-variant"
+            ]
+          },
+          "text": {
+            "status": "generated",
+            "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: mCODECancerGeneticVariantExample02</p><p><b>meta</b>: </p><p><b>status</b>: final</p><p><b>category</b>: Laboratory <span style=\"background: LightGoldenRodYellow\">(Details : {http://terminology.hl7.org/CodeSystem/observation-category code 'laboratory' = 'Laboratory)</span></p><p><b>code</b>: Genetic variant assessment <span style=\"background: LightGoldenRodYellow\">(Details : {LOINC code '69548-6' = 'Genetic variant assessment)</span></p><p><b>subject</b>: <a href=\"{{[type]}}-{{[id]}}.html\">Generated Summary: id: mCODEPatientExample01; Medical record number = m123 (USUAL); John B. Anyperson ; gender: male; birthDate: 1951-01-20</a></p><p><b>effective</b>: Apr 1, 2019 12:00:00 AM</p><p><b>value</b>: Present <span style=\"background: LightGoldenRodYellow\">(Details : {LOINC code 'LA9633-4' = 'Present)</span></p><p><b>method</b>: Sequencing <span style=\"background: LightGoldenRodYellow\">(Details : {LOINC code 'LA26398-0' = 'Sequencing)</span></p><blockquote><p><b>component</b></p><p><b>code</b>: Gene studied [ID] <span style=\"background: LightGoldenRodYellow\">(Details : {LOINC code '48018-6' = 'Gene studied [ID])</span></p><p><b>value</b>: HGNC:1100 <span style=\"background: LightGoldenRodYellow\">(Details : {http://www.genenames.org/geneId code 'HGNC:1100' = 'HGNC:1100)</span></p></blockquote><blockquote><p><b>component</b></p><p><b>code</b>: Genomic DNA change (gHGVS) <span style=\"background: LightGoldenRodYellow\">(Details : {LOINC code '81290-9' = 'Genomic DNA change (gHGVS))</span></p><p><b>value</b>: NG_005905.2:g.126148_126152GTAAA[1] <span style=\"background: LightGoldenRodYellow\">(Details : {http://varnomen.hgvs.org code 'NG_005905.2:g.126148_126152GTAAA[1]' = 'NG_005905.2:g.126148_126152GTAAA[1])</span></p></blockquote><blockquote><p><b>component</b></p><p><b>code</b>: Genomic source class [Type] <span style=\"background: LightGoldenRodYellow\">(Details : {LOINC code '48002-0' = 'Genomic source class [Type])</span></p><p><b>value</b>: Germline <span style=\"background: LightGoldenRodYellow\">(Details : {LOINC code 'LA6683-2' = 'Germline)</span></p></blockquote></div>"
+          },
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "69548-6"
+              }
+            ]
+          },
+          "subject": {
+            "reference": "resource:mCODEPatientExample02"
+          },
+          "effectiveDateTime": "2019-04-01",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "LA9633-4"
+              }
+            ]
+          },
+          "method": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "LA26398-0"
+              }
+            ]
+          },
+          "component": [
+            {
+              "code": {
+                "coding": [
+                  {
+                    "system": "http://loinc.org",
+                    "code": "48018-6"
+                  }
+                ]
+              },
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://www.genenames.org/geneId",
+                    "code": "HGNC:1100"
+                  }
+                ]
+              }
+            },
+            {
+              "code": {
+                "coding": [
+                  {
+                    "system": "http://loinc.org",
+                    "code": "81290-9"
+                  }
+                ]
+              },
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://varnomen.hgvs.org",
+                    "code": "NG_005905.2:g.126148_126152GTAAA[1]"
+                  }
+                ]
+              }
+            },
+            {
+              "code": {
+                "coding": [
+                  {
+                    "system": "http://loinc.org",
+                    "code": "48002-0"
+                  }
+                ]
+              },
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://loinc.org",
+                    "code": "LA6683-2"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+}
