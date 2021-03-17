@@ -6,7 +6,7 @@ let valueSetMap;
 let elm;
 let patientBundle;
 
-beforeEach(() => {
+beforeAll(() => {
   // Set up necessary data for cql-execution
   valueSetMap = {
     SteamVS: {
@@ -28,14 +28,22 @@ test('Should properly match on resources in execution', () => {
   const patientID = '123';
 
   expect(executionResults.patientResults[patientID].Condition).toHaveLength(1);
-  // eslint-disable-next-line no-underscore-dangle
   expect(executionResults.patientResults[patientID].Condition[0]._json).toEqual(expectedCondition);
 });
 
 test('Should exclude resources with values outside of the valueSet Map during execution', () => {
   // Changing the expected code within the valueSetMap to a code not included in the patient bundle
-  valueSetMap.SteamVS[1][0].code = 'second-example-code';
-  const executionResults = execute([elm], patientBundle, valueSetMap, 'testLib');
+  const alteredVSMap = {
+    SteamVS: {
+      1: [
+        {
+          code: 'second-example-code',
+          system: 'www.example.com',
+        },
+      ],
+    },
+  };
+  const executionResults = execute([elm], patientBundle, alteredVSMap, 'testLib');
   const patientID = '123';
 
   // There should be no matching Condition resources within the execution results
@@ -46,7 +54,6 @@ test('Should properly load patient resource from bundle', () => {
   const executionResults = execute([elm], patientBundle, valueSetMap, 'testLib');
   const patientID = '123';
 
-  // eslint-disable-next-line no-underscore-dangle
   const returnedPatient = executionResults.patientResults[patientID].Patient._json;
   expect(returnedPatient).toEqual(patientBundle.entry[1].resource);
 });

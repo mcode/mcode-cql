@@ -52,7 +52,7 @@ yarn translate
 
 ### Utility Function Assurance Testing
 
-The `assurance` folder contains unit tests and relevant fixtures used for testing the functionality of the helper functions used in the testing harness. 
+The `assurance` folder contains tests and fixtures for testing the functionality of the helper functions used in the testing harness. 
 
 Example CQL for assurance testing lives in the `assurance/fixtures/cql` subdirectory. To build this CQL into ELM, spin up a cql-translation-service docker container and run the `yarn:translate` script:
 ``` bash
