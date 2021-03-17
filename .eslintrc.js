@@ -10,6 +10,6 @@ module.exports = {
   },
   rules: {
     'no-console': 'off',
-    'no-underscore-dangle': { allow: '_json' },
+    'no-underscore-dangle': [2, { allow: '_json' }],
   },
 };
