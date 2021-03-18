@@ -1,22 +1,21 @@
 const cql = require('cql-execution');
 const { PatientSource } = require('cql-exec-fhir');
 
-const MAIN_LIB_ID = 'mCODE';
-
 /**
  *
  * @param {Array} elmJSONs array of ELM JSON objects
  * @param {Object} patientBundle patient record to execute against
  * @param {Object} valueSetMap valueSetMap for CodeService
+ * @param {String} libraryID the library ID of the cql library corresponding to the ELM
  * @returns {Object} cql-execution-results
  */
-function execute(elmJSONs, patientBundle, valueSetMap) {
+function execute(elmJSONs, patientBundle, valueSetMap, libraryID = 'mCODE') {
   // 'main' ELM is the mcode library
-  const mainELM = elmJSONs.find((e) => e.library.identifier.id === MAIN_LIB_ID);
+  const mainELM = elmJSONs.find((e) => e.library.identifier.id === libraryID);
 
   // Resolve dependencies
   const repository = new cql.Repository(elmJSONs);
-  const library = repository.resolve(MAIN_LIB_ID, mainELM.library.identifier.version);
+  const library = repository.resolve(libraryID, mainELM.library.identifier.version);
 
   const codeService = new cql.CodeService(valueSetMap);
   const executor = new cql.Executor(library, codeService);

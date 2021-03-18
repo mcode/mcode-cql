@@ -46,6 +46,26 @@ yarn test:unit
 To only translate the CQL and not do the rest of the build/test steps, spin up a `cql-translation-service` docker container and run the `translate` script:
 
 ``` bash
-docker run -d -p 8080:8080 cqframework/cql-translation-service
+docker run --name cql-translation-service --rm -d -p 8080:8080 cqframework/cql-translation-service:latest
 yarn translate
+```
+
+To stop the docker container once translation is complete, run the following command:
+``` bash
+docker stop cql-translation-service
+```
+
+### Utility Function Assurance Testing
+
+The `assurance` folder contains tests and fixtures for testing the functionality of the helper functions used in the testing harness. 
+
+Example CQL for assurance testing lives in the `assurance/fixtures/cql` subdirectory. To build this CQL into ELM, spin up a cql-translation-service docker container and run the `yarn:translate` script:
+``` bash
+docker run -d -p 8080:8080 cqframework/cql-translation-service
+yarn translate:assurance
+```
+
+To only run the utility function unit tests while excluding mCODE assertion tests, run the `test:assurance` script:
+``` bash
+yarn test:assurance
 ```

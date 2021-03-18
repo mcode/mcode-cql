@@ -1,0 +1,78 @@
+{
+  "library": {
+    "annotation": [
+      {
+        "translatorOptions": "",
+        "type": "CqlToElmInfo"
+      }
+    ],
+    "identifier": {
+      "id": "testLib",
+      "version": "1"
+    },
+    "schemaIdentifier": {
+      "id": "urn:hl7-org:elm",
+      "version": "r1"
+    },
+    "usings": {
+      "def": [
+        {
+          "localIdentifier": "System",
+          "uri": "urn:hl7-org:elm-types:r1"
+        },
+        {
+          "localIdentifier": "FHIR",
+          "uri": "http://hl7.org/fhir",
+          "version": "4.0.0"
+        }
+      ]
+    },
+    "includes": {
+      "def": [
+        {
+          "localIdentifier": "FHIRHelpers",
+          "path": "FHIRHelpers",
+          "version": "4.0.0"
+        }
+      ]
+    },
+    "valueSets": {
+      "def": [
+        {
+          "name": "Steam VS",
+          "id": "SteamVS",
+          "accessLevel": "Public"
+        }
+      ]
+    },
+    "statements": {
+      "def": [
+        {
+          "name": "Patient",
+          "context": "Patient",
+          "expression": {
+            "type": "SingletonFrom",
+            "operand": {
+              "dataType": "{http://hl7.org/fhir}Patient",
+              "type": "Retrieve"
+            }
+          }
+        },
+        {
+          "name": "Condition",
+          "context": "Patient",
+          "accessLevel": "Public",
+          "expression": {
+            "dataType": "{http://hl7.org/fhir}Condition",
+            "codeProperty": "code",
+            "type": "Retrieve",
+            "codes": {
+              "name": "Steam VS",
+              "type": "ValueSetRef"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
