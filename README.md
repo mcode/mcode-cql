@@ -55,6 +55,11 @@ To stop the docker container once translation is complete, run the following com
 docker stop cql-translation-service
 ```
 
+The default URL used for the translation service is `http://localhost:8080/cql/translator`, however that can be configured by setting the `TRANSLATION_SERVICE_URL` node environment variable. To set this variable, create a `.env` file within the base diretory of `mcode-cql` and enter a custom URL like so:
+``` bash
+TRANSLATION_SERVICE_URL=http://secondUrl.com
+```  
+
 ### Utility Function Assurance Testing
 
 The `assurance` folder contains tests and fixtures for testing the functionality of the helper functions used in the testing harness. 
