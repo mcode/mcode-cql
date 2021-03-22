@@ -55,6 +55,14 @@ To stop the docker container once translation is complete, run the following com
 docker stop cql-translation-service
 ```
 
+The default URL used for the translation service is `http://localhost:8080/cql/translator`, however that can be configured by setting the `TRANSLATION_SERVICE_URL` node environment variable. This variable can be set at runtime like so: 
+``` bash
+TRANSLATION_SERVICE_URL=http://preferredURL.com yarn translate
+```
+Additionally, the variable can be set in perpetuity by creating a `.env` file within the base diretory of `mcode-cql` and setting the variable there. This can be done by renaming the `.env.example` file in the base `mcode-cql` directory to `.env`, then changing the example url in the file to a URL of your choosing.
+
+When translating CQL with a custom URL, `yarn test` should be run with the `-n` flag to prevent the testing harness from starting a new docker container.
+
 ### Utility Function Assurance Testing
 
 The `assurance` folder contains tests and fixtures for testing the functionality of the helper functions used in the testing harness. 

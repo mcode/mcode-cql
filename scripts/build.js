@@ -1,9 +1,12 @@
 const fs = require('fs');
 const path = require('path');
+const dotenv = require('dotenv');
 const { Client } = require('cql-translation-service-client');
 
-const TRANSLATION_SERVICE_URL = 'http://localhost:8080/cql/translator';
-
+dotenv.config();
+const TRANSLATION_SERVICE_URL = !process.env.TRANSLATION_SERVICE_URL
+  ? 'http://localhost:8080/cql/translator'
+  : process.env.TRANSLATION_SERVICE_URL;
 const client = new Client(TRANSLATION_SERVICE_URL);
 
 const cqlPath = process.argv[2] ? path.resolve(process.argv[2]) : path.join(__dirname, '../src');
