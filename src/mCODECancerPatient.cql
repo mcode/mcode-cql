@@ -25,7 +25,6 @@ define "Current Addresses":  // patient-4,5,6,7,8
     // Detailed Race (required) - url=detailed
     // Race Text (required) - url=text
 define "Race Codes1": // patient-13
-  Coalesce(
     Flatten(
       Patient.extension E
         where
@@ -36,7 +35,6 @@ define "Race Codes1": // patient-13
             return E2.value as FHIR.Coding
         )
     )
-  )
 
 
     // us-core-ethnicity extension "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity"
@@ -46,7 +44,6 @@ define "Race Codes1": // patient-13
     // Ethnicity Text - url=text
     // Patient.extension:ethnicity.extension:ombCategory.valueCoding
 define "Ethnicity Codes" // patient -14
-  Coalesce(
     Flatten(
       Patient.extension E
         where
@@ -57,6 +54,5 @@ define "Ethnicity Codes" // patient -14
             return E2.value as FHIR.Coding
         )
     )
-  )
 
 
