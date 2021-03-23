@@ -10,27 +10,26 @@ define "Date of Birth":  // patient-1
 
 // What is the syntax for drilling down into extensions?
 define "Birth Sex":  // patient-3
-    let birthsex: singleton from (Patient.extension E
-        where E.url.value = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex' )
-        (birthsex.value as FHIR.code)
+    Patient.extension E
+        where E.url.value = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex'
+        return E.value 
 
-// Is this close to the right syntax?
 define "Current Addresses":  // patient-4,5,6,7,8
-    Patient.address A where
-                A.period is null OR 
-                A.period contains (Now()) 
+    Patient.address A    
+         where A.period contains (Now()) or
+               A.period is null
 
-//Questions:
-//  - do these return a triple of race category, detailed race, text?
-//  - is anything other than a filter a function?
+// Thiw will return the OMB race category coding
 define "Race Codes":  // patient-13
     // us-core-race extension     "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race"
     // Extension with two valueCoding and one string
     // OMB Race Category - url=ombCategory
     // Detailed Race (required) - url=detailed
     // Race Text (required) - url=text
-    Patient.extension:race.extension:ombCategory.valueCoding
-
+    Patient.extension E
+        where E.url.value = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race' and
+        where E.extension EE where EE.url.value = 'category'
+            return EE.value
 
 define "Ethnicity Codes" // patient -14
     // us-core-ethnicity extension "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity"
@@ -38,6 +37,9 @@ define "Ethnicity Codes" // patient -14
     // OMB Ethnicity Category - url=ombCategory
     // detailed Ethnicity- url=detailed
     // Ethnicity Text - url=text
-    Patient.extension:ethnicity.extension:ombCategory.valueCoding
-
+    // Patient.extension:ethnicity.extension:ombCategory.valueCoding
+    Patient.extension E
+        where E.url.value = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity' and
+        where E.extension EE where EE.url.value = 'category'
+            return EE.value
 
