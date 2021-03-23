@@ -8,17 +8,21 @@ context Patient
 define "Date of Birth":  // patient-1
     Patient.birthDate 
 
+// What is the syntax for drilling down into extensions?
 define "Birth Sex":  // patient-3
     let birthsex: singleton from (Patient.extension E
         where E.url.value = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex' )
         (birthsex.value as FHIR.code)
 
+// Is this close to the right syntax?
 define "Current Addresses":  // patient-4,5,6,7,8
     Patient.address A where
                 A.period is null OR 
                 A.period contains (Now()) 
 
-
+//Questions:
+//  - do these return a triple of race category, detailed race, text?
+//  - is anything other than a filter a function?
 define "Race Codes":  // patient-13
     // us-core-race extension     "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race"
     // Extension with two valueCoding and one string
