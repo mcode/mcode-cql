@@ -1,17 +1,18 @@
 library mCODEKarnofskyPerformanceStatus version '1'
 
 using FHIR version '4.0.0'
-include FHIRHelpers version '4.0.0' called FHIRHelpers
+codesystem "LOINC": 'http://loinc.org'
 
-context Patient
 code "Karnofsky performance code": '89245-5' from "LOINC"
+//include FHIRHelpers version '4.0.0' called FHIRHelpers
+context Patient
 
-define "ECOG Performance Statuses"
-    [Observation: "Karnofsky Performance Code"]
+define "Karnofsky Performance Statuses":
+    [Observation: "Karnofsky performance code"]
 
-//define "Most Recent ECOG Performance Status"
-//    First "ECOG Performance Statuses" where status in {final, amended, corrected} SORT BY effective[x] DESC
+//define "Most Recent Karnofsky Performance Status":
+// "Karnofsky Performance Statuses" K where K.status in {'final', 'amended', 'corrected'} sort by effective desc
 
-define function "Value" (O Observation) // patient-18
-          O.valueInteger
+define function "Value" (O Observation): // patient-18
+          O.value    // want to return integer...how to cast?
 

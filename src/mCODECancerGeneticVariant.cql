@@ -12,8 +12,8 @@ define "Cancer Genetic Variants":
     [Observation: "CancerGeneticVariant Code"]
 
 define function "Filter Cancer Genetic Variants"(Observations List<Observation>):
-    Observations O
-        where "Is Cancer Genetic Variant"(O)
+        Observations O
+            where "Is Cancer Genetic Variant"(O)
 
 define function "Is Cancer Genetic Variant"(O Observation):
     O.code = "CancerGeneticVariant Code"

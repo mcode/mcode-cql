@@ -43,7 +43,7 @@ define "Race Codes1": // patient-13
     // detailed Ethnicity- url=detailed
     // Ethnicity Text - url=text
     // Patient.extension:ethnicity.extension:ombCategory.valueCoding
-define "Ethnicity Codes" // patient -14
+define "Ethnicity Codes": // patient -14
     Flatten(
       Patient.extension E
         where
