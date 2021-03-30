@@ -22,7 +22,7 @@ yarn test
 This script will do the following:
 
 1. Start a [cql-translation-service](https://github.com/cqframework/cql-translation-service) docker container
-2. Translate all CQL in the `./src` directory into ELM JSON and write it to `./build`
+2. Translate all CQL in the `./src` directory into ELM JSON and write it to `./build`. This will only occur if CQL files in the `src` have changed and the ELM needs to be updated
 3. Run the unit tests present in `./test`
 
 To only do steps 2. and 3. above without starting a new container:

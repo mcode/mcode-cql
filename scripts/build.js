@@ -15,20 +15,45 @@ const buildPath = process.argv[3] ? path.resolve(process.argv[3]) : path.join(__
 /**
  * Translate all cql
  *
- * @returns {Object} ELM from translator
+ * @returns {Object} ELM from translator, or {} if nothing to translate
  */
 async function translateCQL() {
   const cqlFiles = fs.readdirSync(cqlPath).filter((f) => path.extname(f) === '.cql');
   const cqlRequestBody = {};
 
   cqlFiles.forEach((f) => {
-    cqlRequestBody[path.basename(f, '.cql')] = {
-      cql: fs.readFileSync(path.join(cqlPath, f), 'utf8'),
-    };
+    const cqlFilePath = path.join(cqlPath, f);
+
+    // Check if ELM already exists to see if translation is needed
+    const correspondingElm = fs
+      .readdirSync(buildPath)
+      .find((elmFile) => path.basename(elmFile, '.json') === path.basename(f, '.cql'));
+    let includeCQL = true;
+
+    // If ELM exists in build, compare timestamps
+    if (correspondingElm) {
+      const cqlStat = fs.statSync(cqlFilePath);
+      const elmStat = fs.statSync(path.join(buildPath, correspondingElm));
+
+      // cql file was modified more recently
+      includeCQL = cqlStat.mtimeMs > elmStat.mtimeMs;
+    }
+
+    if (includeCQL) {
+      cqlRequestBody[path.basename(f, '.cql')] = {
+        cql: fs.readFileSync(cqlFilePath, 'utf8'),
+      };
+    } else {
+      console.log(`No CQL changes detected: skipping translation for ${cqlFilePath}`);
+    }
   });
 
-  const elm = await client.convertCQL(cqlRequestBody);
-  return elm;
+  if (Object.keys(cqlRequestBody).length > 0) {
+    const elm = await client.convertCQL(cqlRequestBody);
+    return elm;
+  }
+
+  return {};
 }
 
 /**
