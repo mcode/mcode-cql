@@ -17,7 +17,8 @@
     "test:unit": "jest --testPathPattern=./test",
     "translate": "node ./scripts/build.js",
     "test:assurance": "jest --testPathPattern=./assurance",
-    "translate:assurance": "node scripts/build.js assurance/fixtures/cql assurance/fixtures/elm"
+    "translate:assurance": "node scripts/build.js assurance/fixtures/cql assurance/fixtures/elm",
+    "translate:tests": "node scripts/build.js test/fixtures/cql test/fixtures/elm true"
   },
   "devDependencies": {
     "cql-exec-fhir": "^2.0.0",

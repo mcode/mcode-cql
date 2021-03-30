@@ -11,18 +11,14 @@ const client = new Client(TRANSLATION_SERVICE_URL);
 
 const cqlPath = process.argv[2] ? path.resolve(process.argv[2]) : path.join(__dirname, '../src');
 const buildPath = process.argv[3] ? path.resolve(process.argv[3]) : path.join(__dirname, '../build');
+const includeSrc = process.argv[4] ? Boolean(process.argv[4]) : false;
 
-/**
- * Translate all cql
- *
- * @returns {Object} ELM from translator, or {} if nothing to translate
- */
-async function translateCQL() {
-  const cqlFiles = fs.readdirSync(cqlPath).filter((f) => path.extname(f) === '.cql');
+function loadCQL(pathToLoad) {
+  const cqlFiles = fs.readdirSync(pathToLoad).filter((f) => path.extname(f) === '.cql');
   const cqlRequestBody = {};
 
   cqlFiles.forEach((f) => {
-    const cqlFilePath = path.join(cqlPath, f);
+    const cqlFilePath = path.join(pathToLoad, f);
 
     // Check if ELM already exists to see if translation is needed
     const correspondingElm = fs
@@ -47,6 +43,20 @@ async function translateCQL() {
       console.log(`No CQL changes detected: skipping translation for ${cqlFilePath}`);
     }
   });
+
+  return cqlRequestBody;
+}
+
+/**
+ * Translate all cql
+ *
+ * @returns {Object} ELM from translator, or {} if nothing to translate
+ */
+async function translateCQL() {
+  let cqlRequestBody = loadCQL(cqlPath);
+  if (includeSrc) {
+    cqlRequestBody = { ...cqlRequestBody, ...loadCQL(path.join(__dirname, '../src')) };
+  }
 
   if (Object.keys(cqlRequestBody).length > 0) {
     const elm = await client.convertCQL(cqlRequestBody);
@@ -82,9 +92,11 @@ translateCQL()
     Object.entries(libraries).forEach(([libName, elm]) => {
       const errors = processErrors(elm);
       if (errors.length === 0) {
-        const elmPath = path.join(buildPath, `${libName}.json`);
-        fs.writeFileSync(elmPath, JSON.stringify(elm), 'utf8');
-        console.log(`Wrote ELM to ${elmPath}`);
+        if (fs.existsSync(path.join(cqlPath, `${libName}.cql`))) {
+          const elmPath = path.join(buildPath, `${libName}.json`);
+          fs.writeFileSync(elmPath, JSON.stringify(elm), 'utf8');
+          console.log(`Wrote ELM to ${elmPath}`);
+        }
       } else {
         console.error('Error translating to ELM');
         console.error(errors);

@@ -29,7 +29,10 @@ function setup(libraryID, elmJSONs, patientBundle, valueSetMap, parameters = {})
   testSetup.library = library;
   testSetup.patientSource = patientSource;
   testSetup.context = new cql.PatientContext(
-    testSetup.library, patientSource.currentPatient(), codeService, parameters,
+    testSetup.library,
+    patientSource.currentPatient(),
+    codeService,
+    parameters,
   );
   testSetup.executor = executor;
 
@@ -52,5 +55,6 @@ function execute(elmJSONs, patientBundle, valueSetMap, libraryID = 'mCODE') {
 }
 
 module.exports = {
-  execute, setup,
+  execute,
+  setup,
 };
