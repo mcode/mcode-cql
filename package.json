@@ -14,12 +14,15 @@
     "prettier": "prettier --check \"**/*.js\"",
     "prettier:fix": "prettier --write \"**/*.js\"",
     "test": "./test/run_tests.sh",
-    "test:unit": "jest",
-    "translate": "node ./scripts/build.js"
+    "test:unit": "jest --testPathPattern=./test",
+    "translate": "node ./scripts/build.js",
+    "test:assurance": "jest --testPathPattern=./assurance",
+    "translate:assurance": "node scripts/build.js assurance/fixtures/cql assurance/fixtures/elm",
+    "translate:tests": "node scripts/build.js test/fixtures/cql test/fixtures/elm true"
   },
   "devDependencies": {
-    "cql-exec-fhir": "^1.3.0",
-    "cql-execution": "^1.4.1",
+    "cql-exec-fhir": "^2.0.0",
+    "cql-execution": "^2.2.0",
     "eslint": "^7.20.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
@@ -29,6 +32,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "cql-translation-service-client": "^0.6.0"
+    "cql-translation-service-client": "^0.6.0",
+    "dotenv": "^8.2.0"
   }
 }

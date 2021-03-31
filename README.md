@@ -22,7 +22,7 @@ yarn test
 This script will do the following:
 
 1. Start a [cql-translation-service](https://github.com/cqframework/cql-translation-service) docker container
-2. Translate all CQL in the `./src` directory into ELM JSON and write it to `./build`
+2. Translate all CQL in the `./src` directory into ELM JSON and write it to `./build`. This will only occur if CQL files in the `src` have changed and the ELM needs to be updated
 3. Run the unit tests present in `./test`
 
 To only do steps 2. and 3. above without starting a new container:
@@ -46,6 +46,34 @@ yarn test:unit
 To only translate the CQL and not do the rest of the build/test steps, spin up a `cql-translation-service` docker container and run the `translate` script:
 
 ``` bash
-docker run -d -p 8080:8080 cqframework/cql-translation-service
+docker run --name cql-translation-service --rm -d -p 8080:8080 cqframework/cql-translation-service:latest
 yarn translate
+```
+
+To stop the docker container once translation is complete, run the following command:
+``` bash
+docker stop cql-translation-service
+```
+
+The default URL used for the translation service is `http://localhost:8080/cql/translator`, however that can be configured by setting the `TRANSLATION_SERVICE_URL` node environment variable. This variable can be set at runtime like so: 
+``` bash
+TRANSLATION_SERVICE_URL=http://preferredURL.com yarn translate
+```
+Additionally, the variable can be set in perpetuity by creating a `.env` file within the base diretory of `mcode-cql` and setting the variable there. This can be done by renaming the `.env.example` file in the base `mcode-cql` directory to `.env`, then changing the example url in the file to a URL of your choosing.
+
+When translating CQL with a custom URL, `yarn test` should be run with the `-n` flag to prevent the testing harness from starting a new docker container.
+
+### Utility Function Assurance Testing
+
+The `assurance` folder contains tests and fixtures for testing the functionality of the helper functions used in the testing harness. 
+
+Example CQL for assurance testing lives in the `assurance/fixtures/cql` subdirectory. To build this CQL into ELM, spin up a cql-translation-service docker container and run the `yarn:translate` script:
+``` bash
+docker run -d -p 8080:8080 cqframework/cql-translation-service
+yarn translate:assurance
+```
+
+To only run the utility function unit tests while excluding mCODE assertion tests, run the `test:assurance` script:
+``` bash
+yarn test:assurance
 ```
