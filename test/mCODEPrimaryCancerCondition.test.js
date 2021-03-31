@@ -19,16 +19,15 @@ beforeAll(() => {
   console.log(executionResults);
 });
 
-
 test('Can identify Cancer Condition Code', () => {
-    const functionRef = new FunctionRef({
-      type: 'FunctionRef',
-      name: 'mCODEPrimaryCancerCondition',
-      operand: [{ type: 'First', source: { type: 'ExpressionRef', name: 'Cancer Genetic Variants' } }],
-    });
-    const values = functionRef.exec(setupResults.context);
-    // eslint-disable-next-line no-unused-expressions
-    expect(values).not.null;
-    expect(values.length).toBe(1);
-    expect(values[0].coding[0].code.value).toBe('HGNC:11389');
+  const functionRef = new FunctionRef({
+    type: 'FunctionRef',
+    name: 'mCODEPrimaryCancerCondition',
+    operand: [{ type: 'First', source: { type: 'ExpressionRef', name: 'Cancer Genetic Variants' } }],
   });
+  const values = functionRef.exec(setupResults.context);
+
+  expect(values).not.toBeNull();
+  expect(values.length).toBe(1);
+  expect(values[0].coding[0].code.value).toBe('HGNC:11389');
+});
