@@ -78,11 +78,23 @@ define function "Current TM Clinical Stage Groups v1" (C Condition):
               such that StageGroup.id = (Last(Split((Assessment as FHIR.Reference).reference, '/')))
         ) )
 
-// This is invalid, with error:  
-//>> Error [66:7] Syntax error at return
-//>> Error [65:1] Function Latest TNM Clinical Stage Group is marked external but does not declare a return type.
-  define function "Latest TNM Clinical Stage Group" (C Condition):
-       return (TNMClinicalStageGroups StageGroup
-         with StageGroup.focus Focus
-         such that C.id = (Last(Split((Focus as FHIR.Reference).reference, '/')))
-          sort by StageGroup.date desc)
+define function "Latest TNM Clinical Stage Group" (C Condition):
+       TNMClinicalStageGroups StageGroup     // get stagegroups
+         with StageGroup.focus Focus         // Focus is 0..* and refers to a condition
+            such that C.id = (Last(Split((Focus as FHIR.Reference).reference, '/')))   // Is there a focus that refers to condition C?
+            sort by effective desc
+
+define function "Earliest TNM Clinical Stage Group" (C Condition):
+       TNMClinicalStageGroups StageGroup     // get stagegroups
+         with StageGroup.focus Focus         // Focus is 0..* and refers to a condition
+            such that C.id = (Last(Split((Focus as FHIR.Reference).reference, '/')))   // Is there a focus that refers to condition C?
+            sort by effective asc
+
+define function "TNM Clinical Stage Group Value" (O Observation):
+      O.valueCodeableConcept
+
+define function "TNM Clinical Stage Group Staging System" (O Observation):
+      O.method
+
+define function "TNM Clinical Primary Tumor Categories" (O Observation):
+ // 
