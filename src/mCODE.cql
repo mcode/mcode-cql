@@ -1,7 +1,7 @@
 library mCODE version '1'
 
 using FHIR version '4.0.0'
-
+include FHIRHelpers version '4.0.0' called FHIRHelpers
 codesystem "SNOMEDCT": 'http://snomed.info/sct'
 codesystem "LOINC": 'http://loinc.org'
 codesystem "RXNORM": 'http://www.nlm.nih.gov/research/umls/rxnorm'
@@ -36,8 +36,10 @@ valueset "Units of Length Value Set": 'mcode-units-of-length-vs'
 
 code "CancerDiseaseStatus Code": '88040-1' from "LOINC"
 code "CancerGeneticVariant Code": '69548-6' from "LOINC"
+code "CancerGeneticVariant Gene Studied Code": '48018-6' from "LOINC"
 code "CancerGenomicsReport Code": '81247-9' from "LOINC"
 code "ECOGPerformanceStatus Code": '89247-1' from "LOINC"
+code "ECOGPerformance Code": '89262-0' from "LOINC"
 code "GenomicRegionStudied Code": '53041-0' from "LOINC"
 code "KarnofskyPerformanceStatus Code": '89243-0' from "LOINC"
 code "TNMClinicalDistantMetastasesCategory Code": '21907-1' from "LOINC"
@@ -48,6 +50,8 @@ code "TNMPathologicalDistantMetastasesCategory Code": '21901-4' from "LOINC"
 code "TNMPathologicalPrimaryTumorCategory Code": '21899-0' from "LOINC"
 code "TNMPathologicalRegionalNodesCategory Code": '21900-6' from "LOINC"
 code "TNMPathologicalStageGroup Code": '21902-2' from "LOINC"
+
+context Patient
 
 define "CancerDiseaseStatus":
 	[Observation: "CancerDiseaseStatus Code"]
@@ -109,3 +113,228 @@ define "TNMPathologicalStageGroup":
 define "TumorMarker":
 	[Observation: "TumorMarkerTestVS"]
 
+///////*** CancerPatient
+
+define "Cancer Patient Date Of Birth":  // patient-1
+    Patient.birthDate 
+
+// What is the syntax for drilling down into extensions?
+define "Cancer Patient Birth Sex":  // patient-3
+    Patient.extension E
+        where E.url.value = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex'
+        return E.value 
+
+define "Cancer Patient Current Addresses":  // patient-4,5,6,7,8
+    Patient.address A    
+         where A.period contains (Now()) or
+               A.period is null
+
+    // us-core-race extension     "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race"
+    // Extension with two valueCoding and one string
+    // OMB Race Category - url=ombCategory
+    // Detailed Race (required) - url=detailed
+    // Race Text (required) - url=text
+define "Cancer Patient Race Codes1": // patient-13
+    Flatten(
+      Patient.extension E
+        where
+          E.url.value = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race'
+        return (
+          E.extension E2
+            where E2.url.value = 'ombCategory'
+            return E2.value as FHIR.Coding
+        )
+    )
+
+
+    // us-core-ethnicity extension "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity"
+    // Extension with two valueCoding and one string
+    // OMB Ethnicity Category - url=ombCategory
+    // detailed Ethnicity- url=detailed
+    // Ethnicity Text - url=text
+    // Patient.extension:ethnicity.extension:ombCategory.valueCoding
+define "Cancer Patient Ethnicity Codes": // patient -14
+    Flatten(
+      Patient.extension E
+        where
+          E.url.value = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity'
+        return (
+          E.extension E2
+            where E2.url.value = 'ombCategory'
+            return E2.value as FHIR.Coding
+        )
+    )
+
+//*********** ECOGPerformanceStatus
+//define "ECOG Performance Statuses":
+//    [Observation: "ECOGPerformance code"]
+
+define "Most Recent ECOG Performance Status":
+ "ECOGPerformanceStatus" K 
+ 	where K.status in {'final', 'amended', 'corrected'} 
+	 sort by effective desc
+
+define function "Value" (O Observation): // patient-17 and patient-18
+          O.value // Integer
+
+
+//*********** KarnofskyPerformanceStatus
+
+
+define "Most Recent Karnofsky Performance Status":
+ "KarnofskyPerformanceStatus" K 
+ 	where K.status in {'final', 'amended', 'corrected'} 
+	 sort by effective desc
+
+//*********** Primary/Secondary Cancer Condition
+// Should return an array of CodeableConcepts
+define function "Primary Cancer Condition Body Sites" (C Condition):             // disease-1
+        C.bodySite
+
+// Should return an array of CodeableConcepts
+define function "Primary Cancer Condition Body Site Laterality" (B CodeableConcept): // disease-2
+    B.extension Laterality
+        where
+          Laterality.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-location-qualifier'
+        return (
+          Laterality.value
+        )
+
+define function "Primary Cancer Condition Clinical Status" (C Condition):      // disease-3
+        C.clinicalStatus
+
+define function "Primary Cancer Condition Code" (C Condition):      // disease-4
+        C.code
+
+define function "Primary Cancer Condition Date of Diagnosis" (C Condition): // disease-5 - DateTime
+    C.extension AssertedDate
+        where
+          AssertedDate.url.value = 'http://hl7.org/fhir/StructureDefinition/condition-assertedDate'
+        return (
+          AssertedDate.value
+        )
+
+define function "Primary Cancer Condition Histology Morphology Behavior" (C Condition): // disease-6 - CodeableConcept
+    C.extension HMB
+        where
+          HMB.url.value = ' http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-histology-morphology-behavior'
+        return (
+          HMB.value
+        )
+
+define function "Primary Cancer Condition Verification Status" (C Condition): // disease-7
+         C.verificationStatus
+
+
+
+//*********** TNM Clinical Primary Tumor Category
+
+//define function "TNMClinicalPrimaryTumorCategory":
+//    [Observation: "TNMClinicalPrimaryTumorCategory Code"]
+
+// "TNM Clinical Stage Group Categories"("Current TNM Clinical Stage Groups"(C)), 
+//  filter where Observation code = LOINC 21905-5 and status in {final, amended, corrected}
+// This has an error (squawks at cat.status) and needs a flatten somewhere.
+//define function "Current TNM Clinical Primary Tumor Categories" (C Condition):
+//        ("Current TNM Clinical Stage Groups"(C)) StageGroup   // List of Observations
+//        where StageGroup is not null
+//          return( ("TNM Clinical Stage Group Categories"(StageGroup)) cat  // For each Observation, up to 3 Observations from hasMember
+//        	           where cat.status in {'final','amended','corrected'} and ("is TNM Clinical Stage Group" (cat))
+ //                )
+//define function "Latest TNM Clinical Primary Tumor Categories" (C Condition):
+//        ("Latest TNM Clinical Stage Groups"(C)) StageGroup   // List of Observations
+//        where StageGroup is not null
+//          return( ("TNM Clinical Stage Group Categories"(StageGroup)) cat  // For each Observation, up to 3 Observations from hasMember
+//        	           where cat.status in {'final','amended','corrected'} and ("is TNM Clinical Stage Group" (cat))
+ //                )
+//*********** TNM Clinical Stage Group
+
+
+define function "is TNM Clinical Stage Group" (O Observation):
+	O.code = "TNMClinicalStageGroup Code"
+
+
+// Test:
+//  INput:  a specific condition that is associated with TNMClinicalStageGroup.  Patient mCODECQLExample01.   COndition primarycancer01.
+//  Output: 
+//  {"Observation/913b5547-c504-46f4-98bb-4f4a92104949","Observation/4a5df21c-cf98-48b5-9863-77bb3e651c05","Observation/934599df-ab91-448e-a0cc-fd5d357b39f0","Observation/5a47ce52-f781-448f-bb11-644181d27542"
+            
+define function "Current TNM Clinical Stage Groups" (C Condition):
+   flatten(C.stage Stage
+      where Stage.assessment is not null
+      return (
+      	      from Stage.assessment Assessment,
+              TNMClinicalStageGroup  StageGroup
+              where StageGroup.id = (Last(Split((Assessment as FHIR.Reference).reference, '/')))
+              return StageGroup) )
+  
+  
+ define function "Current TNM Clinical Stage Groups v2" (C Condition):
+   flatten(C.stage Stage
+      where Stage.assessment is not null
+      return ( TNMClinicalStageGroup StageGroup
+              with Stage.assessment Assessment
+              such that StageGroup.id = (Last(Split((Assessment as FHIR.Reference).reference, '/')))
+        ) )
+
+
+define function "Latest TNM Clinical Stage Group" (C Condition):
+       TNMClinicalStageGroup StageGroup 
+         with StageGroup.focus Focus
+            such that C.id = (Last(Split((Focus as FHIR.Reference).reference, '/')))
+            sort by effective desc
+
+define function "Earliest TNM Clinical Stage Group" (C Condition):
+       TNMClinicalStageGroup StageGroup     // get stagegroups
+         with StageGroup.focus Focus         // Focus is 0..* and refers to a condition
+            such that C.id = (Last(Split((Focus as FHIR.Reference).reference, '/')))   // Is there a focus that refers to condition C?
+            sort by effective asc
+
+// Returns [Observation] for all hasMember references from an Observation
+define function "TNM Clinical Stage Group Categories" (O Observation):
+    O.hasMember h
+      return([Observation: id in (Last(Split((h as FHIR.Reference).reference, '/')))])
+	
+//***** CancerGeneticVariant
+
+
+define "Cancer Genetic Variants":
+    [Observation: "CancerGeneticVariant Code"]
+
+define function "Filter Cancer Genetic Variants"(Observations List<Observation>):
+        Observations O
+            where "Is Cancer Genetic Variant"(O)
+
+define function "Is Cancer Genetic Variant"(O Observation):
+    O.code = "CancerGeneticVariant Code"
+
+define function "Cancer Genetic Variant Data Value"(O Observation): //genomics-16
+    O.value
+
+define function "Cancer Genetic Variant Method"(O Observation): //genomics-17
+    O.method
+
+define function "Cancer Genetic Variant Gene Studied"(O Observation): //genomics-22
+    O.component c
+        where c.code = "CancerGeneticVariant Gene Studied Code"
+        return all c.value
+
+//***** TumorMarker
+define function "Tumor Markers By Value Set" (VS ValueSet):
+//Query Observation.code in Value Set and Observation.category.code = laboratory and status in {final, amended, corrected}
+  [Observation: VS] O
+    where 
+     O.status in {'final','amended','corrected'}
+     return(
+       O.category c
+          where 'laboratory' in c.coding.code  
+          return(O)
+       )  
+      
+      
+define function "Tumor Marker Code" (O Observation):
+         O.code
+
+define function "Tumor Marker Data Value" (O Observation):
+     // O.valueCodeableConcept or O.valueQuantity or O.valueRatio
+     O.value

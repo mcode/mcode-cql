@@ -12,30 +12,30 @@ beforeAll(() => {
   const valueSets = loadValueSets();
   const valueSetMap = mapValueSets(valueSets);
   const elm = loadELM();
-  elm.push(loadJSONFixture(__dirname, './fixtures/FHIRHelpers.json'));
+
   elm.push(loadJSONFixture(__dirname, './fixtures/elm/mCODECancerGeneticVariant.test.json'));
   const patientBundle = loadJSONFixture(
     __dirname,
     './fixtures/patients/Bundle-mCODECancerGeneticVariantExample01.json',
   );
 
-  executionResults = execute(elm, patientBundle, valueSetMap, 'mCODECancerGeneticVariant');
+  executionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
   executionTestResults = execute(elm, patientBundle, valueSetMap, 'mCODECancerGeneticVariantTest');
-  setupResults = setup('mCODECancerGeneticVariant', elm, patientBundle, valueSetMap);
+  setupResults = setup('mCODE', elm, patientBundle, valueSetMap);
   console.log(executionResults);
 });
 
 test('Can identify Cancer Genetic Variants', () => {
   const result = executionResults.patientResults.mCODEPatientExample01['Cancer Genetic Variants'];
-  // eslint-disable-next-line no-unused-expressions
-  expect(result).not.null;
+
+  expect(result).not.toBeNull();
   expect(result.length).toBe(1);
 });
 
 test('Can identify Gene Studied', () => {
   const functionRef = new FunctionRef({
     type: 'FunctionRef',
-    name: 'Gene Studied',
+    name: 'Cancer Genetic Variant Gene Studied',
     operand: [{ type: 'First', source: { type: 'ExpressionRef', name: 'Cancer Genetic Variants' } }],
   });
   const values = functionRef.exec(setupResults.context);
