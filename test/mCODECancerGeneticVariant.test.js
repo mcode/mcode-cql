@@ -39,16 +39,16 @@ test('Can identify Gene Studied', () => {
     operand: [{ type: 'First', source: { type: 'ExpressionRef', name: 'Cancer Genetic Variants' } }],
   });
   const values = functionRef.exec(setupResults.context);
-  // eslint-disable-next-line no-unused-expressions
-  expect(values).not.null;
+
+  expect(values).not.toBeNull();
   expect(values.length).toBe(1);
   expect(values[0].coding[0].code.value).toBe('HGNC:11389');
 });
 
 test('Can identify Gene Studied Test', () => {
   const values = executionTestResults.patientResults.mCODEPatientExample01['Test Gene Studied'];
-  // eslint-disable-next-line no-unused-expressions
-  expect(values).not.null;
+
+  expect(values).not.toBeNull();
   expect(values.length).toBe(1);
   expect(values[0].coding[0].code.value).toBe('HGNC:11389');
 });
