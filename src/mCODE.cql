@@ -247,8 +247,8 @@ define function "Primary Cancer Condition Verification Status" (C Condition): //
 //          return( ("TNM Clinical Stage Group Categories"(StageGroup)) cat  // For each Observation, up to 3 Observations from hasMember
 //        	           where cat.status in {'final','amended','corrected'} and ("is TNM Clinical Stage Group" (cat))
  //                )
-//*********** TNM Clinical Stage Group
 
+//*********** TNM Clinical Stage Group
 
 define function "is TNM Clinical Stage Group" (O Observation):
 	O.code = "TNMClinicalStageGroup Code"
