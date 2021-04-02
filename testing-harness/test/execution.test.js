@@ -1,6 +1,6 @@
 const { execute } = require('../execution');
 const { mapValueSets } = require('../valueSetMapper');
-const { loadELM, loadJSONFixture, loadValueSets } = require('../fixtureLoader');
+const { loadJSONFixture, loadJSONFromDirectory } = require('../fixtureLoader');
 
 let valueSetMap;
 let elm;
@@ -58,6 +58,17 @@ test('Should properly load patient resource from bundle', () => {
   expect(returnedPatient).toEqual(patientBundle.entry[1].resource);
 });
 
+test('Should properly load multiple patient resources from array', () => {
+  const patientBundles = loadJSONFromDirectory(__dirname, './fixtures/patients');
+  const executionResults = execute([elm], patientBundles, valueSetMap, 'testLib');
+  const patientIDs = ['123', '456'];
+
+  const returnedPatient1 = executionResults.patientResults[patientIDs[0]].Patient._json;
+  expect(returnedPatient1).toEqual(patientBundles[0].entry[1].resource);
+  const returnedPatient2 = executionResults.patientResults[patientIDs[1]].Patient._json;
+  expect(returnedPatient2).toEqual(patientBundles[1].entry[1].resource);
+});
+
 test('Should only load elm JSON with the specified identifier', () => {
   const secondElm = {
     libray: {
@@ -80,9 +91,9 @@ test('Should only load elm JSON with the specified identifier', () => {
 
 test('Should default to loading elm with the mCODE identifier', () => {
   // Pulling elm with the mCODE identifier along with its valueSetMap
-  const valueSets = loadValueSets('./test/fixtures/valuesets');
+  const valueSets = loadJSONFromDirectory(__dirname, './test/fixtures/valuesets');
   const mcodeVSMap = mapValueSets(valueSets);
-  const mcodeElm = loadELM();
+  const mcodeElm = loadJSONFromDirectory(__dirname, '../build');
 
   // Running the execution utility without a libraryID argument
   const executionResults = execute(mcodeElm, patientBundle, mcodeVSMap);
