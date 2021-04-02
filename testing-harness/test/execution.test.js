@@ -1,6 +1,6 @@
-const { execute } = require('../test/helpers/execution');
-const { mapValueSets } = require('../test/helpers/valueSetMapper');
-const { loadELM, loadJSONFixture, loadValueSets } = require('../test/helpers/fixtureLoader');
+const { execute } = require('../execution');
+const { mapValueSets } = require('../valueSetMapper');
+const { loadELM, loadJSONFixture, loadValueSets } = require('../fixtureLoader');
 
 let valueSetMap;
 let elm;

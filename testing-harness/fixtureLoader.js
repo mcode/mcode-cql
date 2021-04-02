@@ -7,7 +7,7 @@ const path = require('path');
  * @returns {Array} array of ELM JSON objects
  */
 function loadELM() {
-  const p = path.join(__dirname, '../../build');
+  const p = path.join(__dirname, '../output-elm');
   const elmFiles = fs.readdirSync(p).filter((f) => path.extname(f) === '.json');
   return elmFiles.map((f) => JSON.parse(fs.readFileSync(path.join(p, f), 'utf8')));
 }
@@ -31,7 +31,7 @@ function loadJSONFixture(currentDir, relativePathToFixture) {
  * @returns {Array} array of ValueSet JSON resources
  */
 function loadValueSets() {
-  const p = path.resolve(path.join(__dirname, '../fixtures/valuesets'));
+  const p = path.resolve(path.join(__dirname, './test/fixtures/valuesets'));
   const valueSets = fs.readdirSync(p).filter((f) => path.extname(f) === '.json');
   return valueSets.map((f) => JSON.parse(fs.readFileSync(path.join(p, f), 'utf8')));
 }
