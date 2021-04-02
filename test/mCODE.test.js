@@ -1,16 +1,16 @@
-const { loadELM, loadJSONFixture, loadValueSets } = require('./helpers/fixtureLoader');
+const { loadJSONFromDirectory } = require('./helpers/fixtureLoader');
 const { mapValueSets } = require('./helpers/valueSetMapper');
 const { execute } = require('./helpers/execution');
 
 let executionResults;
 beforeAll(() => {
   // Set up necessary data for cql-execution
-  const valueSets = loadValueSets();
+  const valueSets = loadJSONFromDirectory(__dirname, './fixtures/valuesets');
   const valueSetMap = mapValueSets(valueSets);
-  const elm = loadELM();
-  const patientBundle = loadJSONFixture(__dirname, './fixtures/patients/mcode-extraction-patient-1.json');
+  const elm = loadJSONFromDirectory(__dirname, '../build');
+  const patientBundles = loadJSONFromDirectory(__dirname, './fixtures/patients');
 
-  executionResults = execute(elm, patientBundle, valueSetMap);
+  executionResults = execute(elm, patientBundles, valueSetMap);
   console.log(executionResults);
 });
 
