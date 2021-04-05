@@ -14,8 +14,8 @@ beforeAll(() => {
   console.log(executionResults);
 });
 
-test('Can identify PrimaryCancerConditions', () => { });
+test('Can identify PrimaryCancerConditions', () => {});
 
-test('Can identify SecondaryCancerConditions', () => { });
+test('Can identify SecondaryCancerConditions', () => {});
 
-test('Can identify CancerDiseaseStatus', () => { });
+test('Can identify CancerDiseaseStatus', () => {});
