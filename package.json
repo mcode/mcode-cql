@@ -13,16 +13,13 @@
     "lint:fix": "eslint \"./**/*.js\" --fix",
     "prettier": "prettier --check \"**/*.js\"",
     "prettier:fix": "prettier --write \"**/*.js\"",
-    "test": "./test/run_tests.sh",
-    "test:unit": "jest --testPathPattern=./test",
-    "translate": "node ./scripts/build.js",
-    "test:assurance": "jest --testPathPattern=./assurance",
-    "translate:assurance": "node scripts/build.js assurance/fixtures/cql assurance/fixtures/elm",
-    "translate:tests": "node scripts/build.js test/fixtures/cql test/fixtures/elm true"
+    "test": "./testing-harness/scripts/run_tests.sh",
+    "test:unit": "jest --testPathPattern=test --testPathIgnorePatterns=testing-harness",
+    "translate": "node ./testing-harness/scripts/buildElm.js",
+    "test:testing-harness": "jest --testPathPattern=./testing-harness/test",
+    "translate:testing-harness": "node testing-harness/scripts/buildElm.js testing-harness/test/fixtures/cql testing-harness/test/fixtures/elm"
   },
   "devDependencies": {
-    "cql-exec-fhir": "^2.0.0",
-    "cql-execution": "^2.2.0",
     "eslint": "^7.20.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
@@ -33,6 +30,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "cql-translation-service-client": "^0.6.0",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "cql-exec-fhir": "^2.0.0",
+    "cql-execution": "^2.2.0"
   }
 }

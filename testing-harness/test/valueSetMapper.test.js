@@ -1,4 +1,4 @@
-const { mapValueSets } = require('../test/helpers/valueSetMapper');
+const { mapValueSets } = require('../valueSetMapper');
 const exampleValueSet1 = require('./fixtures/valuesets/example-valueset-1.json');
 const exampleValueSet2 = require('./fixtures/valuesets/example-valueset-2.json');
 

@@ -1,6 +1,6 @@
-const { execute } = require('../test/helpers/execution');
-const { mapValueSets } = require('../test/helpers/valueSetMapper');
-const { loadELM, loadJSONFixture, loadValueSets } = require('../test/helpers/fixtureLoader');
+const { execute } = require('../execution');
+const { mapValueSets } = require('../valueSetMapper');
+const { loadELM, loadJSONFixture, loadValueSets } = require('../fixtureLoader');
 
 let valueSetMap;
 let elm;
@@ -80,7 +80,7 @@ test('Should only load elm JSON with the specified identifier', () => {
 
 test('Should default to loading elm with the mCODE identifier', () => {
   // Pulling elm with the mCODE identifier along with its valueSetMap
-  const valueSets = loadValueSets();
+  const valueSets = loadValueSets('./test/fixtures/valuesets');
   const mcodeVSMap = mapValueSets(valueSets);
   const mcodeElm = loadELM();
 
