@@ -1,11 +1,11 @@
-const { loadELM, loadJSONFixture, loadValueSets } = require('./helpers/fixtureLoader');
-const { mapValueSets } = require('./helpers/valueSetMapper');
-const { execute } = require('./helpers/execution');
+const { loadELM, loadJSONFixture, loadValueSets } = require('../testing-harness/fixtureLoader');
+const { mapValueSets } = require('../testing-harness/valueSetMapper');
+const { execute } = require('../testing-harness/execution');
 
 let executionResults;
 beforeAll(() => {
   // Set up necessary data for cql-execution
-  const valueSets = loadValueSets();
+  const valueSets = loadValueSets('../valuesets');
   const valueSetMap = mapValueSets(valueSets);
   const elm = loadELM();
 

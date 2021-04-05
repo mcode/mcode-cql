@@ -1,6 +1,6 @@
-const { loadELM, loadJSONFixture, loadValueSets } = require('./helpers/fixtureLoader');
-const { mapValueSets } = require('./helpers/valueSetMapper');
-const { execute, setup } = require('./helpers/execution');
+const { loadELM, loadJSONFixture, loadValueSets } = require('../testing-harness/fixtureLoader');
+const { mapValueSets } = require('../testing-harness/valueSetMapper');
+const { execute, setup } = require('../testing-harness/execution');
 // eslint-disable-next-line import/order
 const { FunctionRef } = require('cql-execution/lib/elm/expressions');
 
@@ -9,7 +9,7 @@ let executionTestResults;
 let setupResults;
 beforeAll(() => {
   // Set up necessary data for cql-execution
-  const valueSets = loadValueSets();
+  const valueSets = loadValueSets('../valuesets');
   const valueSetMap = mapValueSets(valueSets);
   const elm = loadELM();
 
