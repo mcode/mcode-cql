@@ -55,7 +55,7 @@ To stop the docker container once translation is complete, run the following com
 docker stop cql-translation-service
 ```
 
-The default URL used for the translation service is `http://localhost:8080/cql/translator`, however that can be configured by setting the `TRANSLATION_SERVICE_URL` node environment variable. This variable can be set at runtime like so: 
+The default URL used for the translation service is `http://localhost:8080/cql/translator`, however that can be configured by setting the `TRANSLATION_SERVICE_URL` node environment variable. This variable can be set at runtime like so:
 ``` bash
 TRANSLATION_SERVICE_URL=http://preferredURL.com yarn translate
 ```
@@ -63,17 +63,17 @@ Additionally, the variable can be set in perpetuity by creating a `.env` file wi
 
 When translating CQL with a custom URL, `yarn test` should be run with the `-n` flag to prevent the testing harness from starting a new docker container.
 
-### Utility Function Assurance Testing
+### Testing the Testing Harness
 
-The `assurance` folder contains tests and fixtures for testing the functionality of the helper functions used in the testing harness. 
+The `testing-harness/teset` folder contains tests and fixtures for validating the functionality of the testing harness infrastructure.
 
-Example CQL for assurance testing lives in the `assurance/fixtures/cql` subdirectory. To build this CQL into ELM, spin up a cql-translation-service docker container and run the `yarn:translate` script:
+Example CQL for assurance testing lives in the `testing-harness/test/fixtures/cql` subdirectory. To build this CQL into ELM, spin up a cql-translation-service docker container and run the `yarn translate:testing-harness` script:
 ``` bash
 docker run -d -p 8080:8080 cqframework/cql-translation-service
-yarn translate:assurance
+yarn translate:testing-harness
 ```
 
-To only run the utility function unit tests while excluding mCODE assertion tests, run the `test:assurance` script:
+To only run the utility function unit tests while excluding mCODE assertion tests, run the `test:testing-harness` script:
 ``` bash
-yarn test:assurance
+yarn test:testing-harness
 ```

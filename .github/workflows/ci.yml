@@ -6,41 +6,41 @@ jobs:
     name: Check lint
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '12.x'
-    - uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: install --frozen-lockfile
-    - uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: lint
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: install --frozen-lockfile
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: lint
   prettier:
     name: Check prettier
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '12.x'
-    - uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: install --frozen-lockfile
-    - uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: prettier
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: install --frozen-lockfile
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: prettier
   test:
     name: Run tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '12.x'
-    - uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: install --frozen-lockfile
-    - run: chmod +x ./test/run_tests.sh
-    - run: yarn test
-    - run: yarn test:assurance
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: install --frozen-lockfile
+      - run: chmod +x ./testing-harness/scripts/run_tests.sh
+      - run: yarn test
+      - run: yarn test:testing-harness
