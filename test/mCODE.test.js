@@ -7,7 +7,7 @@ beforeAll(() => {
   // Set up necessary data for cql-execution
   const valueSets = loadJSONFromDirectory(__dirname, '../valuesets');
   const valueSetMap = mapValueSets(valueSets);
-  const elm = loadJSONFromDirectory(__dirname, '../build');
+  const elm = loadJSONFromDirectory(__dirname, '../output-elm');
   const patientBundles = loadJSONFromDirectory(__dirname, './fixtures/patients');
 
   executionResults = execute(elm, patientBundles, valueSetMap);

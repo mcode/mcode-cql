@@ -91,9 +91,9 @@ test('Should only load elm JSON with the specified identifier', () => {
 
 test('Should default to loading elm with the mCODE identifier', () => {
   // Pulling elm with the mCODE identifier along with its valueSetMap
-  const valueSets = loadJSONFromDirectory(__dirname, './test/fixtures/valuesets');
+  const valueSets = loadJSONFromDirectory(__dirname, '../../valuesets');
   const mcodeVSMap = mapValueSets(valueSets);
-  const mcodeElm = loadJSONFromDirectory(__dirname, '../build');
+  const mcodeElm = loadJSONFromDirectory(__dirname, '../../output-elm');
 
   // Running the execution utility without a libraryID argument
   const executionResults = execute(mcodeElm, patientBundle, mcodeVSMap);
