@@ -18,7 +18,7 @@ const client = new Client(TRANSLATION_SERVICE_URL);
  *
  * @returns {Object} ELM from translator, or {} if nothing to translate
  */
-async function loadCQL(pathToLoad) {
+function loadCQL(pathToLoad) {
   const cqlFiles = fs.readdirSync(pathToLoad).filter((f) => path.extname(f) === '.cql');
   const cqlRequestBody = {};
 

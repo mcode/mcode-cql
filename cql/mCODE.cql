@@ -265,7 +265,7 @@ define function "Current TNM Clinical Stage Groups" (C Condition):
       return (
       	      from Stage.assessment Assessment,
               TNMClinicalStageGroup  StageGroup
-              where StageGroup.id = (Last(Split((Assessment as FHIR.Reference).reference, '/')))
+              where StageGroup.id = "Reference id"(Assessment)
               return StageGroup) )
   
   
@@ -274,21 +274,20 @@ define function "Current TNM Clinical Stage Groups" (C Condition):
       where Stage.assessment is not null
       return ( TNMClinicalStageGroup StageGroup
               with Stage.assessment Assessment
-              such that StageGroup.id = (Last(Split((Assessment as FHIR.Reference).reference, '/')))
+              such that StageGroup.id = "Reference id"(Assessment)
         ) )
 
-
 define function "Latest TNM Clinical Stage Group" (C Condition):
-       TNMClinicalStageGroup StageGroup 
-         with StageGroup.focus Focus
-            such that C.id = (Last(Split((Focus as FHIR.Reference).reference, '/')))
-            sort by effective desc
+  First([Observation] StageGroup 
+    where "is TNM Clinical Stage Group"(StageGroup)
+      and C.id = "Reference id"(StageGroup.focus)
+    sort by effective desc)
 
 define function "Earliest TNM Clinical Stage Group" (C Condition):
-       TNMClinicalStageGroup StageGroup     // get stagegroups
-         with StageGroup.focus Focus         // Focus is 0..* and refers to a condition
-            such that C.id = (Last(Split((Focus as FHIR.Reference).reference, '/')))   // Is there a focus that refers to condition C?
-            sort by effective asc
+  First([Observation] StageGroup 
+    where "is TNM Clinical Stage Group"(StageGroup)
+      and C.id = "Reference id"(StageGroup.focus)
+    sort by effective asc)
 
 // Returns [Observation] for all hasMember references from an Observation
 define function "TNM Clinical Stage Group Categories" (O Observation):

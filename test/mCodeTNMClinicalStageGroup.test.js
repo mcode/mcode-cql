@@ -31,6 +31,22 @@ test('Test is TNM Clinical Stage Group', () => {
   expect(values).toBe(true);
 });
 
+test('Test is TNM Clinical Stage Group', () => {
+  const expr = testSetup.library.expressions['Test is TNM Clinical Stage Group'];
+  const values = expr.exec(testSetup.context);
+
+  expect(values).not.toBeNull();
+  expect(values).toBe(true);
+});
+
+test('Test Latest TNM Clinical Stage Group', () => {
+  const expr = testSetup.library.expressions['Test Latest TNM Clinical Stage Group'];
+  const values = expr.exec(testSetup.context);
+
+  expect(values).not.toBeNull();
+  expect(values.id.value).toBe('d07680cd7040d712e15f332ffa5d6523843b65dc55ca72b215225252fed7335f');
+});
+
 test('Test TNM Clinical Stage Group Categories', () => {
   const expr = testSetup.library.expressions['Test TNM Clinical Stage Group Categories'];
   const values = expr.exec(testSetup.context);
