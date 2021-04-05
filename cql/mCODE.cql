@@ -134,7 +134,7 @@ define "Cancer Patient Current Addresses":  // patient-4,5,6,7,8
     // OMB Race Category - url=ombCategory
     // Detailed Race (required) - url=detailed
     // Race Text (required) - url=text
-define "Cancer Patient Race Codes1": // patient-13
+define "Cancer Patient Race Codes": // patient-13
     Flatten(
       Patient.extension E
         where
