@@ -10,11 +10,21 @@ define "Test Observation":
     singleton from ([Observation] o
         where o.id = 'd07680cd7040d712e15f332ffa5d6523843b65dc55ca72b215225252fed7335f')
 
+define "Test Condition":
+    singleton from ([Condition] c
+        where c.id = 'conditionId-1')        
+
 define "Test Reference id":
     mCODE."Reference id"(("Test Observation" as FHIR.Observation).hasMember[0])           
 
-define "Test is TNM Clinical Stage Group":
-    mCODE."is TNM Clinical Stage Group"("Test Observation")          
+define "Test Is TNM Clinical Stage Group":
+    mCODE."Is TNM Clinical Stage Group"("Test Observation")   
+
+define "Test Current TNM Clinical Stage Groups":
+    mCODE."Current TNM Clinical Stage Groups"("Test Condition")         
+
+define "Test Latest TNM Clinical Stage Group":
+    mCODE."Latest TNM Clinical Stage Group"("Test Condition")             
 
 define "Test TNM Clinical Stage Group Categories":
     mCODE."TNM Clinical Stage Group Categories"("Test Observation")  
