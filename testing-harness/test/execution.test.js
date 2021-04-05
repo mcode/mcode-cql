@@ -80,7 +80,7 @@ test('Should only load elm JSON with the specified identifier', () => {
 
 test('Should default to loading elm with the mCODE identifier', () => {
   // Pulling elm with the mCODE identifier along with its valueSetMap
-  const valueSets = loadValueSets('../fixtures/valuesets');
+  const valueSets = loadValueSets('./test/fixtures/valuesets');
   const mcodeVSMap = mapValueSets(valueSets);
   const mcodeElm = loadELM();
 
