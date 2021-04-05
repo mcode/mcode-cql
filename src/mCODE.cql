@@ -293,10 +293,15 @@ define function "Earliest TNM Clinical Stage Group" (C Condition):
 // Returns [Observation] for all hasMember references from an Observation
 define function "TNM Clinical Stage Group Categories" (O Observation):
     O.hasMember h
-      return([Observation: id in (Last(Split((h as FHIR.Reference).reference, '/')))])
+      return([Observation] member where member.id = "Reference id"(h as FHIR.Reference))
+
+// get id from a reference string - this should be in a utility library
+define function "Reference id" (ref FHIR.Reference):
+    if StartsWith(ref.reference, 'urn:')
+    then Last(Split(ref.reference, ':'))
+    else Last(Split(ref.reference, '/'))
 	
 //***** CancerGeneticVariant
-
 
 define "Cancer Genetic Variants":
     [Observation: "CancerGeneticVariant Code"]

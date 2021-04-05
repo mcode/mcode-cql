@@ -8,7 +8,10 @@ context Patient
 
 define "Test Observation":
     singleton from ([Observation] o
-        where o.id.value = 'd07680cd7040d712e15f332ffa5d6523843b65dc55ca72b215225252fed7335f')
+        where o.id = 'd07680cd7040d712e15f332ffa5d6523843b65dc55ca72b215225252fed7335f')
+
+define "Test Reference id":
+    mCODE."Reference id"(("Test Observation" as FHIR.Observation).hasMember[0])           
 
 define "Test is TNM Clinical Stage Group":
     mCODE."is TNM Clinical Stage Group"("Test Observation")          
