@@ -17,8 +17,11 @@ define "Test Condition":
 define "Test Reference id":
     mCODE."Reference id"(("Test Observation" as FHIR.Observation).hasMember[0])           
 
-define "Test is TNM Clinical Stage Group":
-    mCODE."is TNM Clinical Stage Group"("Test Observation")   
+define "Test Is TNM Clinical Stage Group":
+    mCODE."Is TNM Clinical Stage Group"("Test Observation")   
+
+define "Test Current TNM Clinical Stage Groups":
+    mCODE."Current TNM Clinical Stage Groups"("Test Condition")         
 
 define "Test Latest TNM Clinical Stage Group":
     mCODE."Latest TNM Clinical Stage Group"("Test Condition")             

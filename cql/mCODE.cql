@@ -227,72 +227,63 @@ define function "Primary Cancer Condition Verification Status" (C Condition): //
 
 
 
-//*********** TNM Clinical Primary Tumor Category
+//*********** TNM Clinical Primary Tumor Category ***********//
 
 //define function "TNMClinicalPrimaryTumorCategory":
 //    [Observation: "TNMClinicalPrimaryTumorCategory Code"]
 
-// "TNM Clinical Stage Group Categories"("Current TNM Clinical Stage Groups"(C)), 
-//  filter where Observation code = LOINC 21905-5 and status in {final, amended, corrected}
-// This has an error (squawks at cat.status) and needs a flatten somewhere.
-//define function "Current TNM Clinical Primary Tumor Categories" (C Condition):
-//        ("Current TNM Clinical Stage Groups"(C)) StageGroup   // List of Observations
-//        where StageGroup is not null
-//          return( ("TNM Clinical Stage Group Categories"(StageGroup)) cat  // For each Observation, up to 3 Observations from hasMember
-//        	           where cat.status in {'final','amended','corrected'} and ("is TNM Clinical Stage Group" (cat))
- //                )
-//define function "Latest TNM Clinical Primary Tumor Categories" (C Condition):
-//        ("Latest TNM Clinical Stage Groups"(C)) StageGroup   // List of Observations
-//        where StageGroup is not null
-//          return( ("TNM Clinical Stage Group Categories"(StageGroup)) cat  // For each Observation, up to 3 Observations from hasMember
-//        	           where cat.status in {'final','amended','corrected'} and ("is TNM Clinical Stage Group" (cat))
- //                )
+define function "Is TNM Clinical Primary Tumor Category" (O Observation):
+	O.code = "TNMClinicalPrimaryTumorCategory Code"
 
-//*********** TNM Clinical Stage Group
+define function "Current TNM Clinical Primary Tumor Categories" (C Condition):
+  ("Current TNM Clinical Stage Groups"(C)) StageGroup
+    where StageGroup is not null
+    return( ("TNM Clinical Stage Group Categories"(StageGroup)) category
+      where ("Is TNM Clinical Stage Group" (category))
+      and category.status in {'final','amended','corrected'}
+    )
 
-define function "is TNM Clinical Stage Group" (O Observation):
+define function "Latest TNM Clinical Primary Tumor Categories" (C Condition):
+  ("TNM Clinical Stage Group Categories"(
+    "Latest TNM Clinical Stage Group"(C)
+  )) category
+    where "Is TNM Clinical Primary Tumor Category"(category)
+      and category.status in {'final','amended','corrected'}
+
+//*********** TNM Clinical Stage Group ***********//
+
+define "TNM Clinical Stage Groups":
+  [Observation: "TNMClinicalStageGroup Code"]
+
+define function "Is TNM Clinical Stage Group" (O Observation):
 	O.code = "TNMClinicalStageGroup Code"
-
-
-// Test:
-//  INput:  a specific condition that is associated with TNMClinicalStageGroup.  Patient mCODECQLExample01.   COndition primarycancer01.
-//  Output: 
-//  {"Observation/913b5547-c504-46f4-98bb-4f4a92104949","Observation/4a5df21c-cf98-48b5-9863-77bb3e651c05","Observation/934599df-ab91-448e-a0cc-fd5d357b39f0","Observation/5a47ce52-f781-448f-bb11-644181d27542"
-            
+  
 define function "Current TNM Clinical Stage Groups" (C Condition):
-   flatten(C.stage Stage
-      where Stage.assessment is not null
-      return (
-      	      from Stage.assessment Assessment,
-              TNMClinicalStageGroup  StageGroup
-              where StageGroup.id = "Reference id"(Assessment)
-              return StageGroup) )
-  
-  
- define function "Current TNM Clinical Stage Groups v2" (C Condition):
-   flatten(C.stage Stage
-      where Stage.assessment is not null
-      return ( TNMClinicalStageGroup StageGroup
-              with Stage.assessment Assessment
-              such that StageGroup.id = "Reference id"(Assessment)
-        ) )
+  flatten(C.stage Stage
+    where Stage.assessment is not null
+    return (
+      "TNM Clinical Stage Groups" StageGroup
+        where StageGroup.id = "Reference id"(Stage.assessment)
+    )
+  )  
 
 define function "Latest TNM Clinical Stage Group" (C Condition):
   First([Observation] StageGroup 
-    where "is TNM Clinical Stage Group"(StageGroup)
+    where "Is TNM Clinical Stage Group"(StageGroup)
       and C.id = "Reference id"(StageGroup.focus)
     sort by effective desc)
 
 define function "Earliest TNM Clinical Stage Group" (C Condition):
   First([Observation] StageGroup 
-    where "is TNM Clinical Stage Group"(StageGroup)
+    where "Is TNM Clinical Stage Group"(StageGroup)
       and C.id = "Reference id"(StageGroup.focus)
     sort by effective asc)
 
 // Returns [Observation] for all hasMember references from an Observation
 define function "TNM Clinical Stage Group Categories" (O Observation):
-    O.hasMember h
+    Flatten(O.hasMember h
       return([Observation] member where member.id = "Reference id"(h as FHIR.Reference))
+    )
 
 // get id from a reference string - this should be in a utility library
 define function "Reference id" (ref FHIR.Reference):

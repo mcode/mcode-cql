@@ -84,7 +84,16 @@
         ],
         "subject": {
           "reference": "urn:uuid:123"
-        }
+        },
+        "stage": [
+          {
+            "assessment": [
+              {
+                "reference": "urn:uuid:d07680cd7040d712e15f332ffa5d6523843b65dc55ca72b215225252fed7335f"
+              }
+            ]
+          }
+        ]
       }
     },
     {
