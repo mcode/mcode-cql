@@ -200,13 +200,15 @@ define function "Karnofsky Performance Status Value" (O Observation): // patient
 define function "Primary Cancer Condition Body Sites" (C Condition):             // disease-1
         C.bodySite
 
-define function "Primary Cancer Condition Body Site Laterality" (B CodeableConcept): // disease-2
-    B.extension Laterality
-        where
-          Laterality.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-location-qualifier'
-        return (
-          Laterality.value
-        )
+define function "Primary Cancer Condition Body Site Laterality" (BodySite CodeableConcept): // disease-2
+    singleton from (
+      BodySite.extension Laterality
+      where
+        Laterality.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-laterality'
+      return (
+        Laterality.value as FHIR.CodeableConcept // enfore valueCodeableConcept only
+      )
+    )
 
 define function "Primary Cancer Condition Clinical Status" (C Condition):      // disease-3
         C.clinicalStatus
@@ -215,23 +217,26 @@ define function "Primary Cancer Condition Code" (C Condition):      // disease-4
         C.code
 
 define function "Primary Cancer Condition Date of Diagnosis" (C Condition): // disease-5
-    C.extension AssertedDate
-        where
-          AssertedDate.url.value = 'http://hl7.org/fhir/StructureDefinition/condition-assertedDate'
-        return (
-          AssertedDate.value
-        )
+    singleton from (
+      C.extension AssertedDate
+      where
+        AssertedDate.url.value = 'http://hl7.org/fhir/StructureDefinition/condition-assertedDate'
+      return (
+        AssertedDate.value as FHIR.dateTime
+      )
+    )
 
 define function "Primary Cancer Condition Histology Morphology Behavior" (C Condition): // disease-6
-    C.extension HMB
-        where
-          HMB.url.value = ' http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-histology-morphology-behavior'
-        return (
-          HMB.value
-        )
+    singleton from (C.extension HMB
+      where
+        HMB.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-histology-morphology-behavior'
+      return (
+        HMB.value as FHIR.CodeableConcept 
+      )
+    )
 
 define function "Primary Cancer Condition Verification Status" (C Condition): // disease-7
-         C.verificationStatus
+  C.verificationStatus
 
 //*********** TNM Clinical Stage Group ***********//
 
