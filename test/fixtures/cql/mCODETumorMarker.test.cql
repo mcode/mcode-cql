@@ -10,7 +10,7 @@ define "Test Tumor Markers By Value Set":
     mCODE."Tumor Markers By Value Set"(mCODE."TumorMarkerTestVS")
 
 define "Test Tumor Marker Code":
-    First ("Test Tumor Markers By ValueSet").code 
+    First ("Test Tumor Markers By Value Set").code 
 
 define "Tumor Marker Data Value":
-    First ("Test Tumor Markers By ValueSet").value  
+    First ("Test Tumor Markers By Value Set").value  

@@ -319,7 +319,7 @@ define function "Cancer Genetic Variant Gene Studied"(O Observation): //genomics
         return all c.value
 
 //***** TumorMarker
-define function "Tumor Markers By Value Set" (VS ValueSet):
+define function "Tumor Markers By Value Set" (VS List<System.Code>):
 //Query Observation.code in Value Set and Observation.category.code = laboratory and status in {final, amended, corrected}
   [Observation: VS] O
     where 
