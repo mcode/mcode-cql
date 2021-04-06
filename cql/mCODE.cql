@@ -113,7 +113,11 @@ define "TNMPathologicalStageGroup":
 define "TumorMarker":
 	[Observation: "TumorMarkerTestVS"]
 
-///////*** CancerPatient
+//*************************************//
+//*********** PATIENT GROUP ***********//
+//*************************************//
+
+//*********** Cancer Patient ***********//
 
 define "Cancer Patient Date Of Birth":  // patient-1
     Patient.birthDate 
@@ -165,7 +169,7 @@ define "Cancer Patient Ethnicity Codes": // patient -14
         )
     )
 
-//*********** ECOGPerformanceStatus
+//*********** ECOGPerformanceStatus ***********//
 //define "ECOG Performance Statuses":
 //    [Observation: "ECOGPerformance code"]
 
@@ -178,8 +182,7 @@ define function "ECOG Performance Status Value" (O Observation): // patient-17 a
           O.value // Integer
 
 
-//*********** KarnofskyPerformanceStatus
-
+//*********** KarnofskyPerformanceStatus ***********//
 
 define "Most Recent Karnofsky Performance Status":
  First("KarnofskyPerformanceStatus" K 
@@ -189,20 +192,23 @@ define "Most Recent Karnofsky Performance Status":
 define function "Karnofsky Performance Status Value" (O Observation): // patient-17 and patient-18
           O.value // Integer
 
+//*************************************//
+//*********** DISEASE GROUP ***********//
+//*************************************//
 
-//*********** Primary/Secondary Cancer Condition
-// Should return an array of CodeableConcepts
+//*********** Primary Cancer Condition ***********//
 define function "Primary Cancer Condition Body Sites" (C Condition):             // disease-1
         C.bodySite
 
-// Should return an array of CodeableConcepts
-define function "Primary Cancer Condition Body Site Laterality" (B CodeableConcept): // disease-2
-    B.extension Laterality
-        where
-          Laterality.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-location-qualifier'
-        return (
-          Laterality.value
-        )
+define function "Primary Cancer Condition Body Site Laterality" (BodySite CodeableConcept): // disease-2
+    singleton from (
+      BodySite.extension Laterality
+      where
+        Laterality.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-laterality'
+      return (
+        Laterality.value as FHIR.CodeableConcept // enfore valueCodeableConcept only
+      )
+    )
 
 define function "Primary Cancer Condition Clinical Status" (C Condition):      // disease-3
         C.clinicalStatus
@@ -210,49 +216,27 @@ define function "Primary Cancer Condition Clinical Status" (C Condition):      /
 define function "Primary Cancer Condition Code" (C Condition):      // disease-4
         C.code
 
-define function "Primary Cancer Condition Date of Diagnosis" (C Condition): // disease-5 - DateTime
-    C.extension AssertedDate
-        where
-          AssertedDate.url.value = 'http://hl7.org/fhir/StructureDefinition/condition-assertedDate'
-        return (
-          AssertedDate.value
-        )
-
-define function "Primary Cancer Condition Histology Morphology Behavior" (C Condition): // disease-6 - CodeableConcept
-    C.extension HMB
-        where
-          HMB.url.value = ' http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-histology-morphology-behavior'
-        return (
-          HMB.value
-        )
-
-define function "Primary Cancer Condition Verification Status" (C Condition): // disease-7
-         C.verificationStatus
-
-
-
-//*********** TNM Clinical Primary Tumor Category ***********//
-
-//define function "TNMClinicalPrimaryTumorCategory":
-//    [Observation: "TNMClinicalPrimaryTumorCategory Code"]
-
-define function "Is TNM Clinical Primary Tumor Category" (O Observation):
-	O.code = "TNMClinicalPrimaryTumorCategory Code"
-
-define function "Current TNM Clinical Primary Tumor Categories" (C Condition):
-  ("Current TNM Clinical Stage Groups"(C)) StageGroup
-    where StageGroup is not null
-    return( ("TNM Clinical Stage Group Categories"(StageGroup)) category
-      where ("Is TNM Clinical Stage Group" (category))
-      and category.status in {'final','amended','corrected'}
+define function "Primary Cancer Condition Date of Diagnosis" (C Condition): // disease-5
+    singleton from (
+      C.extension AssertedDate
+      where
+        AssertedDate.url.value = 'http://hl7.org/fhir/StructureDefinition/condition-assertedDate'
+      return (
+        AssertedDate.value as FHIR.dateTime
+      )
     )
 
-define function "Latest TNM Clinical Primary Tumor Categories" (C Condition):
-  ("TNM Clinical Stage Group Categories"(
-    "Latest TNM Clinical Stage Group"(C)
-  )) category
-    where "Is TNM Clinical Primary Tumor Category"(category)
-      and category.status in {'final','amended','corrected'}
+define function "Primary Cancer Condition Histology Morphology Behavior" (C Condition): // disease-6
+    singleton from (C.extension HMB
+      where
+        HMB.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-histology-morphology-behavior'
+      return (
+        HMB.value as FHIR.CodeableConcept 
+      )
+    )
+
+define function "Primary Cancer Condition Verification Status" (C Condition): // disease-7
+  C.verificationStatus
 
 //*********** TNM Clinical Stage Group ***********//
 
@@ -263,11 +247,11 @@ define function "Is TNM Clinical Stage Group" (O Observation):
 	O.code = "TNMClinicalStageGroup Code"
   
 define function "Current TNM Clinical Stage Groups" (C Condition):
-  flatten(C.stage Stage
-    where Stage.assessment is not null
+  flatten(C.stage.assessment Assessment
+    where Assessment is not null
     return (
       "TNM Clinical Stage Groups" StageGroup
-        where StageGroup.id = "Reference id"(Stage.assessment)
+        where StageGroup.id = "Reference id"(Assessment)
     )
   )  
 
@@ -289,13 +273,54 @@ define function "TNM Clinical Stage Group Categories" (O Observation):
       return([Observation] member where member.id = "Reference id"(h as FHIR.Reference))
     )
 
+define function "TNM Clinical Stage Group Value" (O Observation):             // disease-15
+  O.value as FHIR.CodeableConcept // enfore valueCodeableConcept only
+
+define function "TNM Clinical Stage Group Staging System" (O Observation):             // disease-16
+  O.method         
+
 // get id from a reference string - this should be in a utility library
+// will fail with uri schemes that are not urn or absolute/relative URL
 define function "Reference id" (ref FHIR.Reference):
-    if StartsWith(ref.reference, 'urn:')
-    then Last(Split(ref.reference, ':'))
-    else Last(Split(ref.reference, '/'))
+  if StartsWith(ref.reference, 'urn:')
+  then Last(Split(ref.reference, ':'))
+  else Last(Split(ref.reference, '/'))
+
+//*********** TNM Clinical Primary Tumor Category ***********//
+
+define "TNM Clinical Primary Tumor Categories":
+  [Observation: "TNMClinicalPrimaryTumorCategory Code"]
+
+define function "Is TNM Clinical Primary Tumor Category" (O Observation):
+	O.code = "TNMClinicalPrimaryTumorCategory Code"
+
+define function "Current TNM Clinical Primary Tumor Categories" (C Condition):
+  ("Current TNM Clinical Stage Groups"(C)) StageGroup
+    where StageGroup is not null
+    return( ("TNM Clinical Stage Group Categories"(StageGroup)) category
+      where ("Is TNM Clinical Primary Tumor Category" (category))
+      and category.status in {'final','amended','corrected'}
+    )
+
+define function "Latest TNM Clinical Primary Tumor Categories" (C Condition):
+  ("TNM Clinical Stage Group Categories"(
+    "Latest TNM Clinical Stage Group"(C)
+  )) category
+    where "Is TNM Clinical Primary Tumor Category"(category)
+      and category.status in {'final','amended','corrected'}
+
+define function "Earliest TNM Clinical Primary Tumor Categories" (C Condition):
+  ("TNM Clinical Stage Group Categories"(
+    "Earliest TNM Clinical Stage Group"(C)
+  )) category
+    where "Is TNM Clinical Primary Tumor Category"(category)
+      and category.status in {'final','amended','corrected'}      
+
+//**************************************//
+//*********** GENOMICS GROUP ***********//
+//**************************************//
 	
-//***** CancerGeneticVariant
+//***** CancerGeneticVariant ***********//
 
 define "Cancer Genetic Variants":
     [Observation: "CancerGeneticVariant Code"]
