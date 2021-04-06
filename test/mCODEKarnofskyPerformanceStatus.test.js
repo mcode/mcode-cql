@@ -19,29 +19,17 @@ beforeAll(() => {
   console.log(executionResults);
 });
 
-test('Can Get ECOG Performance Statuses', () => {
-  const values = executionResults.patientResults.mCODECQLExample01.ECOGPerformanceStatus;
-  expect(values).not.toBeNull();
-  expect(values.length).toBe(2);
-});
 test('Can Get Karnofsky Performance Status', () => {
   const values = executionResults.patientResults.mCODECQLExample01.KarnofskyPerformanceStatus;
   expect(values).not.toBeNull();
   expect(values.length).toBe(2);
 });
-test('Can Get ECOG Performance Status Data Value', () => {
-  const values = executionResults.patientResults.mCODECQLExample01.ECOGPerformanceStatus;
-  expect(values).not.toBeNull();
-});
 test('Can Get Karnofsky Performance Status Data Value', () => {
   const values = executionResults.patientResults.mCODECQLExample01.KarnofskyPerformanceStatus;
-  expect(values).not.toBeNull();
-});
-test('Can Get Most Recent ECOG Performance Status', () => {
-  const values = executionResults.patientResults.mCODECQLExample01['Most Recent ECOG Performance Status'];
   expect(values).not.toBeNull();
 });
 test('Can Get Most Recent Karnofsky Performance Status Data Value', () => {
   const values = executionResults.patientResults.mCODECQLExample01['Most Recent Karnofsky Performance Status'];
   expect(values).not.toBeNull();
+  expect(values.id.value).toBe('mCODEKarnofskyPerformanceStatusExample02');
 });
