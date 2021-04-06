@@ -65,9 +65,9 @@ When translating CQL with a custom URL, `yarn test` should be run with the `-n` 
 
 ### Testing the Testing Harness
 
-The `testing-harness/teset` folder contains tests and fixtures for validating the functionality of the testing harness infrastructure.
+The `testing-harness/test` folder contains tests and fixtures for validating the functionality of the testing harness infrastructure.
 
-Example CQL for assurance testing lives in the `testing-harness/test/fixtures/cql` subdirectory. To build this CQL into ELM, spin up a cql-translation-service docker container and run the `yarn translate:testing-harness` script:
+Example CQL for testing translation in the `testing-harness/test/fixtures/cql` subdirectory. To build this CQL into ELM, spin up a cql-translation-service docker container and run the `yarn translate:testing-harness` script:
 ``` bash
 docker run -d -p 8080:8080 cqframework/cql-translation-service
 yarn translate:testing-harness
