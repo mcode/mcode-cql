@@ -689,6 +689,17 @@
           {
             "reference": "urn:uuid:conditionId-1"
           }
+        ],
+        "hasMember": [
+          {
+            "reference": "urn:uuid:a121869e84dc63c7b6e98b6f299e168a9d212048a1c05ddc8ea06ac01427a74e"
+          },
+          {
+            "reference": "urn:uuid:72f00994860c396a7905153220ad183b16740c840b3719b46bb200c2061864a3"
+          },
+          {
+            "reference": "urn:uuid:891fbf6bd0bdf928474c239da9bd6a59f042974b3a801c7d8c1ef483ace93f05"
+          }
         ]
       }
     },

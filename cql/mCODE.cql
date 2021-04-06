@@ -259,13 +259,13 @@ define function "Latest TNM Clinical Stage Group" (C Condition):
   First([Observation] StageGroup 
     where "Is TNM Clinical Stage Group"(StageGroup)
       and C.id = "Reference id"(StageGroup.focus)
-    sort by effective desc)
+    sort by effective.value desc)
 
 define function "Earliest TNM Clinical Stage Group" (C Condition):
   First([Observation] StageGroup 
     where "Is TNM Clinical Stage Group"(StageGroup)
       and C.id = "Reference id"(StageGroup.focus)
-    sort by effective asc)
+    sort by effective.value asc)
 
 // Returns [Observation] for all hasMember references from an Observation
 define function "TNM Clinical Stage Group Categories" (O Observation):
@@ -295,12 +295,12 @@ define function "Is TNM Clinical Primary Tumor Category" (O Observation):
 	O.code = "TNMClinicalPrimaryTumorCategory Code"
 
 define function "Current TNM Clinical Primary Tumor Categories" (C Condition):
-  ("Current TNM Clinical Stage Groups"(C)) StageGroup
+  flatten(("Current TNM Clinical Stage Groups"(C)) StageGroup
     where StageGroup is not null
     return( ("TNM Clinical Stage Group Categories"(StageGroup)) category
       where ("Is TNM Clinical Primary Tumor Category" (category))
       and category.status in {'final','amended','corrected'}
-    )
+    ))
 
 define function "Latest TNM Clinical Primary Tumor Categories" (C Condition):
   ("TNM Clinical Stage Group Categories"(
