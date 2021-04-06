@@ -170,11 +170,11 @@ define "Cancer Patient Ethnicity Codes": // patient -14
 //    [Observation: "ECOGPerformance code"]
 
 define "Most Recent ECOG Performance Status":
- "ECOGPerformanceStatus" K 
+ First("ECOGPerformanceStatus" K 
  	where K.status in {'final', 'amended', 'corrected'} 
-	 sort by effective desc
+	 sort by effective desc)
 
-define function "Value" (O Observation): // patient-17 and patient-18
+define function "ECOG Performance Status Value" (O Observation): // patient-17 and patient-18
           O.value // Integer
 
 
@@ -182,9 +182,13 @@ define function "Value" (O Observation): // patient-17 and patient-18
 
 
 define "Most Recent Karnofsky Performance Status":
- "KarnofskyPerformanceStatus" K 
+ First("KarnofskyPerformanceStatus" K 
  	where K.status in {'final', 'amended', 'corrected'} 
-	 sort by effective desc
+	 sort by effective desc )
+
+define function "Karnofsky Performance Status Value" (O Observation): // patient-17 and patient-18
+          O.value // Integer
+
 
 //*********** Primary/Secondary Cancer Condition
 // Should return an array of CodeableConcepts
