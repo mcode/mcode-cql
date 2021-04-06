@@ -1,12 +1,11 @@
 const { loadELM, loadJSONFixture, loadValueSets } = require('../testing-harness/fixtureLoader');
 const { mapValueSets } = require('../testing-harness/valueSetMapper');
-const { execute, setup } = require('../testing-harness/execution');
+const { execute } = require('../testing-harness/execution');
 
 // eslint-disable-next-line import/order
 // const { FunctionRef } = require('cql-execution/lib/elm/expressions');
 
 let executionResults;
-let setupResults;
 beforeAll(() => {
   // Set up necessary data for cql-execution
   const valueSets = loadValueSets('../valuesets');
@@ -33,5 +32,3 @@ test('Can Get Most Recent ECOG Performance Status', () => {
   expect(values).not.toBeNull();
   expect(values.id.value).toBe('mCODEECOGPerformanceStatusExample02');
 });
-
-
