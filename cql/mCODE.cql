@@ -277,7 +277,7 @@ define function "TNM Clinical Stage Group Value" (O Observation):             //
   O.value as FHIR.CodeableConcept // enfore valueCodeableConcept only
 
 define function "TNM Clinical Stage Group Staging System" (O Observation):             // disease-16
-  O.method         
+  O.method
 
 // get id from a reference string - this should be in a utility library
 // will fail with uri schemes that are not urn or absolute/relative URL
