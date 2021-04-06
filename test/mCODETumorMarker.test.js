@@ -5,8 +5,8 @@ const { execute } = require('../testing-harness/execution');
 // const { FunctionRef } = require('cql-execution/lib/elm/expressions');
 
 let executionResults;
-// let executionTestResults;
-// let setupResults;
+let executionTestResults; 
+let setupResults;
 beforeAll(() => {
   // Set up necessary data for cql-execution
   const valueSets = loadValueSets('../valuesets');
@@ -19,8 +19,8 @@ beforeAll(() => {
   );
 
   executionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
-  // executionTestResults = execute(elm, patientBundle, valueSetMap, 'mCODETumorMarkerTest');
-  // setupResults = setup('mCODE', elm, patientBundle, valueSetMap);
+  executionTestResults = execute(elm, patientBundle, valueSetMap, 'mCODETumorMarkerTest');
+  setupResults = setup('mCODE', elm, patientBundle, valueSetMap);
   console.log(executionResults);
 });
 
