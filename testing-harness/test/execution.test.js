@@ -1,3 +1,4 @@
+const path = require('path');
 const { execute } = require('../execution');
 const { mapValueSets } = require('../valueSetMapper');
 const { loadJSONFixture, loadJSONFromDirectory } = require('../fixtureLoader');
@@ -18,8 +19,8 @@ beforeAll(() => {
       ],
     },
   };
-  elm = loadJSONFixture(__dirname, 'fixtures/elm/testLib.json');
-  patientBundle = loadJSONFixture(__dirname, './fixtures/patients/test-patient-1.json');
+  elm = loadJSONFixture(path.resolve(__dirname, 'fixtures/elm/testLib.json'));
+  patientBundle = loadJSONFixture(path.resolve(__dirname, './fixtures/patients/test-patient-1.json'));
 });
 
 test('Should properly match on resources in execution', () => {
@@ -59,7 +60,7 @@ test('Should properly load patient resource from bundle', () => {
 });
 
 test('Should properly load multiple patient resources from array', () => {
-  const patientBundles = loadJSONFromDirectory(__dirname, './fixtures/patients');
+  const patientBundles = loadJSONFromDirectory(path.resolve(__dirname, './fixtures/patients'));
   const executionResults = execute([elm], patientBundles, valueSetMap, 'testLib');
   const patientIDs = ['123', '456'];
 
@@ -91,9 +92,9 @@ test('Should only load elm JSON with the specified identifier', () => {
 
 test('Should default to loading elm with the mCODE identifier', () => {
   // Pulling elm with the mCODE identifier along with its valueSetMap
-  const valueSets = loadJSONFromDirectory(__dirname, '../../valuesets');
+  const valueSets = loadJSONFromDirectory(path.resolve(__dirname, '../../valuesets'));
   const mcodeVSMap = mapValueSets(valueSets);
-  const mcodeElm = loadJSONFromDirectory(__dirname, '../../output-elm');
+  const mcodeElm = loadJSONFromDirectory(path.resolve(__dirname, '../../output-elm'));
 
   // Running the execution utility without a libraryID argument
   const executionResults = execute(mcodeElm, patientBundle, mcodeVSMap);
