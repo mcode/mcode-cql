@@ -2,42 +2,28 @@ const fs = require('fs');
 const path = require('path');
 
 /**
- * Load all ELM files in build directory as JSON
+ * Load a directory of JSON files
  *
- * @returns {Array} array of ELM JSON objects
+ * @param {string} pathToDir absolute path from the caller of where directory is located
+ * @returns {Array} array of JSON parsed fixtures
  */
-function loadELM() {
-  const p = path.join(__dirname, '../output-elm');
-  const elmFiles = fs.readdirSync(p).filter((f) => path.extname(f) === '.json');
-  return elmFiles.map((f) => JSON.parse(fs.readFileSync(path.join(p, f), 'utf8')));
+function loadJSONFromDirectory(pathToDir) {
+  const filesInDir = fs.readdirSync(pathToDir).filter((f) => path.extname(f) === '.json');
+  return filesInDir.map((f) => JSON.parse(fs.readFileSync(path.join(pathToDir, f), 'utf8')));
 }
 
 /**
  * Load any JSON fixture
  *
- * @param {string} currentDir current path of file trying to do the loading
- * @param {string} relativePathToFixture relative path from the caller of where fixture is located
+ * @param {string} pathToFixture absolute path from the caller of where fixture is located
  * @returns {Object} JSON parsed fixture
  */
-function loadJSONFixture(currentDir, relativePathToFixture) {
-  const p = path.resolve(path.join(currentDir, relativePathToFixture));
-  const f = fs.readFileSync(p, 'utf8');
+function loadJSONFixture(pathToFixture) {
+  const f = fs.readFileSync(pathToFixture, 'utf8');
   return JSON.parse(f);
 }
 
-/**
- * Load all ValueSets as JSON
- *
- * @returns {Array} array of ValueSet JSON resources
- */
-function loadValueSets(relativePathToValueSets) {
-  const p = path.resolve(path.join(__dirname, relativePathToValueSets));
-  const valueSets = fs.readdirSync(p).filter((f) => path.extname(f) === '.json');
-  return valueSets.map((f) => JSON.parse(fs.readFileSync(path.join(p, f), 'utf8')));
-}
-
 module.exports = {
-  loadELM,
   loadJSONFixture,
-  loadValueSets,
+  loadJSONFromDirectory,
 };

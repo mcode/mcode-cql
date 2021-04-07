@@ -4,12 +4,12 @@ const { PatientSource } = require('cql-exec-fhir');
 /**
  *
  * @param {Array} elmJSONs array of ELM JSON objects
- * @param {Object} patientBundle patient record to execute against
+ * @param {Array} patientBundles array of patient records to execute against
  * @param {Object} valueSetMap valueSetMap for CodeService
  * @param {String} libraryID the library ID of the cql library corresponding to the ELM
  * @returns {Object} cql-execution-results
  */
-function execute(elmJSONs, patientBundle, valueSetMap, libraryID = 'mCODE') {
+function execute(elmJSONs, patientBundles, valueSetMap, libraryID = 'mCODE') {
   // 'main' ELM is the mcode library
   const mainELM = elmJSONs.find((e) => e.library.identifier.id === libraryID);
 
@@ -20,9 +20,13 @@ function execute(elmJSONs, patientBundle, valueSetMap, libraryID = 'mCODE') {
   const codeService = new cql.CodeService(valueSetMap);
   const executor = new cql.Executor(library, codeService);
 
-  // Load array of patient bundles (1 patient for now)
+  // Load array of patient bundles
   const patientSource = new PatientSource.FHIRv400();
-  patientSource.loadBundles([patientBundle]);
+  if (!Array.isArray(patientBundles)) {
+    patientSource.loadBundles([patientBundles]);
+  } else {
+    patientSource.loadBundles(patientBundles);
+  }
 
   return executor.exec(patientSource);
 }
