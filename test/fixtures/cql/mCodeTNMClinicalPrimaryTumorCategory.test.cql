@@ -12,10 +12,16 @@ define "Test Observation":
 
 define "Test Condition":
     singleton from ([Condition] c
-        where c.id = 'conditionId-1')        
+        where c.id = 'conditionId-1')                 
 
 define "Test Is TNM Clinical Primary Tumor Category":
     mCODE."Is TNM Clinical Primary Tumor Category"("Test Observation")   
 
+define "Test Current TNM Clinical Primary Tumor Categories":
+    mCODE."Current TNM Clinical Primary Tumor Categories"("Test Condition")    
+
 define "Test Latest TNM Clinical Primary Tumor Categories":
-    mCODE."Latest TNM Clinical Primary Tumor Categories"("Test Condition")             
+    mCODE."Latest TNM Clinical Primary Tumor Categories"("Test Condition")
+
+define "Test Earliest TNM Clinical Primary Tumor Categories":
+    mCODE."Earliest TNM Clinical Primary Tumor Categories"("Test Condition")                 
