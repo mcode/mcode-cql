@@ -1,12 +1,8 @@
 const { loadELM, loadJSONFixture, loadValueSets } = require('../testing-harness/fixtureLoader');
 const { mapValueSets } = require('../testing-harness/valueSetMapper');
-const { execute } = require('../testing-harness/execution');
-// eslint-disable-next-line import/order
-// const { FunctionRef } = require('cql-execution/lib/elm/expressions');
+const { setup } = require('../testing-harness/execution');
 
-let executionResults;
-let executionTestResults; 
-let setupResults;
+let testSetup;
 beforeAll(() => {
   // Set up necessary data for cql-execution
   const valueSets = loadValueSets('../valuesets');
@@ -14,26 +10,29 @@ beforeAll(() => {
   const elm = loadELM();
 
   elm.push(loadJSONFixture(__dirname, './fixtures/elm/mCODETumorMarker.test.json'));
-  const patientBundle = loadJSONFixture(
-    __dirname, './fixtures/patients/Bundle-mCODECQLExample01.json',
-  );
+  const patientBundle = loadJSONFixture(__dirname, './fixtures/patients/Bundle-mCODECQLExample01.json');
 
-  executionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
-  executionTestResults = execute(elm, patientBundle, valueSetMap, 'mCODETumorMarkerTest');
-  setupResults = setup('mCODE', elm, patientBundle, valueSetMap);
-  console.log(executionResults);
+  testSetup = setup('mCODETumorMarkerTest', elm, patientBundle, valueSetMap);
 });
-
+test('Can Identify Tumor Marker Test', () => {
+  const expr = testSetup.library.expressions['Test Tumor Marker'];
+  const values = expr.exec(testSetup.context);
+  expect(values.id.value).toBe('53a6e3e8-fbcd-4cdf-8e8f-28de9ec5d234');
+});
 test('Can identify Tumor Markers By Value Set', () => {
-  const result = executionResults.patientResults.mCODEPatientExample01['Test Tumor Markers By Value Set'];
-  expect(result).not.toBeNull();
-  expect(result.length).toBe(1);
+  const expr = testSetup.library.expressions['Test Tumor Markers By Value Set'];
+  const values = expr.exec(testSetup.context);
+  expect(values).not.toBeNull();
 });
 test('Can identify Tumor Marker Code"', () => {
-  const result = executionResults.patientResults.mCODEPatientExample01['Test Tumor Marker Code'];
-  expect(result).not.toBeNull();
+  const expr = testSetup.library.expressions['Test Tumor Marker Code'];
+  const values = expr.exec(testSetup.context);
+  expect(values).not.toBeNull();
+  expect(values.coding[0].code.value).toBe("48676-1"); 
 });
 test('Can identify Tumor Marker Value', () => {
-  const result = executionResults.patientResults.mCODEPatientExample01['Test Tumor Marker Value'];
-  expect(result).not.toBeNull();
+  const expr = testSetup.library.expressions['Test Tumor Marker Data Value'];
+  const values = expr.exec(testSetup.context);
+  expect(values).not.toBeNull();
+  expect(values.coding[0].code.value).toBe("260385009");
 });
