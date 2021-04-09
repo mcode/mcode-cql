@@ -34,11 +34,11 @@ jobs:
     name: Run tests
     runs-on: ubuntu-latest
     env:
-      TRANSLATION_SERVICE_URL=http://localhost:8080/cql/translator
-      INPUT_CQL=./cql
-      OUTPUT_ELM=./output-elm
-      VALUESETS=./valuesets
-      PATIENTS=./test/fixtures/patients
+      TRANSLATION_SERVICE_URL: http://localhost:8080/cql/translator
+      INPUT_CQL: ./cql
+      OUTPUT_ELM: ./output-elm
+      VALUESETS: ./valuesets
+      PATIENTS: ./test/fixtures/patients
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
