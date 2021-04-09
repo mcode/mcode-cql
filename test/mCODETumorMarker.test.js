@@ -41,3 +41,8 @@ test('Can identify Tumor Marker Value', () => {
   expect(values).not.toBeNull();
   expect(values.coding[0].code.value).toBe('260385009');
 });
+test('Can Pass Value Set ', () => {
+  const expr = testSetup.library.expressions['Test Value Set'];
+  const values = expr.exec(testSetup.context);
+  expect(values).not.toBeNull();
+});

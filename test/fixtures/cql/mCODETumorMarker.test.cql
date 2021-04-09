@@ -18,3 +18,6 @@ define "Test Tumor Marker Code":
 
 define "Test Tumor Marker Data Value":
     First ("Test Tumor Marker").value  
+
+define "Test Value Set":
+    mCODE."Return Value Set"(mCODE."Tumor Marker Tests")
