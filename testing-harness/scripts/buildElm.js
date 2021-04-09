@@ -3,7 +3,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const { Client } = require('cql-translation-service-client');
 
-const cqlPathString = process.argv[2] ? path.resolve(process.argv[2]) : path.join(__dirname, '../../cql');
+const cqlPathString = process.argv[2] ? process.argv[2] : path.join(__dirname, '../../cql');
 const buildPath = process.argv[3] ? path.resolve(process.argv[3]) : path.join(__dirname, '../../output-elm');
 
 dotenv.config();
@@ -20,6 +20,7 @@ const client = new Client(TRANSLATION_SERVICE_URL);
 async function translateCQL() {
   const cqlPaths = cqlPathString.split(',');
   const cqlFiles = cqlPaths
+    .map((p) => path.resolve(p))
     .map((cqlPath) => {
       const fileNames = fs.readdirSync(cqlPath).filter((f) => path.extname(f) === '.cql');
       return fileNames.map((f) => path.join(cqlPath, f));
