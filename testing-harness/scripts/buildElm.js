@@ -19,10 +19,12 @@ const client = new Client(TRANSLATION_SERVICE_URL);
  */
 async function translateCQL() {
   const cqlPaths = cqlPathString.split(',');
-  const cqlFiles = cqlPaths.map((cqlPath) => {
-    const fileNames = fs.readdirSync(cqlPath).filter((f) => path.extname(f) === '.cql');
-    return fileNames.map((f) => path.join(cqlPath, f));
-  }).flat();
+  const cqlFiles = cqlPaths
+    .map((cqlPath) => {
+      const fileNames = fs.readdirSync(cqlPath).filter((f) => path.extname(f) === '.cql');
+      return fileNames.map((f) => path.join(cqlPath, f));
+    })
+    .flat();
   const cqlRequestBody = {};
   let includeCQL = false;
 
