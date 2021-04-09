@@ -23,7 +23,40 @@ function loadJSONFixture(pathToFixture) {
   return JSON.parse(f);
 }
 
+/**
+ * Default loader for Elm
+ *
+ * @returns {Array} array of JSON parsed Elm
+ */
+function defaultLoadElm() {
+  const elmPath = path.resolve(process.cwd(), process.env.OUTPUT_ELM);
+  return loadJSONFromDirectory(elmPath);
+}
+
+/**
+ * Default loader for Patients
+ *
+ * @returns {Array} array of JSON parsed Patients
+ */
+function defaultLoadPatients() {
+  const patientsPath = path.resolve(process.cwd(), process.env.PATIENTS);
+  return loadJSONFromDirectory(patientsPath);
+}
+
+/**
+ * Default loader for Valuesets
+ *
+ * @returns {Array} array of JSON parsed Valuesets
+ */
+function defaultLoadValuesets() {
+  const valuesetsPath = path.resolve(process.cwd(), process.env.VALUESETS);
+  return loadJSONFromDirectory(valuesetsPath);
+}
+
 module.exports = {
   loadJSONFixture,
   loadJSONFromDirectory,
+  defaultLoadElm,
+  defaultLoadPatients,
+  defaultLoadValuesets,
 };

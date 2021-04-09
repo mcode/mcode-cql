@@ -17,7 +17,7 @@
     "test:unit": "jest --testPathPattern=test --testPathIgnorePatterns=testing-harness",
     "translate": "node ./testing-harness/scripts/buildElm.js",
     "test:testing-harness": "jest --testPathPattern=./testing-harness/test",
-    "translate:testing-harness": "node testing-harness/scripts/buildElm.js testing-harness/test/fixtures/cql testing-harness/test/fixtures/elm"
+    "translate:testing-harness": "node testing-harness/scripts/buildElm.js .env.test"
   },
   "devDependencies": {
     "eslint": "^7.20.0",
