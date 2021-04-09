@@ -1,14 +1,7 @@
 const dotenv = require('dotenv');
 const path = require('path');
 const { execute } = require('../execution');
-const { mapValueSets } = require('../valueSetMapper');
-const {
-  loadJSONFixture,
-  loadJSONFromDirectory,
-  defaultLoadElm,
-  defaultLoadPatients,
-  defaultLoadValuesets,
-} = require('../fixtureLoader');
+const { defaultLoadElm, defaultLoadPatients } = require('../fixtureLoader');
 
 // Initialize the env variables
 dotenv.config({ path: path.resolve(process.cwd(), '.env.test') });
@@ -72,7 +65,6 @@ test('Should properly load patient resource from bundle', () => {
 });
 
 test('Should properly load multiple patient resources from array', () => {
-  const patientBundles = loadJSONFromDirectory(path.resolve(__dirname, './fixtures/patients'));
   const executionResults = execute(elm, patientBundles, valueSetMap, 'testLib');
   const patientIDs = ['123', '456'];
 
