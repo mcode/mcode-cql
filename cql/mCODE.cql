@@ -8,31 +8,31 @@ codesystem "RXNORM": 'http://www.nlm.nih.gov/research/umls/rxnorm'
 codesystem "V20074": 'http://terminology.hl7.org/CodeSystem/v2-0074'
 codesystem "OBSCAT": 'http://terminology.hl7.org/CodeSystem/observation-category'
 
-valueset "Cancer Body Location Value Set": 'mcode-cancer-body-location-vs'
-valueset "Cancer Disease Status Evidence Type Value Set": 'mcode-cancer-disease-status-evidence-type-vs'
-valueset "Cancer Disorder Value Set": 'mcode-cancer-disorder-vs'
-valueset "Cancer-Related Surgical Procedure Value Set": 'mcode-cancer-related-surgical-procedure-vs'
-valueset "Cancer Staging System Value Set": 'mcode-cancer-staging-system-vs'
-valueset "ClinVar Value Set": 'mcode-clinvar-vs'
-valueset "Comorbid Condition Value Set": 'mcode-comorbid-condition-vs'
-valueset "Condition Status Trend Value Set": 'mcode-condition-status-trend-vs'
-valueset "Genetic Specimen Type Value Set": 'mcode-genetic-specimen-type-vs'
-valueset "HUGO Gene Nomenclature Committee Gene Names Value Set": 'mcode-hgnc-vs'
-valueset "Human Genome Variation Society Sequence Variant Nomenclature Value Set": 'mcode-hgvs-vs'
-valueset "Histology Morphology Behavior Value Set": 'mcode-histology-morphology-behavior-vs'
-valueset "Laterality Value Set": 'mcode-laterality-vs'
-valueset "Primary or Uncertain Behavior Cancer Disorder Value Set": 'mcode-primary-or-uncertain-behavior-cancer-disorder-vs'
-valueset "Radiation Procedure Value Set": 'mcode-radiation-procedure-vs'
-valueset "Radiation Target Body Site Value Set": 'mcode-radiation-target-body-site-vs'
-valueset "Secondary Cancer Disorder Value Set": 'mcode-secondary-cancer-disorder-vs'
-valueset "TNM Distant Metastases Category Value Set": 'mcode-tnm-distant-metastases-category-vs'
-valueset "TNM Primary Tumor Category Value Set": 'mcode-tnm-primary-tumor-category-vs'
-valueset "TNM Regional Nodes Category Value Set": 'mcode-tnm-regional-nodes-category-vs'
-valueset "TNM Stage Group Value Set": 'mcode-tnm-stage-group-vs'
-valueset "Treatment Intent Value Set": 'mcode-treatment-intent-vs'
-valueset "Treatment Termination Reason Value Set": 'mcode-treatment-termination-reason-vs'
-valueset "TumorMarkerTestVS": 'mcode-tumor-marker-test-vs'
-valueset "Units of Length Value Set": 'mcode-units-of-length-vs'
+valueset "Cancer Body Location Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-cancer-body-location-vs'
+valueset "Cancer Disease Status Evidence Type Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-cancer-disease-status-evidence-type-vs'
+valueset "Cancer Disorder Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-cancer-disorder-vs'
+valueset "Cancer-Related Surgical Procedure Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-cancer-related-surgical-procedure-vs'
+valueset "Cancer Staging System Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-cancer-staging-system-vs'
+valueset "ClinVar Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-clinvar-vs'
+valueset "Comorbid Condition Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-comorbid-condition-vs'
+valueset "Condition Status Trend Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-condition-status-trend-vs'
+valueset "Genetic Specimen Type Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-genetic-specimen-type-vs'
+valueset "HUGO Gene Nomenclature Committee Gene Names Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-hgnc-vs'
+valueset "Human Genome Variation Society Sequence Variant Nomenclature Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-hgvs-vs'
+valueset "Histology Morphology Behavior Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-histology-morphology-behavior-vs'
+valueset "Laterality Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-laterality-vs'
+valueset "Primary or Uncertain Behavior Cancer Disorder Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-primary-or-uncertain-behavior-cancer-disorder-vs'
+valueset "Radiation Procedure Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-radiation-procedure-vs'
+valueset "Radiation Target Body Site Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-radiation-target-body-site-vs'
+valueset "Secondary Cancer Disorder Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-secondary-cancer-disorder-vs'
+valueset "TNM Distant Metastases Category Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-tnm-distant-metastases-category-vs'
+valueset "TNM Primary Tumor Category Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-tnm-primary-tumor-category-vs'
+valueset "TNM Regional Nodes Category Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-tnm-regional-nodes-category-vs'
+valueset "TNM Stage Group Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-tnm-stage-group-vs'
+valueset "Treatment Intent Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-treatment-intent-vs'
+valueset "Treatment Termination Reason Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-treatment-termination-reason-vs'
+valueset "Units of Length Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-units-of-length-vs'
+valueset "Tumor Marker Tests": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-tumor-marker-test-vs'
 
 code "CancerDiseaseStatus Code": '88040-1' from "LOINC"
 code "CancerGeneticVariant Code": '69548-6' from "LOINC"
@@ -50,6 +50,7 @@ code "TNMPathologicalDistantMetastasesCategory Code": '21901-4' from "LOINC"
 code "TNMPathologicalPrimaryTumorCategory Code": '21899-0' from "LOINC"
 code "TNMPathologicalRegionalNodesCategory Code": '21900-6' from "LOINC"
 code "TNMPathologicalStageGroup Code": '21902-2' from "LOINC"
+code "Laboratory Category Code": 'laboratory' from "OBSCAT"
 
 context Patient
 
@@ -111,7 +112,7 @@ define "TNMPathologicalStageGroup":
 	[Observation: "TNMPathologicalStageGroup Code"]
 
 define "TumorMarker":
-	[Observation: "TumorMarkerTestVS"]
+	[Observation: "Tumor Marker Tests"]
 
 ///////*** CancerPatient
 
@@ -318,19 +319,18 @@ define function "Cancer Genetic Variant Gene Studied"(O Observation): //genomics
         where c.code = "CancerGeneticVariant Gene Studied Code"
         return all c.value
 
+
 //***** TumorMarker
 define function "Tumor Markers By Value Set" (VS List<System.Code>):
 //Query Observation.code in Value Set and Observation.category.code = laboratory and status in {final, amended, corrected}
-  [Observation: VS] O
-    where 
-     O.status in {'final','amended','corrected'}
-     return(
-       O.category c
-          where 'laboratory' in c.coding.code  
-          return(O)
-       )  
-      
-      
+  [Observation : VS] //  O   
+//    where 
+//     O.status.value in {'final','amended','corrected'}
+//     return(
+//       O.category c
+//          where  exists(c.coding x where x = "Laboratory Category Code")
+//         return(O)      )  
+        
 define function "Tumor Marker Code" (O Observation):
          O.code
 
