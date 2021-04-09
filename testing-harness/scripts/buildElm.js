@@ -24,13 +24,13 @@ async function translateCQL() {
     return fileNames.map((f) => path.join(cqlPath, f));
   }).flat();
   const cqlRequestBody = {};
+  let includeCQL = false;
 
   cqlFiles.forEach((cqlFilePath) => {
     // Check if ELM already exists to see if translation is needed
     const correspondingElm = fs
       .readdirSync(buildPath)
       .find((elmFile) => path.basename(elmFile, '.json') === path.basename(cqlFilePath, '.cql'));
-    let includeCQL = true;
 
     // If ELM exists in build, compare timestamps
     if (correspondingElm) {
@@ -38,23 +38,27 @@ async function translateCQL() {
       const elmStat = fs.statSync(path.join(buildPath, correspondingElm));
 
       // cql file was modified more recently
-      includeCQL = cqlStat.mtimeMs > elmStat.mtimeMs;
+      if (cqlStat.mtimeMs > elmStat.mtimeMs) {
+        includeCQL = true;
+      }
+    } else {
+      // No ELM file so need to convert
+      includeCQL = true;
     }
 
-    if (includeCQL) {
-      cqlRequestBody[path.basename(cqlFilePath, '.cql')] = {
-        cql: fs.readFileSync(cqlFilePath, 'utf8'),
-      };
-    } else {
-      console.log(`No CQL changes detected: skipping translation for ${cqlFilePath}`);
-    }
+    cqlRequestBody[path.basename(cqlFilePath, '.cql')] = {
+      cql: fs.readFileSync(cqlFilePath, 'utf8'),
+    };
   });
 
-  if (Object.keys(cqlRequestBody).length > 0) {
+  if (includeCQL && Object.keys(cqlRequestBody).length > 0) {
     const elm = await client.convertCQL(cqlRequestBody);
     return elm;
   }
 
+  if (!includeCQL) {
+    console.log(`No CQL changes detected: skipping translation for CQL files in ${cqlPaths.join(', ')}`);
+  }
   return {};
 }
 
