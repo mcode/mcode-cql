@@ -7,7 +7,6 @@ codesystem "LOINC": 'http://loinc.org'
 codesystem "RXNORM": 'http://www.nlm.nih.gov/research/umls/rxnorm'
 codesystem "V20074": 'http://terminology.hl7.org/CodeSystem/v2-0074'
 codesystem "OBSCAT": 'http://terminology.hl7.org/CodeSystem/observation-category'
-
 valueset "Cancer Body Location Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-cancer-body-location-vs'
 valueset "Cancer Disease Status Evidence Type Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-cancer-disease-status-evidence-type-vs'
 valueset "Cancer Disorder Value Set": 'http://hl7.org/fhir/us/mcode/ValueSet/mcode-cancer-disorder-vs'
@@ -321,16 +320,17 @@ define function "Cancer Genetic Variant Gene Studied"(O Observation): //genomics
 
 
 //***** TumorMarker
-define function "Tumor Markers By Value Set" (VS List<System.Code>):
+//define function "Tumor Markers By Value Set" (VS System.ValueSet):
 //Query Observation.code in Value Set and Observation.category.code = laboratory and status in {final, amended, corrected}
-  "TumorMarker" T
-     where exists (T.code.coding C where C in VS  )
-//    where 
+//  "TumorMarker" T
+//     where  exists ( T.code.coding  x where x in VS  )
+//[Observation : VS ] O
+//   where 
 //     O.status.value in {'final','amended','corrected'}
 //     return(
 //       O.category c
-//          where  exists(c.coding x where x = "Laboratory Category Code")
-//         return(O)      )  
+//         where  exists(c.coding x where x = "Laboratory Category Code")
+//         return(O)      )  //
         
 define function "Tumor Marker Code" (O Observation):
          O.code
@@ -339,8 +339,21 @@ define function "Tumor Marker Data Value" (O Observation):
      // O.valueCodeableConcept or O.valueQuantity or O.valueRatio
      O.value
 
+// @Test: PassingValueSetAsFunctionArg 
+//valueset "ConditionVS": '2.16.840.1.113883.3.560.100.2'
+//define function valueSetFunction(VS System.ValueSet) :
+//   [Observation: VS] O
+//define inVS: 
+//  valueSetFunction("Tumor Marker Tests")
+//define testConditions: 
+//  [Observation: "Tumor Marker Tests"]
 
+// @Test: PassingValueSetAsFunctionArg 
 
-     
-  define function "Return Value Set" (VS System.ValueSet):
-       VS
+define function valueSetFunction(VS System.ValueSet) :
+   [Condition: VS] O
+define inVS: 
+  valueSetFunction("Primary or Uncertain Behavior Cancer Disorder Value Set")
+define testConditions: 
+  [Condition: "Primary or Uncertain Behavior Cancer Disorder Value Set"]
+
