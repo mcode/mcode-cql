@@ -342,5 +342,5 @@ define function "Tumor Marker Data Value" (O Observation):
 
 
      
-  define function "Return Value Set" (VS List<System.Code>):
+  define function "Return Value Set" (VS System.ValueSet):
        VS
