@@ -344,7 +344,7 @@ define function "Cancer Genetic Variant Gene Studied"(O Observation): //genomics
         return all c.value
 
 //***** TumorMarker
-define function "Tumor Markers By Value Set" (VS ValueSet):
+define function "Tumor Markers By Value Set" (VS System.ValueSet):
 //Query Observation.code in Value Set and Observation.category.code = laboratory and status in {final, amended, corrected}
   [Observation: VS] O
     where 
@@ -362,3 +362,42 @@ define function "Tumor Marker Code" (O Observation):
 define function "Tumor Marker Data Value" (O Observation):
      // O.valueCodeableConcept or O.valueQuantity or O.valueRatio
      O.value
+
+
+//**************************************//
+//*********** Treatment GROUP ***********//
+//**************************************//
+
+// CancerRelatedMedicationStatement
+define function "Cancer Related Medication Statement Medication" (M MedicationStatement):
+     M.medication    // want to return codeable concept
+
+define function "MedicationStatementReasonReferenceIsCondition" (M MedicationStatement):
+   M.reasonReference r
+     where exists(
+      [Condition] C where C.id = "Reference id"(r as FHIR.Reference)
+    )
+
+define "Condition Cancer Related Medication Statements":
+   [MedicationStatement]M 
+      where exists("MedicationStatementReasonReferenceIsCondition"(M))
+
+define function "Cancer Related Medication Statement Termination Reason" (M MedicationStatement):
+    Flatten(
+      M.extension E
+        where
+          E.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-termination-reason'
+        return (
+          E.value 
+        )
+    )
+
+define function "Cancer Related Medication Statement Treatment Intent" (M MedicationStatement):
+    Flatten(
+      M.extension E
+        where
+          E.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-treatment-intent'
+        return (
+          E.value 
+        )
+    )
