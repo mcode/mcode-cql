@@ -344,16 +344,16 @@ define function "Cancer Genetic Variant Gene Studied"(O Observation): //genomics
         return all c.value
 
 //***** TumorMarker
-define function "Tumor Markers By Value Set" (VS System.ValueSet):
+//define function "Tumor Markers By Value Set" (VS System.ValueSet):
 //Query Observation.code in Value Set and Observation.category.code = laboratory and status in {final, amended, corrected}
-  [Observation: VS] O
-    where 
-     O.status in {'final','amended','corrected'}
-     return(
-       O.category c
-          where 'laboratory' in c.coding.code  
-          return(O)
-       )  
+//  [Observation: VS] O
+//    where 
+//     O.status in {'final','amended','corrected'}
+//     return(
+//       O.category c
+//          where 'laboratory' in c.coding.code  
+//          return(O)
+//       )  
       
       
 define function "Tumor Marker Code" (O Observation):
@@ -368,19 +368,20 @@ define function "Tumor Marker Data Value" (O Observation):
 //*********** Treatment GROUP ***********//
 //**************************************//
 
+
+//define function "MedicationStatementReasonReferenceIsCondition" (M MedicationStatement):
+//   M.reasonReference r
+//     where exists(
+//      [Condition] C where C.id = "Reference id"(r as FHIR.Reference)
+//    )
+
+//define "Condition Cancer Related Medication Statements":
+//   [MedicationStatement]M 
+//     where exists("MedicationStatementReasonReferenceIsCondition"(M))
+
 // CancerRelatedMedicationStatement
 define function "Cancer Related Medication Statement Medication" (M MedicationStatement):
      M.medication    // want to return codeable concept
-
-define function "MedicationStatementReasonReferenceIsCondition" (M MedicationStatement):
-   M.reasonReference r
-     where exists(
-      [Condition] C where C.id = "Reference id"(r as FHIR.Reference)
-    )
-
-define "Condition Cancer Related Medication Statements":
-   [MedicationStatement]M 
-      where exists("MedicationStatementReasonReferenceIsCondition"(M))
 
 define function "Cancer Related Medication Statement Termination Reason" (M MedicationStatement):
     Flatten(

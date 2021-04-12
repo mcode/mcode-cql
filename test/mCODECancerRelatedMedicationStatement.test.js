@@ -1,48 +1,34 @@
 const { loadELM, loadJSONFixture, loadValueSets } = require('../testing-harness/fixtureLoader');
 const { mapValueSets } = require('../testing-harness/valueSetMapper');
 const { setup } = require('../testing-harness/execution');
-const { execute } = require('../testing-harness/execution');
 
 let testSetup;
-let executionResults;
 beforeAll(() => {
   // Set up necessary data for cql-execution
   const valueSets = loadValueSets('../valuesets');
   const valueSetMap = mapValueSets(valueSets);
   const elm = loadELM();
 
-  elm.push(loadJSONFixture(__dirname, './fixtures/elm/mCODETumorMarker.test.json'));
+  elm.push(loadJSONFixture(__dirname, './fixtures/elm/mCODECancerRelatedMedicationStatement.test.json'));
   const patientBundle = loadJSONFixture(__dirname, './fixtures/patients/Bundle-mCODECQLExample01.json');
 
-  testSetup = setup('mCODETumorMarkerTest', elm, patientBundle, valueSetMap);
-  executionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
-  console.log(executionResults);
+  testSetup = setup('mCODECancerRelatedMedicationStatementTest', elm, patientBundle, valueSetMap);
 });
-test('Can Identify Tumor Marker Test', () => {
-  const expr = testSetup.library.expressions['Test Tumor Marker'];
+
+test('Can Identify Cancer Related Medication Statement Medication', () => {
+  const expr = testSetup.library.expressions['Test CancerRelatedMedicationStatement Medication'];
   const values = expr.exec(testSetup.context);
-  expect(values.id.value).toBe('53a6e3e8-fbcd-4cdf-8e8f-28de9ec5d234');
+  expect(values.coding[0].code.value).toBe('583214');
 });
-test('Can identify Tumor Markers By Value Set', () => {
-  const expr = testSetup.library.expressions['Test Tumor Markers By Value Set'];
-  const values = expr.exec(testSetup.context);
-  expect(values).not.toBeNull();
-  expect(values.length).toBe(2);
-});
-test('Can identify Tumor Marker Code"', () => {
-  const expr = testSetup.library.expressions['Test Tumor Marker Code'];
+test('Can identify Test CancerRelatedMedicationStatement Termination Reason', () => {
+  const expr = testSetup.library.expressions['Test CancerRelatedMedicationStatement Termination Reason'];
   const values = expr.exec(testSetup.context);
   expect(values).not.toBeNull();
-  expect(values.coding[0].code.value).toBe('48676-1'); 
+  expect(values[0].code.value).toBe('182992009');
 });
-test('Can identify Tumor Marker Value', () => {
-  const expr = testSetup.library.expressions['Test Tumor Marker Data Value'];
+test('Can identify Test CancerRelatedMedicationStatement Treatment Intent', () => {
+  const expr = testSetup.library.expressions['Test CancerRelatedMedicationStatement Treatment Intent'];
   const values = expr.exec(testSetup.context);
   expect(values).not.toBeNull();
-  expect(values.coding[0].code.value).toBe('260385009');
-});
-test('Can Pass Value Set ', () => {
-  const expr = testSetup.library.expressions['Test Value Set'];
-  const values = expr.exec(testSetup.context);
-  expect(values).not.toBeNull();
+  expect(values[0].code.value).toBe('373808002');
 });

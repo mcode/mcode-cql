@@ -96819,7 +96819,25 @@
         "meta": {
           "profile": ["http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement"]
         },
-        "status": "completed",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-treatment-intent",
+            "valueCoding": {
+                  "system": "http://snomed.info/sct",
+                  "code": "373808002",
+                  "display": "Curative"
+            }
+          },
+          {
+            "url": "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-termination-reason",
+            "valueCoding": {
+                  "system": "http://snomed.info/sct",
+                  "code": "182992009",
+                  "display": "Treatment Completed"
+            }
+          }
+        ],
+         "status": "completed",
         "medicationCodeableConcept": {
           "coding": [
             {

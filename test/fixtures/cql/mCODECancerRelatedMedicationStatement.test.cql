@@ -1,4 +1,4 @@
-library mCODETumorMarkerTest version '1'
+library mCODECancerRelatedMedicationStatementTest version '1'
 
 using FHIR version '4.0.0'
 include FHIRHelpers version '4.0.0' called FHIRHelpers
@@ -6,18 +6,16 @@ include mCODE version '1' called mCODE
 
 context Patient
 
-define "Test Tumor Marker":
-      singleton from ([Observation] o
-        where o.id = '53a6e3e8-fbcd-4cdf-8e8f-28de9ec5d234')
+define "Test CancerRelatedMedicationStatement":
+      singleton from ([MedicationStatement] m
+        where m.id = 'd6d5e888-fe94-457f-9564-d151695c1b36')
 
-define "Test Tumor Markers By Value Set":
-    mCODE."Tumor Markers By Value Set"(mCODE."Tumor Marker Tests")
 
-define "Test Tumor Marker Code":
-    First ("Test Tumor Marker").code 
+define "Test CancerRelatedMedicationStatement Medication":
+    mCODE."Cancer Related Medication Statement Medication" ("Test CancerRelatedMedicationStatement")
 
-define "Test Tumor Marker Data Value":
-    First ("Test Tumor Marker").value  
+define "Test CancerRelatedMedicationStatement Termination Reason":
+    mCODE."Cancer Related Medication Statement Termination Reason"("Test CancerRelatedMedicationStatement") 
 
-define "Test Value Set":
-    mCODE."Return Value Set"(mCODE."Tumor Marker Tests")
+define "Test CancerRelatedMedicationStatement Treatment Intent":
+    mCODE."Cancer Related Medication Statement Treatment Intent"("Test CancerRelatedMedicationStatement") 
