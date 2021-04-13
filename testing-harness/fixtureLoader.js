@@ -29,6 +29,10 @@ function loadJSONFixture(pathToFixture) {
  * @returns {Array} array of JSON parsed Elm
  */
 function defaultLoadElm() {
+  // Ensure that env variables are defined
+  if (!process.env.OUTPUT_ELM) {
+    throw Error('Unable to find env value for OUTPUT_ELM; make sure you set this in your .env file');
+  }
   const elmPath = path.resolve(process.cwd(), process.env.OUTPUT_ELM);
   return loadJSONFromDirectory(elmPath);
 }
@@ -39,6 +43,10 @@ function defaultLoadElm() {
  * @returns {Array} array of JSON parsed Patients
  */
 function defaultLoadPatients() {
+  // Ensure that env variables are defined
+  if (!process.env.PATIENTS) {
+    throw Error('Unable to find env value for PATIENTS; make sure you set this in your .env file');
+  }
   const patientsPath = path.resolve(process.cwd(), process.env.PATIENTS);
   return loadJSONFromDirectory(patientsPath);
 }
@@ -49,6 +57,10 @@ function defaultLoadPatients() {
  * @returns {Array} array of JSON parsed Valuesets
  */
 function defaultLoadValuesets() {
+  // Ensure that env variables are defined
+  if (!process.env.VALUESETS) {
+    throw Error('Unable to find env value for VALUESETS; make sure you set this in your .env file');
+  }
   const valuesetsPath = path.resolve(process.cwd(), process.env.VALUESETS);
   return loadJSONFromDirectory(valuesetsPath);
 }
