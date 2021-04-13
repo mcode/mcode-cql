@@ -33,6 +33,12 @@ jobs:
   test:
     name: Run tests
     runs-on: ubuntu-latest
+    env:
+      TRANSLATION_SERVICE_URL: http://localhost:8080/cql/translator
+      INPUT_CQL: ./cql
+      OUTPUT_ELM: ./output-elm
+      VALUESETS: ./valuesets
+      PATIENTS: ./test/fixtures/patients
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
@@ -43,4 +49,11 @@ jobs:
           cmd: install --frozen-lockfile
       - run: chmod +x ./testing-harness/scripts/run_tests.sh
       - run: yarn test
-      - run: yarn test:testing-harness
+      # Defining a new ENV variable set for our testing-harness tests
+      - name: 'testing-harness tests'
+        env:
+          INPUT_CQL: ./testing-harness/test/fixtures/cql
+          OUTPUT_ELM: ./testing-harness/test/fixtures/elm
+          VALUESETS: ./testing-harness/test/fixtures/valuesets
+          PATIENTS: ./testing-harness/test/fixtures/patients
+        run: yarn test:testing-harness

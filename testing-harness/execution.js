@@ -12,7 +12,9 @@ const { PatientSource } = require('cql-exec-fhir');
 function execute(elmJSONs, patientBundles, valueSetMap, libraryID = 'mCODE') {
   // 'main' ELM is the mcode library
   const mainELM = elmJSONs.find((e) => e.library.identifier.id === libraryID);
-
+  if (!mainELM) {
+    throw Error(`Cannot find ELM library with library id ${libraryID}`);
+  }
   // Resolve dependencies
   const repository = new cql.Repository(elmJSONs);
   const library = repository.resolve(libraryID, mainELM.library.identifier.version);

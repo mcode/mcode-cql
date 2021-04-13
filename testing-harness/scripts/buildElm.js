@@ -3,10 +3,18 @@ const path = require('path');
 const dotenv = require('dotenv');
 const { Client } = require('cql-translation-service-client');
 
-const cqlPathString = process.argv[2] ? process.argv[2] : path.join(__dirname, '../../cql');
-const buildPath = process.argv[3] ? path.resolve(process.argv[3]) : path.join(__dirname, '../../output-elm');
+// Initialize process.env with either `.env` or a custom file
+const envPath = process.argv[2] ? path.resolve(process.cwd(), process.argv[2]) : path.resolve(process.cwd(), '.env');
+dotenv.config({ path: envPath });
 
-dotenv.config();
+// Ensure that env variables are defined
+if (!(process.env.INPUT_CQL && process.env.OUTPUT_ELM)) {
+  throw Error(`Unable to find ENV values for INPUT_CQL or OUTPUT_ELM in ${envPath}`);
+}
+
+const cqlPathString = path.resolve(process.cwd(), process.env.INPUT_CQL);
+const buildPathString = path.resolve(process.cwd(), process.env.OUTPUT_ELM);
+
 const TRANSLATION_SERVICE_URL = !process.env.TRANSLATION_SERVICE_URL
   ? 'http://localhost:8080/cql/translator'
   : process.env.TRANSLATION_SERVICE_URL;
@@ -32,13 +40,13 @@ async function translateCQL() {
   cqlFiles.forEach((cqlFilePath) => {
     // Check if ELM already exists to see if translation is needed
     const correspondingElm = fs
-      .readdirSync(buildPath)
+      .readdirSync(buildPathString)
       .find((elmFile) => path.basename(elmFile, '.json') === path.basename(cqlFilePath, '.cql'));
 
     // If ELM exists in build, compare timestamps
     if (correspondingElm) {
       const cqlStat = fs.statSync(cqlFilePath);
-      const elmStat = fs.statSync(path.join(buildPath, correspondingElm));
+      const elmStat = fs.statSync(path.join(buildPathString, correspondingElm));
 
       // cql file was modified more recently
       if (cqlStat.mtimeMs > elmStat.mtimeMs) {
@@ -91,7 +99,7 @@ translateCQL()
     Object.entries(libraries).forEach(([libName, elm]) => {
       const errors = processErrors(elm);
       if (errors.length === 0) {
-        const elmPath = path.join(buildPath, `${libName}.json`);
+        const elmPath = path.join(buildPathString, `${libName}.json`);
         fs.writeFileSync(elmPath, JSON.stringify(elm), 'utf8');
         console.log(`Wrote ELM to ${elmPath}`);
       } else {
