@@ -7,6 +7,11 @@ const { Client } = require('cql-translation-service-client');
 const envPath = process.argv[2] ? path.resolve(process.cwd(), process.argv[2]) : path.resolve(process.cwd(), '.env');
 dotenv.config({ path: envPath });
 
+// Ensure that env variables are defined
+if (!(process.env.INPUT_CQL && process.env.OUTPUT_ELM)) {
+  throw Error(`Unable to find ENV values for INPUT_CQL or OUTPUT_ELM in ${envPath}`);
+}
+
 const cqlPathString = path.resolve(process.cwd(), process.env.INPUT_CQL);
 const buildPathString = path.resolve(process.cwd(), process.env.OUTPUT_ELM);
 
