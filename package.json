@@ -27,7 +27,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "cql-testing-harness": "https://github.com/mcode/cql-testing-harness#add-testing-harness",
+    "cql-testing-harness": "git+https://github.com/mcode/cql-testing-harness#add-testing-harness",
     "dotenv": "^8.2.0"
   }
 }
