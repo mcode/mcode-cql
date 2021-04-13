@@ -1,7 +1,11 @@
 const dotenv = require('dotenv');
-const { defaultLoadElm, defaultLoadPatients, defaultLoadValuesets } = require('../testing-harness/fixtureLoader');
-const { mapValueSets } = require('../testing-harness/valueSetMapper');
-const { execute } = require('../testing-harness/execution');
+const {
+  defaultLoadElm,
+  defaultLoadPatients,
+  defaultLoadValuesets,
+  mapValueSets,
+  execute,
+} = require('cql-testing-harness');
 
 // Initialize the env variables
 dotenv.config();

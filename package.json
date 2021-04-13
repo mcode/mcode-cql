@@ -13,11 +13,9 @@
     "lint:fix": "eslint \"./**/*.js\" --fix",
     "prettier": "prettier --check \"**/*.js\"",
     "prettier:fix": "prettier --write \"**/*.js\"",
-    "test": "node ./testing-harness/run.js",
-    "test:unit": "jest --testPathPattern=test --testPathIgnorePatterns=testing-harness",
-    "translate": "node ./testing-harness/scripts/buildElm.js",
-    "test:testing-harness": "jest --testPathPattern=./testing-harness/test",
-    "translate:testing-harness": "node testing-harness/scripts/buildElm.js .env.test"
+    "test": "test-cql -t ./test",
+    "test:unit": "jest --testPathPattern=test",
+    "translate": "translate-cql"
   },
   "devDependencies": {
     "eslint": "^7.20.0",
@@ -29,9 +27,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "cql-translation-service-client": "^0.6.0",
-    "dotenv": "^8.2.0",
-    "cql-exec-fhir": "^2.0.0",
-    "cql-execution": "^2.2.0"
+    "cql-testing-harness": "https://github.com/mcode/cql-testing-harness#add-testing-harness",
+    "dotenv": "^8.2.0"
   }
 }
