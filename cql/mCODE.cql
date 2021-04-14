@@ -402,3 +402,35 @@ define function "Cancer Related Medication Statement Treatment Intent" (M Medica
           E.value 
         )
     )
+
+
+    // CancerRelatedSurgicalProcedure
+define function "Cancer Related Surgical Procedure Procedure" (P Procedure):
+     P.code    // want to return codeable concept
+
+
+define function "Cancer Related Surgical Procedure Treatment Intent" (P Procedure):
+    Flatten(
+      P.extension E
+        where
+          E.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-treatment-intent'
+        return (
+          E.value 
+        )
+    )
+
+// CancerRelatedRadiationProcedure
+define function "Cancer Related Radiation Procedure Procedure" (P Procedure):
+     P.code    // want to return codeable concept
+
+
+define function "Cancer Related Radiation Procedure Treatment Intent" (P Procedure):
+    Flatten(
+      P.extension E
+        where
+          E.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-treatment-intent'
+        return (
+          E.value 
+        )
+    )
+  
