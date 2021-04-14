@@ -1,9 +1,5 @@
 # mcode-cql
 
-## Testing
-
-![testing architecture](https://user-images.githubusercontent.com/16297930/109518787-963a4f00-7a78-11eb-8a0f-5be82a011bb7.png)
-
 ### Prerequisites
 
 * [Docker](https://docker.com)
@@ -21,6 +17,8 @@ PATIENTS='./test/fixtures/patients'         # Folder storing patient files used 
 ```
 
 Provisional values are provided in the `.env.example` file. To start with these values, simply copy these contents into a new file called `.env`.
+
+See the [cql-testing-harness library](https://github.com/mcode/cql-testing-harness) for a detailed description of the environment.
 
 ### Test Script
 
@@ -74,20 +72,3 @@ TRANSLATION_SERVICE_URL=http://preferredURL.com yarn translate
 ```
 
 When translating CQL with a custom URL, `yarn test` should be run with the `-n` flag to prevent the testing harness from starting a new docker container.
-
-### Testing the Testing Harness
-
-The `testing-harness/test` folder contains tests and fixtures for validating the functionality of the testing harness infrastructure.
-
-Example CQL for testing translation in the `testing-harness/test/fixtures/cql` subdirectory. To build this CQL into ELM, spin up a cql-translation-service docker container and run the `yarn translate:testing-harness` script:
-
-``` bash
-docker run -d -p 8080:8080 cqframework/cql-translation-service
-yarn translate:testing-harness
-```
-
-To only run the utility function unit tests while excluding mCODE assertion tests, run the `test:testing-harness` script:
-
-``` bash
-yarn test:testing-harness
-```
