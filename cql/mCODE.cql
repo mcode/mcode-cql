@@ -124,20 +124,17 @@ define "Cancer Patient Date Of Birth":  // patient-1
 
 // What is the syntax for drilling down into extensions?
 define "Cancer Patient Birth Sex":  // patient-3
-    Patient.extension E
+    singleton from (
+      Patient.extension E
         where E.url.value = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex'
         return E.value 
+    )
 
 define "Cancer Patient Current Addresses":  // patient-4,5,6,7,8
     Patient.address A    
          where A.period contains (Now()) or
                A.period is null
 
-    // us-core-race extension     "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race"
-    // Extension with two valueCoding and one string
-    // OMB Race Category - url=ombCategory
-    // Detailed Race (required) - url=detailed
-    // Race Text (required) - url=text
 define "Cancer Patient Race Codes": // patient-13
     Flatten(
       Patient.extension E
@@ -150,13 +147,18 @@ define "Cancer Patient Race Codes": // patient-13
         )
     )
 
+define "Cancer Patient Race Text": // patient-13
+    singleton from (Flatten(
+      Patient.extension E
+        where
+          E.url.value = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race'
+        return (
+          E.extension E2
+            where E2.url.value = 'text'
+            return E2.value
+        )
+    ) )  
 
-    // us-core-ethnicity extension "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity"
-    // Extension with two valueCoding and one string
-    // OMB Ethnicity Category - url=ombCategory
-    // detailed Ethnicity- url=detailed
-    // Ethnicity Text - url=text
-    // Patient.extension:ethnicity.extension:ombCategory.valueCoding
 define "Cancer Patient Ethnicity Codes": // patient -14
     Flatten(
       Patient.extension E
@@ -168,6 +170,18 @@ define "Cancer Patient Ethnicity Codes": // patient -14
             return E2.value as FHIR.Coding
         )
     )
+
+define "Cancer Patient Ethnicity Text": // patient -14
+    singleton from (Flatten(
+      Patient.extension E
+        where
+          E.url.value = 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity'
+        return (
+          E.extension E2
+            where E2.url.value = 'text'
+            return E2.value
+        )
+    ) )
 
 //*********** ECOGPerformanceStatus ***********//
 //define "ECOG Performance Statuses":
