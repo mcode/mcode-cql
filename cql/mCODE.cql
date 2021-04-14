@@ -365,7 +365,7 @@ define function "Tumor Marker Data Value" (O Observation):
 
 
 //**************************************//
-//*********** Treatment GROUP ***********//
+//*********** Treatment GROUP **********//
 //**************************************//
 
 
@@ -379,7 +379,7 @@ define function "Tumor Marker Data Value" (O Observation):
 //   [MedicationStatement]M 
 //     where exists("MedicationStatementReasonReferenceIsCondition"(M))
 
-// CancerRelatedMedicationStatement
+//***** CancerRelatedMedicationStatement ***********//
 define function "Cancer Related Medication Statement Medication" (M MedicationStatement):
      M.medication    // want to return codeable concept
 
@@ -404,8 +404,8 @@ define function "Cancer Related Medication Statement Treatment Intent" (M Medica
     )
 
 
-    // CancerRelatedSurgicalProcedure
-define function "Cancer Related Surgical Procedure Procedure" (P Procedure):
+//***** CancerRelatedSurgicalProcedure ***********//
+define function "Cancer Related Surgical Procedure Code" (P Procedure):
      P.code    // want to return codeable concept
 
 
@@ -419,8 +419,8 @@ define function "Cancer Related Surgical Procedure Treatment Intent" (P Procedur
         )
     )
 
-// CancerRelatedRadiationProcedure
-define function "Cancer Related Radiation Procedure Procedure" (P Procedure):
+//***** CancerRelatedRadiationProcedure ***********//
+define function "Cancer Related Radiation Procedure Code" (P Procedure):
      P.code    // want to return codeable concept
 
 

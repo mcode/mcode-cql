@@ -19,8 +19,8 @@ test('Can Identify CancerRelatedRadiationProcedure', () => {
   const values = expr.exec(testSetup.context);
   expect(values).not.toBeNull();
 });
-test('Can Identify Cancer Related Radiation Procedure Procedure', () => {
-  const expr = testSetup.library.expressions['Test CancerRelatedRadiationProcedure Procedure'];
+test('Can Identify Cancer Related Radiation Procedure Code', () => {
+  const expr = testSetup.library.expressions['Test CancerRelatedRadiationProcedure Code'];
   const values = expr.exec(testSetup.context);
   expect(values.coding[0].code.value).toBe('152198000');
 });

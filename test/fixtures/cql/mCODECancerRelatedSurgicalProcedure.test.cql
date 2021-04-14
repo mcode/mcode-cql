@@ -11,8 +11,8 @@ define "Test CancerRelatedSurgicalProcedure":
         where p.id = 'c622d837-fdee-4897-9d80-da0091d924c1')
 
 
-define "Test CancerRelatedSurgicalProcedure Procedure":
-    mCODE."Cancer Related Surgical Procedure Procedure" ("Test CancerRelatedSurgicalProcedure")
+define "Test CancerRelatedSurgicalProcedure Code":
+    mCODE."Cancer Related Surgical Procedure Code" ("Test CancerRelatedSurgicalProcedure")
 
 define "Test CancerRelatedSurgicalProcedure Treatment Intent":
     mCODE."Cancer Related Surgical Procedure Treatment Intent"("Test CancerRelatedSurgicalProcedure") 
