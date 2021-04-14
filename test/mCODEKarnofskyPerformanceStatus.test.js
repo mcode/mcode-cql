@@ -32,7 +32,9 @@ test('Can Get Most Recent Karnofsky Performance Status Data Value', () => {
 });
 
 test('Can Get Most Recent Karnofsky Performance Status Data Value', () => {
-  const values = executionResults.patientResults.mCODECQLExample01['Most Recent Karnofsky Performance Status Data Value'];
+  // eslint-disable-next-line operator-linebreak
+  const values =
+    executionResults.patientResults.mCODECQLExample01['Most Recent Karnofsky Performance Status Data Value'];
   expect(values).not.toBeNull();
   expect(values.value).toBe(0);
 });
