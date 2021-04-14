@@ -44,6 +44,7 @@ function loadCQL(pathToLoad) {
       cqlRequestBody[path.basename(f, '.cql')] = {
         cql: fs.readFileSync(cqlFilePath, 'utf8'),
       };
+      console.log(`CQL changes detected: GENERATING translation for ${cqlFilePath}`);
     } else {
       console.log(`No CQL changes detected: skipping translation for ${cqlFilePath}`);
     }

@@ -31,7 +31,7 @@ valueset "TNM Regional Nodes Category Value Set": 'mcode-tnm-regional-nodes-cate
 valueset "TNM Stage Group Value Set": 'mcode-tnm-stage-group-vs'
 valueset "Treatment Intent Value Set": 'mcode-treatment-intent-vs'
 valueset "Treatment Termination Reason Value Set": 'mcode-treatment-termination-reason-vs'
-valueset "TumorMarkerTestVS": 'mcode-tumor-marker-test-vs'
+valueset "Tumor Marker Tests": 'mcode-tumor-marker-test-vs'
 valueset "Units of Length Value Set": 'mcode-units-of-length-vs'
 
 code "CancerDiseaseStatus Code": '88040-1' from "LOINC"
@@ -111,7 +111,7 @@ define "TNMPathologicalStageGroup":
 	[Observation: "TNMPathologicalStageGroup Code"]
 
 define "TumorMarker":
-	[Observation: "TumorMarkerTestVS"]
+	[Observation: "Tumor Marker Tests"]
 
 //*************************************//
 //*********** PATIENT GROUP ***********//
@@ -344,16 +344,16 @@ define function "Cancer Genetic Variant Gene Studied"(O Observation): //genomics
         return all c.value
 
 //***** TumorMarker
-define function "Tumor Markers By Value Set" (VS ValueSet):
-//Query Observation.code in Value Set and Observation.category.code = laboratory and status in {final, amended, corrected}
-  [Observation: VS] O
-    where 
-     O.status in {'final','amended','corrected'}
-     return(
-       O.category c
-          where 'laboratory' in c.coding.code  
-          return(O)
-       )  
+//define function "Tumor Markers By Value Set" (VS System.Valueset):
+// Query Observation.code in Value Set and Observation.category.code = laboratory and status in {final, amended, corrected}
+//  [Observation: VS] O
+//    where 
+//     O.status in {'final','amended','corrected'}
+//     return(
+//       O.category c
+//          where 'laboratory' in c.coding.code  
+//          return(O)
+//       )  
       
       
 define function "Tumor Marker Code" (O Observation):
@@ -362,3 +362,75 @@ define function "Tumor Marker Code" (O Observation):
 define function "Tumor Marker Data Value" (O Observation):
      // O.valueCodeableConcept or O.valueQuantity or O.valueRatio
      O.value
+
+
+//**************************************//
+//*********** Treatment GROUP **********//
+//**************************************//
+
+
+//define function "MedicationStatementReasonReferenceIsCondition" (M MedicationStatement):
+//   M.reasonReference r
+//     where exists(
+//      [Condition] C where C.id = "Reference id"(r as FHIR.Reference)
+//    )
+
+//define "Condition Cancer Related Medication Statements":
+//   [MedicationStatement]M 
+//     where exists("MedicationStatementReasonReferenceIsCondition"(M))
+
+//***** CancerRelatedMedicationStatement ***********//
+define function "Cancer Related Medication Statement Medication" (M MedicationStatement):
+     M.medication    // want to return codeable concept
+
+define function "Cancer Related Medication Statement Termination Reason" (M MedicationStatement):
+    Flatten(
+      M.extension E
+        where
+          E.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-termination-reason'
+        return (
+          E.value 
+        )
+    )
+
+define function "Cancer Related Medication Statement Treatment Intent" (M MedicationStatement):
+    Flatten(
+      M.extension E
+        where
+          E.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-treatment-intent'
+        return (
+          E.value 
+        )
+    )
+
+
+//***** CancerRelatedSurgicalProcedure ***********//
+define function "Cancer Related Surgical Procedure Code" (P Procedure):
+     P.code    // want to return codeable concept
+
+
+define function "Cancer Related Surgical Procedure Treatment Intent" (P Procedure):
+    Flatten(
+      P.extension E
+        where
+          E.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-treatment-intent'
+        return (
+          E.value 
+        )
+    )
+
+//***** CancerRelatedRadiationProcedure ***********//
+define function "Cancer Related Radiation Procedure Code" (P Procedure):
+     P.code    // want to return codeable concept
+
+
+define function "Cancer Related Radiation Procedure Treatment Intent" (P Procedure):
+    Flatten(
+      P.extension E
+        where
+          E.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-treatment-intent'
+        return (
+          E.value 
+        )
+    )
+  

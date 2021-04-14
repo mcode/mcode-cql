@@ -96154,6 +96154,55 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:c622d837-fdee-4897-9d80-da0091d924c1a",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "c622d837-fdee-4897-9d80-da0091d924c1a",
+        "meta": {
+          "profile": ["http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure"]
+        },
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-treatment-intent",
+            "valueCoding": {
+                  "system": "http://snomed.info/sct",
+                  "code": "373808002",
+                  "display": "Curative"
+            }
+          }
+        ],
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "152198000",
+              "display": "Brachytherapy (procedure)"
+            }
+          ],
+          "text": "Brachytherapy (procedure)"
+        },
+        "subject": {
+          "reference": "urn:uuid:mCODECQLExample01"
+        },
+        "encounter": {
+          "reference": "urn:uuid:7bfc6dbd-abdf-44e9-87e7-4cf19767d665"
+        },
+        "performedPeriod": {
+          "start": "2020-01-10T06:26:54-05:00",
+          "end": "2020-01-10T06:51:54-05:00"
+        },
+        "location": {
+          "reference": "urn:uuid:3b362c12-f3d0-4738-a2b1-e282657c51f8",
+          "display": "NEWTON-WELLESLEY HOSPITAL"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Procedure"
+      }
+    },
+    {
       "fullUrl": "urn:uuid:c622d837-fdee-4897-9d80-da0091d924c1",
       "resource": {
         "resourceType": "Procedure",
@@ -96161,6 +96210,16 @@
         "meta": {
           "profile": ["http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure"]
         },
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-treatment-intent",
+            "valueCoding": {
+                  "system": "http://snomed.info/sct",
+                  "code": "373808002",
+                  "display": "Curative"
+            }
+          }
+        ],
         "status": "completed",
         "code": {
           "coding": [
@@ -96819,7 +96878,25 @@
         "meta": {
           "profile": ["http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement"]
         },
-        "status": "completed",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-treatment-intent",
+            "valueCoding": {
+                  "system": "http://snomed.info/sct",
+                  "code": "373808002",
+                  "display": "Curative"
+            }
+          },
+          {
+            "url": "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-termination-reason",
+            "valueCoding": {
+                  "system": "http://snomed.info/sct",
+                  "code": "182992009",
+                  "display": "Treatment Completed"
+            }
+          }
+        ],
+         "status": "completed",
         "medicationCodeableConcept": {
           "coding": [
             {
