@@ -31,7 +31,7 @@ valueset "TNM Regional Nodes Category Value Set": 'mcode-tnm-regional-nodes-cate
 valueset "TNM Stage Group Value Set": 'mcode-tnm-stage-group-vs'
 valueset "Treatment Intent Value Set": 'mcode-treatment-intent-vs'
 valueset "Treatment Termination Reason Value Set": 'mcode-treatment-termination-reason-vs'
-valueset "TumorMarkerTestVS": 'mcode-tumor-marker-test-vs'
+valueset "Tumor Marker Tests": 'mcode-tumor-marker-test-vs'
 valueset "Units of Length Value Set": 'mcode-units-of-length-vs'
 
 code "CancerDiseaseStatus Code": '88040-1' from "LOINC"
@@ -111,7 +111,7 @@ define "TNMPathologicalStageGroup":
 	[Observation: "TNMPathologicalStageGroup Code"]
 
 define "TumorMarker":
-	[Observation: "TumorMarkerTestVS"]
+	[Observation: "Tumor Marker Tests"]
 
 //*************************************//
 //*********** PATIENT GROUP ***********//
@@ -344,8 +344,8 @@ define function "Cancer Genetic Variant Gene Studied"(O Observation): //genomics
         return all c.value
 
 //***** TumorMarker
-//define function "Tumor Markers By Value Set" (VS System.ValueSet):
-//Query Observation.code in Value Set and Observation.category.code = laboratory and status in {final, amended, corrected}
+//define function "Tumor Markers By Value Set" (VS System.Valueset):
+// Query Observation.code in Value Set and Observation.category.code = laboratory and status in {final, amended, corrected}
 //  [Observation: VS] O
 //    where 
 //     O.status in {'final','amended','corrected'}
