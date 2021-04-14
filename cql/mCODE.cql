@@ -192,9 +192,11 @@ define "Most Recent ECOG Performance Status":
  	where K.status in {'final', 'amended', 'corrected'} 
 	 sort by effective desc)
 
-define function "ECOG Performance Status Value" (O Observation): // patient-17 and patient-18
-          O.value // Integer
+define function "ECOG Performance Status Data Value" (O Observation): // patient-17
+    O.value
 
+define "Most Recent ECOG Performance Status Data Value":
+  "ECOG Performance Status Data Value"("Most Recent ECOG Performance Status")         
 
 //*********** KarnofskyPerformanceStatus ***********//
 
@@ -203,8 +205,11 @@ define "Most Recent Karnofsky Performance Status":
  	where K.status in {'final', 'amended', 'corrected'} 
 	 sort by effective desc )
 
-define function "Karnofsky Performance Status Value" (O Observation): // patient-17 and patient-18
-          O.value // Integer
+define function "Karnofsky Performance Status Data Value" (O Observation): // patient-18
+          O.value
+
+define "Most Recent Karnofsky Performance Status Data Value":
+  "Karnofsky Performance Status Data Value"("Most Recent Karnofsky Performance Status")
 
 //*************************************//
 //*********** DISEASE GROUP ***********//
