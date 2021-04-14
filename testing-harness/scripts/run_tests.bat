@@ -31,7 +31,7 @@ if %NO_START%==0 (
     echo | set /p="."
     timeout /t 1 > nul
     curl --silent http://localhost:8080/cql/translator > nul
-    if not %errorlevel%==0 goto Waiting
+    if errorlevel 1 goto Waiting
 )
 
 echo ^> Translating CQL
