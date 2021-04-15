@@ -1,4 +1,5 @@
-const { loadELM, loadJSONFixture, loadValueSets } = require('../testing-harness/fixtureLoader');
+const path = require('path');
+const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets } = require('../testing-harness/fixtureLoader');
 const { mapValueSets } = require('../testing-harness/valueSetMapper');
 const { execute } = require('../testing-harness/execution');
 // eslint-disable-next-line import/order
@@ -6,12 +7,11 @@ const { Date } = require('cql-execution/lib/datatypes/datetime');
 
 let executionResults;
 beforeAll(() => {
-  const valueSets = loadValueSets('../valuesets');
+  const valueSets = defaultLoadValuesets();
   const valueSetMap = mapValueSets(valueSets);
-  const elm = loadELM();
+  const elm = defaultLoadElm();
 
-  elm.push(loadJSONFixture(__dirname, './fixtures/elm/mCODEPrimaryCancerCondition.test.json'));
-  const patientBundle = loadJSONFixture(__dirname, './fixtures/patients/mcode-extraction-patient-1.json');
+  const patientBundle = loadJSONFixture(path.join(__dirname, './fixtures/patients/mcode-extraction-patient-1.json'));
 
   executionResults = execute(elm, patientBundle, valueSetMap, 'mCODEPrimaryCancerConditionTest');
   console.log(executionResults);

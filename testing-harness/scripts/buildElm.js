@@ -3,11 +3,18 @@ const path = require('path');
 const dotenv = require('dotenv');
 const { Client } = require('cql-translation-service-client');
 
-const cqlPath = process.argv[2] ? path.resolve(process.argv[2]) : path.join(__dirname, '../../cql');
-const buildPath = process.argv[3] ? path.resolve(process.argv[3]) : path.join(__dirname, '../../output-elm');
-const includeSrc = process.argv[4] ? Boolean(process.argv[4]) : false;
+// Initialize process.env with either `.env` or a custom file
+const envPath = process.argv[2] ? path.resolve(process.cwd(), process.argv[2]) : path.resolve(process.cwd(), '.env');
+dotenv.config({ path: envPath });
 
-dotenv.config();
+// Ensure that env variables are defined
+if (!(process.env.INPUT_CQL && process.env.OUTPUT_ELM)) {
+  throw Error(`Unable to find ENV values for INPUT_CQL or OUTPUT_ELM in ${envPath}`);
+}
+
+const cqlPathString = path.resolve(process.cwd(), process.env.INPUT_CQL);
+const buildPathString = path.resolve(process.cwd(), process.env.OUTPUT_ELM);
+
 const TRANSLATION_SERVICE_URL = !process.env.TRANSLATION_SERVICE_URL
   ? 'http://localhost:8080/cql/translator'
   : process.env.TRANSLATION_SERVICE_URL;
@@ -18,57 +25,51 @@ const client = new Client(TRANSLATION_SERVICE_URL);
  *
  * @returns {Object} ELM from translator, or {} if nothing to translate
  */
-function loadCQL(pathToLoad) {
-  const cqlFiles = fs.readdirSync(pathToLoad).filter((f) => path.extname(f) === '.cql');
+async function translateCQL() {
+  const cqlPaths = cqlPathString.split(',');
+  const cqlFiles = cqlPaths
+    .map((p) => path.resolve(p))
+    .map((cqlPath) => {
+      const fileNames = fs.readdirSync(cqlPath).filter((f) => path.extname(f) === '.cql');
+      return fileNames.map((f) => path.join(cqlPath, f));
+    })
+    .flat();
   const cqlRequestBody = {};
+  let includeCQL = false;
 
-  cqlFiles.forEach((f) => {
-    const cqlFilePath = path.join(pathToLoad, f);
-
+  cqlFiles.forEach((cqlFilePath) => {
     // Check if ELM already exists to see if translation is needed
     const correspondingElm = fs
-      .readdirSync(buildPath)
-      .find((elmFile) => path.basename(elmFile, '.json') === path.basename(f, '.cql'));
-    let includeCQL = true;
+      .readdirSync(buildPathString)
+      .find((elmFile) => path.basename(elmFile, '.json') === path.basename(cqlFilePath, '.cql'));
 
     // If ELM exists in build, compare timestamps
     if (correspondingElm) {
       const cqlStat = fs.statSync(cqlFilePath);
-      const elmStat = fs.statSync(path.join(buildPath, correspondingElm));
+      const elmStat = fs.statSync(path.join(buildPathString, correspondingElm));
 
       // cql file was modified more recently
-      includeCQL = cqlStat.mtimeMs > elmStat.mtimeMs;
+      if (cqlStat.mtimeMs > elmStat.mtimeMs) {
+        includeCQL = true;
+      }
+    } else {
+      // No ELM file so need to convert
+      includeCQL = true;
     }
 
-    if (includeCQL) {
-      cqlRequestBody[path.basename(f, '.cql')] = {
-        cql: fs.readFileSync(cqlFilePath, 'utf8'),
-      };
-      console.log(`CQL changes detected: GENERATING translation for ${cqlFilePath}`);
-    } else {
-      console.log(`No CQL changes detected: skipping translation for ${cqlFilePath}`);
-    }
+    cqlRequestBody[path.basename(cqlFilePath, '.cql')] = {
+      cql: fs.readFileSync(cqlFilePath, 'utf8'),
+    };
   });
 
-  return cqlRequestBody;
-}
-
-/**
- * Translate all cql
- *
- * @returns {Object} ELM from translator, or {} if nothing to translate
- */
-async function translateCQL() {
-  let cqlRequestBody = loadCQL(cqlPath);
-  if (includeSrc) {
-    cqlRequestBody = { ...cqlRequestBody, ...loadCQL(path.join(__dirname, '../../cql')) };
-  }
-
-  if (Object.keys(cqlRequestBody).length > 0) {
+  if (includeCQL && Object.keys(cqlRequestBody).length > 0) {
     const elm = await client.convertCQL(cqlRequestBody);
     return elm;
   }
 
+  if (!includeCQL) {
+    console.log(`No CQL changes detected: skipping translation for CQL files in ${cqlPaths.join(', ')}`);
+  }
   return {};
 }
 
@@ -98,11 +99,9 @@ translateCQL()
     Object.entries(libraries).forEach(([libName, elm]) => {
       const errors = processErrors(elm);
       if (errors.length === 0) {
-        if (fs.existsSync(path.join(cqlPath, `${libName}.cql`))) {
-          const elmPath = path.join(buildPath, `${libName}.json`);
-          fs.writeFileSync(elmPath, JSON.stringify(elm), 'utf8');
-          console.log(`Wrote ELM to ${elmPath}`);
-        }
+        const elmPath = path.join(buildPathString, `${libName}.json`);
+        fs.writeFileSync(elmPath, JSON.stringify(elm), 'utf8');
+        console.log(`Wrote ELM to ${elmPath}`);
       } else {
         console.error('Error translating to ELM');
         console.error(errors);
