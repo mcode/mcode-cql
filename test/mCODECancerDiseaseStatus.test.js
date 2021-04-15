@@ -42,4 +42,3 @@ test('Can identify Test Condition Cancer Disease Status', () => {
   const values = expr.exec(testSetup.context);
   expect(values.length).toBe(2);
 });
-
