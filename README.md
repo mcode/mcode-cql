@@ -10,10 +10,17 @@ Users also need to configure a `.env` file, defining the following values:
 
 ```bash
 TRANSLATION_SERVICE_URL=http://example.com  # An endpoint exposing a CQL translation service
-INPUT_CQL='./cql'                           # Folder containing all CQL to translate
+INPUT_CQL='./cql'                           # Folder(s) containing all CQL to translate
 VALUESETS='./valuesets'                     # Folder where CQL-dependent valuesets live
 OUTPUT_ELM='./output-elm'                   # Folder where translated ELM will be saved
 PATIENTS='./test/fixtures/patients'         # Folder storing patient files used as test fixtures
+```
+
+The `INPUT_CQL` value can take multiple directories, separated by a comma, in order to tell the testing harness to look in more than one directory for CQL files.
+
+```
+INPUT_CQL='cqlDir1,cqlDir2,cqlDir3'
+...
 ```
 
 Provisional values are provided in the `.env.example` file. To start with these values, simply copy these contents into a new file called `.env`.
