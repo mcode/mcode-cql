@@ -1,4 +1,5 @@
-const { loadELM, loadJSONFixture, loadValueSets } = require('../testing-harness/fixtureLoader');
+const path = require('path');
+const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets } = require('../testing-harness/fixtureLoader');
 const { mapValueSets } = require('../testing-harness/valueSetMapper');
 const { execute } = require('../testing-harness/execution');
 
@@ -9,11 +10,11 @@ let executionResults;
 
 beforeAll(() => {
   // Set up necessary data for cql-execution
-  const valueSets = loadValueSets('../valuesets');
+  const valueSets = defaultLoadValuesets();
   const valueSetMap = mapValueSets(valueSets);
-  const elm = loadELM();
+  const elm = defaultLoadElm();
 
-  const patientBundle = loadJSONFixture(__dirname, './fixtures/patients/Bundle-mCODECQLExample01.json');
+  const patientBundle = loadJSONFixture(path.join(__dirname, './fixtures/patients/Bundle-mCODECQLExample01.json'));
 
   executionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
   console.log(executionResults);

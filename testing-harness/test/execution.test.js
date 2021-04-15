@@ -1,10 +1,15 @@
+const dotenv = require('dotenv');
+const path = require('path');
 const { execute } = require('../execution');
-const { mapValueSets } = require('../valueSetMapper');
-const { loadELM, loadJSONFixture, loadValueSets } = require('../fixtureLoader');
+const { defaultLoadElm, defaultLoadPatients } = require('../fixtureLoader');
+
+// Initialize the env variables
+dotenv.config({ path: path.resolve(process.cwd(), '.env.test') });
 
 let valueSetMap;
 let elm;
-let patientBundle;
+let patientBundles;
+let firstPatientBundle;
 
 beforeAll(() => {
   // Set up necessary data for cql-execution
@@ -18,13 +23,14 @@ beforeAll(() => {
       ],
     },
   };
-  elm = loadJSONFixture(__dirname, 'fixtures/elm/testLib.json');
-  patientBundle = loadJSONFixture(__dirname, './fixtures/patients/test-patient-1.json');
-});
 
+  elm = defaultLoadElm();
+  patientBundles = defaultLoadPatients();
+  [firstPatientBundle] = patientBundles;
+});
 test('Should properly match on resources in execution', () => {
-  const expectedCondition = patientBundle.entry[0].resource;
-  const executionResults = execute([elm], patientBundle, valueSetMap, 'testLib');
+  const expectedCondition = firstPatientBundle.entry[0].resource;
+  const executionResults = execute(elm, firstPatientBundle, valueSetMap, 'testLib');
   const patientID = '123';
 
   expect(executionResults.patientResults[patientID].Condition).toHaveLength(1);
@@ -43,7 +49,7 @@ test('Should exclude resources with values outside of the valueSet Map during ex
       ],
     },
   };
-  const executionResults = execute([elm], patientBundle, alteredVSMap, 'testLib');
+  const executionResults = execute(elm, firstPatientBundle, alteredVSMap, 'testLib');
   const patientID = '123';
 
   // There should be no matching Condition resources within the execution results
@@ -51,11 +57,21 @@ test('Should exclude resources with values outside of the valueSet Map during ex
 });
 
 test('Should properly load patient resource from bundle', () => {
-  const executionResults = execute([elm], patientBundle, valueSetMap, 'testLib');
+  const executionResults = execute(elm, firstPatientBundle, valueSetMap, 'testLib');
   const patientID = '123';
 
   const returnedPatient = executionResults.patientResults[patientID].Patient._json;
-  expect(returnedPatient).toEqual(patientBundle.entry[1].resource);
+  expect(returnedPatient).toEqual(firstPatientBundle.entry[1].resource);
+});
+
+test('Should properly load multiple patient resources from array', () => {
+  const executionResults = execute(elm, patientBundles, valueSetMap, 'testLib');
+  const patientIDs = ['123', '456'];
+
+  const returnedPatient1 = executionResults.patientResults[patientIDs[0]].Patient._json;
+  expect(returnedPatient1).toEqual(patientBundles[0].entry[1].resource);
+  const returnedPatient2 = executionResults.patientResults[patientIDs[1]].Patient._json;
+  expect(returnedPatient2).toEqual(patientBundles[1].entry[1].resource);
 });
 
 test('Should only load elm JSON with the specified identifier', () => {
@@ -69,7 +85,7 @@ test('Should only load elm JSON with the specified identifier', () => {
   };
 
   // Run the execution utility with testLib elm as well as the secondary Elm
-  const executionResults = execute([elm, secondElm], patientBundle, valueSetMap, 'testLib');
+  const executionResults = execute([elm[0], secondElm], firstPatientBundle, valueSetMap, 'testLib');
 
   const patientID = '123';
 
@@ -80,15 +96,9 @@ test('Should only load elm JSON with the specified identifier', () => {
 
 test('Should default to loading elm with the mCODE identifier', () => {
   // Pulling elm with the mCODE identifier along with its valueSetMap
-  const valueSets = loadValueSets('./test/fixtures/valuesets');
-  const mcodeVSMap = mapValueSets(valueSets);
-  const mcodeElm = loadELM();
 
   // Running the execution utility without a libraryID argument
-  const executionResults = execute(mcodeElm, patientBundle, mcodeVSMap);
-
-  const patientID = '123';
-
-  // Exectuion utility should run with an assumed mCODE libraryID
-  expect(executionResults.localIdPatientResultsMap[patientID]).toHaveProperty('mCODE');
+  expect(() => execute(elm, firstPatientBundle, valueSetMap)).toThrow(
+    Error('Cannot find ELM library with library id mCODE'),
+  );
 });
