@@ -1,0 +1,800 @@
+{
+    "resourceType": "Bundle",
+    "type": "collection",
+    "entry": [
+        {
+            "fullUrl": "urn:uuid:conditionId-2",
+            "resource": {
+                "resourceType": "Condition",
+                "id": "conditionId-2",
+                "extension": [
+                    {
+                        "url": "http://hl7.org/fhir/StructureDefinition/condition-assertedDate",
+                        "valueDateTime": "2019-11-11"
+                    },
+                    {
+                        "url": "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-histology-morphology-behavior",
+                        "valueCodeableConcept": {
+                            "coding": [
+                                {
+                                    "system": "http://snomed.info/sct",
+                                    "code": "2735009"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "clinicalStatus": {
+                    "coding": [
+                        {
+                            "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+                            "code": "remission"
+                        }
+                    ]
+                },
+                "verificationStatus": {
+                    "coding": [
+                        {
+                            "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+                            "code": "confirmed"
+                        }
+                    ]
+                },
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                                "code": "problem-list-item"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://snomed.info/sct",
+                            "code": "363346000",
+                            "display": "Prostate Cancer"
+                        }
+                    ]
+                },
+                "bodySite": [
+                    {
+                        "extension": [
+                            {
+                                "url": "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-laterality",
+                                "valueCodeableConcept": {
+                                    "coding": [
+                                        {
+                                            "system": "http://snomed.info/sct",
+                                            "code": "24028007"
+                                        }
+                                    ]
+                                }
+                            }
+                        ],
+                        "coding": [
+                            {
+                                "system": "http://snomed.info/sct",
+                                "code": "251007"
+                            }
+                        ]
+                    }
+                ],
+                "subject": {
+                    "reference": "urn:uuid:456",
+                    "type": "Patient"
+                }
+            }
+        },
+        {
+            "fullUrl": "urn:uuid:456",
+            "resource": {
+                "resourceType": "Patient",
+                "id": "456",
+                "gender": "male",
+                "identifier": [
+                    {
+                        "type": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                    "code": "MR",
+                                    "display": "Medical Record Number"
+                                }
+                            ],
+                            "text": "Medical Record Number"
+                        },
+                        "system": "http://example.com/system/mrn",
+                        "value": "456"
+                    }
+                ],
+                "name": [
+                    {
+                        "text": "John Doe",
+                        "family": "Doe",
+                        "given": [
+                            "John"
+                        ]
+                    }
+                ],
+                "address": [
+                    {
+                        "line": [
+                            "3 East Side Rd"
+                        ],
+                        "city": "Brooklyn",
+                        "state": "NY",
+                        "postalCode": "11201",
+                        "country": "US"
+                    }
+                ],
+                "birthDate": "1970-01-01",
+                "communication": [
+                    {
+                        "language": {
+                            "coding": [
+                                {
+                                    "system": "urn:ietf:bcp:47",
+                                    "code": "en-US"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "extension": [
+                    {
+                        "extension": [
+                            {
+                                "url": "ombCategory",
+                                "valueCoding": {
+                                    "system": "urn:oid:2.16.840.1.113883.6.238",
+                                    "code": "2106-3"
+                                }
+                            },
+                            {
+                                "url": "text",
+                                "valueString": "White"
+                            }
+                        ],
+                        "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race"
+                    },
+                    {
+                        "extension": [
+                            {
+                                "url": "ombCategory",
+                                "valueCoding": {
+                                    "system": "urn:oid:2.16.840.1.113883.6.238",
+                                    "code": "2186-5"
+                                }
+                            },
+                            {
+                                "url": "text",
+                                "valueString": "Non Hispanic or Latino"
+                            }
+                        ],
+                        "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity"
+                    },
+                    {
+                        "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex",
+                        "valueCode": "M"
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "urn:uuid:531dad8cb2f0500cd835fbeff9338035a54a1d6c4171bb115b44056135a808db",
+            "resource": {
+                "resourceType": "Observation",
+                "id": "531dad8cb2f0500cd835fbeff9338035a54a1d6c4171bb115b44056135a808db",
+                "meta": {
+                    "profile": [
+                        "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-disease-status"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-evidence-type",
+                        "valueCodeableConcept": {
+                            "coding": [
+                                {
+                                    "system": "http://snomed.info/sct",
+                                    "code": "363679005",
+                                    "display": "imaging"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "status": "amended",
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                                "code": "therapy",
+                                "display": "Therapy"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://loinc.org",
+                            "code": "88040-1",
+                            "display": "Response to cancer treatment"
+                        }
+                    ]
+                },
+                "effectiveDateTime": "2020-01-12",
+                "focus": [
+                    {
+                        "reference": "urn:uuid:conditionId-2",
+                        "type": "Condition"
+                    }
+                ],
+                "subject": {
+                    "reference": "urn:uuid:456",
+                    "type": "Patient"
+                },
+                "valueCodeableConcept": {
+                    "coding": [
+                        {
+                            "system": "http://snomed.info/sct",
+                            "code": "359746009",
+                            "display": "stable"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "fullUrl": "urn:uuid:825680903d12e3646ff3c0e6cc5a329aa15ea661eed8d0b661e3ba30cb3475f5",
+            "resource": {
+                "resourceType": "ResearchSubject",
+                "id": "825680903d12e3646ff3c0e6cc5a329aa15ea661eed8d0b661e3ba30cb3475f5",
+                "status": "on-study-intervention",
+                "study": {
+                    "identifier": {
+                        "system": "system-2",
+                        "value": "researchId-1"
+                    }
+                },
+                "individual": {
+                    "reference": "urn:uuid:456",
+                    "type": "Patient"
+                },
+                "identifier": [
+                    {
+                        "system": "http://example.com/clinicaltrialsubjectids",
+                        "value": "subjectId-2",
+                        "type": {
+                            "text": "Clinical Trial Subject ID"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "urn:uuid:e584a9823d7f939adff48956a2e01b67530efc192e6998b2a158d8f7a20cd4c6",
+            "resource": {
+                "resourceType": "ResearchStudy",
+                "id": "e584a9823d7f939adff48956a2e01b67530efc192e6998b2a158d8f7a20cd4c6",
+                "status": "completed",
+                "site": [
+                    {
+                        "display": "ID associated with Clinical Trial",
+                        "identifier": {
+                            "system": "http://example.com/clinicalSiteIds",
+                            "value": "test-site-id"
+                        }
+                    }
+                ],
+                "identifier": [
+                    {
+                        "system": "system-2",
+                        "value": "researchId-1",
+                        "type": {
+                            "text": "Clinical Trial Research ID"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "urn:uuid:e8613f5328cd1b612df539e6630255900bca52ea75d2ff53dd33331c94a60ae1",
+            "resource": {
+                "resourceType": "CarePlan",
+                "id": "e8613f5328cd1b612df539e6630255900bca52ea75d2ff53dd33331c94a60ae1",
+                "meta": {
+                    "profile": [
+                        "http://mcodeinitiative.org/codex/us/icare/StructureDefinition/icare-care-plan-with-review"
+                    ]
+                },
+                "text": {
+                    "status": "additional",
+                    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">This resource details the Treatment Plan Changes for a particular patient over a period of time, as modeled in the ICAREdata usecase of mCODE. It is based on the profile found here: http://standardhealthrecord.org/guides/icare/StructureDefinition-icare-CarePlanWithReview.html</div>"
+                },
+                "extension": [
+                    {
+                        "url": "http://mcodeinitiative.org/codex/us/icare/StructureDefinition/icare-care-plan-review",
+                        "extension": [
+                            {
+                                "url": "CarePlanChangeReason",
+                                "valueCodeableConcept": {
+                                    "coding": [
+                                        {
+                                            "system": "http://snomed.info/sct",
+                                            "code": "405613005"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "url": "ReviewDate",
+                                "valueDate": "2020-03-30"
+                            },
+                            {
+                                "url": "ChangedFlag",
+                                "valueBoolean": true
+                            }
+                        ]
+                    }
+                ],
+                "subject": {
+                    "reference": "urn:uuid:456",
+                    "type": "Patient"
+                },
+                "status": "draft",
+                "intent": "proposal",
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://argonaut.hl7.org",
+                                "code": "assess-plan"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "urn:uuid:d409c377e0c80eed51724a22cf5b908fab40ef62b6ca81c401f054b864b20391",
+            "resource": {
+                "resourceType": "Observation",
+                "id": "d409c377e0c80eed51724a22cf5b908fab40ef62b6ca81c401f054b864b20391",
+                "meta": {
+                    "profile": [
+                        "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-clinical-primary-tumor-category"
+                    ]
+                },
+                "status": "final",
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                                "code": "survey"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://loinc.org",
+                            "code": "21905-5"
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "urn:uuid:456",
+                    "type": "Patient"
+                },
+                "method": {
+                    "coding": [
+                        {
+                            "system": "http://snomed.info/sct",
+                            "code": "443830009"
+                        }
+                    ]
+                },
+                "effectiveDateTime": "2020-01-01",
+                "valueCodeableConcept": {
+                    "coding": [
+                        {
+                            "system": "http://cancerstaging.org",
+                            "code": "cT3"
+                        }
+                    ]
+                },
+                "focus": [
+                    {
+                        "reference": "urn:uuid:conditionId-2",
+                        "type": "Condition"
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "urn:uuid:9e886dd1fc2e1ab44f64852c45a7d83a2acd0338f93843317b2aec3ae1d06a61",
+            "resource": {
+                "resourceType": "Observation",
+                "id": "9e886dd1fc2e1ab44f64852c45a7d83a2acd0338f93843317b2aec3ae1d06a61",
+                "meta": {
+                    "profile": [
+                        "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-clinical-distant-metastases-category"
+                    ]
+                },
+                "status": "final",
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                                "code": "survey"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://loinc.org",
+                            "code": "21907-1"
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "urn:uuid:456",
+                    "type": "Patient"
+                },
+                "method": {
+                    "coding": [
+                        {
+                            "system": "http://snomed.info/sct",
+                            "code": "443830009"
+                        }
+                    ]
+                },
+                "effectiveDateTime": "2020-01-01",
+                "valueCodeableConcept": {
+                    "coding": [
+                        {
+                            "system": "http://cancerstaging.org",
+                            "code": "cM0"
+                        }
+                    ]
+                },
+                "focus": [
+                    {
+                        "reference": "urn:uuid:conditionId-2",
+                        "type": "Condition"
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "urn:uuid:e4fbea4a3ee2854287a630a422806a9f3fb9a8dcc1660ed134910593f99d07cd",
+            "resource": {
+                "resourceType": "Observation",
+                "id": "e4fbea4a3ee2854287a630a422806a9f3fb9a8dcc1660ed134910593f99d07cd",
+                "meta": {
+                    "profile": [
+                        "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-clinical-regional-nodes-category"
+                    ]
+                },
+                "status": "final",
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                                "code": "survey"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://loinc.org",
+                            "code": "21906-3"
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "urn:uuid:456",
+                    "type": "Patient"
+                },
+                "method": {
+                    "coding": [
+                        {
+                            "system": "http://snomed.info/sct",
+                            "code": "443830009"
+                        }
+                    ]
+                },
+                "effectiveDateTime": "2020-01-01",
+                "valueCodeableConcept": {
+                    "coding": [
+                        {
+                            "system": "http://cancerstaging.org",
+                            "code": "cN3"
+                        }
+                    ]
+                },
+                "focus": [
+                    {
+                        "reference": "urn:uuid:conditionId-2",
+                        "type": "Condition"
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "urn:uuid:e832d92a69d9c5a18c7fe138ae82cadc67c27a39f105970b0ab296f28aae4352",
+            "resource": {
+                "resourceType": "Observation",
+                "id": "e832d92a69d9c5a18c7fe138ae82cadc67c27a39f105970b0ab296f28aae4352",
+                "meta": {
+                    "profile": [
+                        "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-clinical-stage-group"
+                    ]
+                },
+                "status": "final",
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                                "code": "survey"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://loinc.org",
+                            "code": "21908-9"
+                        }
+                    ]
+                },
+                "method": {
+                    "coding": [
+                        {
+                            "system": "http://snomed.info/sct",
+                            "code": "443830009"
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "urn:uuid:456",
+                    "type": "Patient"
+                },
+                "effectiveDateTime": "2020-01-01",
+                "valueCodeableConcept": {
+                    "coding": [
+                        {
+                            "system": "http://cancerstaging.org",
+                            "code": "3C"
+                        }
+                    ]
+                },
+                "focus": [
+                    {
+                        "reference": "urn:uuid:conditionId-2",
+                        "type": "Condition"
+                    }
+                ],
+                "hasMember": [
+                    {
+                        "reference": "urn:uuid:d409c377e0c80eed51724a22cf5b908fab40ef62b6ca81c401f054b864b20391",
+                        "type": "Observation"
+                    },
+                    {
+                        "reference": "urn:uuid:9e886dd1fc2e1ab44f64852c45a7d83a2acd0338f93843317b2aec3ae1d06a61",
+                        "type": "Observation"
+                    },
+                    {
+                        "reference": "urn:uuid:e4fbea4a3ee2854287a630a422806a9f3fb9a8dcc1660ed134910593f99d07cd",
+                        "type": "Observation"
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "urn:uuid:medicationId-2",
+            "resource": {
+                "resourceType": "MedicationStatement",
+                "id": "medicationId-2",
+                "meta": {
+                    "profile": [
+                        "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-statement"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-treatment-intent",
+                        "valueCodeableConcept": {
+                            "coding": [
+                                {
+                                    "system": "http://snomed.info/sct",
+                                    "code": "373808002"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "status": "completed",
+                "medicationCodeableConcept": {
+                    "coding": [
+                        {
+                            "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                            "code": "91318",
+                            "display": "Coal Tar Topical Solution"
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "urn:uuid:456",
+                    "type": "Patient"
+                },
+                "effectivePeriod": {
+                    "start": "2020-02-17",
+                    "end": "2020-08-13"
+                },
+                "reasonCode": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://snomed.info/sct",
+                                "code": "188001",
+                                "display": "Intercostal artery injury"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "urn:uuid:observation-id",
+            "resource": {
+                "resourceType": "Observation",
+                "id": "observation-id",
+                "status": "final",
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                                "code": "vital-signs",
+                                "display": "Vital Signs"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://loinc.org",
+                            "code": "8302-2",
+                            "display": "Body height"
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "urn:uuid:456",
+                    "type": "Patient"
+                },
+                "effectiveDateTime": "2020-01-02",
+                "valueQuantity": {
+                    "value": 66.89,
+                    "code": "[in_i]",
+                    "system": "http://unitsofmeasure.org",
+                    "unit": "in"
+                },
+                "bodySite": {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-laterality",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://snomed.info/sct",
+                                        "code": "66459002"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "coding": [
+                        {
+                            "system": "http://snomed.info/sct",
+                            "code": "251007"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "fullUrl": "urn:uuid:procedure-id",
+            "resource": {
+                "resourceType": "Procedure",
+                "id": "procedure-id",
+                "status": "in-progress",
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://snomed.info/sct",
+                            "code": "174337000",
+                            "display": "Destruction of lesion"
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "urn:uuid:456",
+                    "type": "Patient"
+                },
+                "performedDateTime": "2020-01-12",
+                "reasonCode": [
+                    {
+                        "coding": [
+                            {
+                                "system": "http://snomed.info/sct",
+                                "code": "363346000",
+                                "display": "Malignant tumor"
+                            }
+                        ]
+                    }
+                ],
+                "reasonReference": [
+                    {
+                        "reference": "urn:uuid:condition-id",
+                        "type": "Condition"
+                    }
+                ],
+                "extension": [
+                    {
+                        "url": "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-treatment-intent",
+                        "valueCodeableConcept": {
+                            "coding": [
+                                {
+                                    "system": "http://snomed.info/sct",
+                                    "code": "373808002"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "bodySite": [
+                    {
+                        "extension": [
+                            {
+                                "url": "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-laterality",
+                                "valueCodeableConcept": {
+                                    "coding": [
+                                        {
+                                            "system": "http://snomed.info/sct",
+                                            "code": "51440002"
+                                        }
+                                    ]
+                                }
+                            }
+                        ],
+                        "coding": [
+                            {
+                                "system": "http://snomed.info/sct",
+                                "code": "41224006"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}

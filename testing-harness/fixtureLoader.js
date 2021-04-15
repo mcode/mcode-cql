@@ -2,42 +2,73 @@ const fs = require('fs');
 const path = require('path');
 
 /**
- * Load all ELM files in build directory as JSON
+ * Load a directory of JSON files
  *
- * @returns {Array} array of ELM JSON objects
+ * @param {string} pathToDir absolute path from the caller of where directory is located
+ * @returns {Array} array of JSON parsed fixtures
  */
-function loadELM() {
-  const p = path.join(__dirname, '../output-elm');
-  const elmFiles = fs.readdirSync(p).filter((f) => path.extname(f) === '.json');
-  return elmFiles.map((f) => JSON.parse(fs.readFileSync(path.join(p, f), 'utf8')));
+function loadJSONFromDirectory(pathToDir) {
+  const filesInDir = fs.readdirSync(pathToDir).filter((f) => path.extname(f) === '.json');
+  return filesInDir.map((f) => JSON.parse(fs.readFileSync(path.join(pathToDir, f), 'utf8')));
 }
 
 /**
  * Load any JSON fixture
  *
- * @param {string} currentDir current path of file trying to do the loading
- * @param {string} relativePathToFixture relative path from the caller of where fixture is located
+ * @param {string} pathToFixture absolute path from the caller of where fixture is located
  * @returns {Object} JSON parsed fixture
  */
-function loadJSONFixture(currentDir, relativePathToFixture) {
-  const p = path.resolve(path.join(currentDir, relativePathToFixture));
-  const f = fs.readFileSync(p, 'utf8');
+function loadJSONFixture(pathToFixture) {
+  const f = fs.readFileSync(pathToFixture, 'utf8');
   return JSON.parse(f);
 }
 
 /**
- * Load all ValueSets as JSON
+ * Default loader for Elm
  *
- * @returns {Array} array of ValueSet JSON resources
+ * @returns {Array} array of JSON parsed Elm
  */
-function loadValueSets(relativePathToValueSets) {
-  const p = path.resolve(path.join(__dirname, relativePathToValueSets));
-  const valueSets = fs.readdirSync(p).filter((f) => path.extname(f) === '.json');
-  return valueSets.map((f) => JSON.parse(fs.readFileSync(path.join(p, f), 'utf8')));
+function defaultLoadElm() {
+  // Ensure that env variables are defined
+  if (!process.env.OUTPUT_ELM) {
+    throw Error('Unable to find env value for OUTPUT_ELM; make sure you set this in your .env file');
+  }
+  const elmPath = path.resolve(process.cwd(), process.env.OUTPUT_ELM);
+  return loadJSONFromDirectory(elmPath);
+}
+
+/**
+ * Default loader for Patients
+ *
+ * @returns {Array} array of JSON parsed Patients
+ */
+function defaultLoadPatients() {
+  // Ensure that env variables are defined
+  if (!process.env.PATIENTS) {
+    throw Error('Unable to find env value for PATIENTS; make sure you set this in your .env file');
+  }
+  const patientsPath = path.resolve(process.cwd(), process.env.PATIENTS);
+  return loadJSONFromDirectory(patientsPath);
+}
+
+/**
+ * Default loader for Valuesets
+ *
+ * @returns {Array} array of JSON parsed Valuesets
+ */
+function defaultLoadValuesets() {
+  // Ensure that env variables are defined
+  if (!process.env.VALUESETS) {
+    throw Error('Unable to find env value for VALUESETS; make sure you set this in your .env file');
+  }
+  const valuesetsPath = path.resolve(process.cwd(), process.env.VALUESETS);
+  return loadJSONFromDirectory(valuesetsPath);
 }
 
 module.exports = {
-  loadELM,
   loadJSONFixture,
-  loadValueSets,
+  loadJSONFromDirectory,
+  defaultLoadElm,
+  defaultLoadPatients,
+  defaultLoadValuesets,
 };
