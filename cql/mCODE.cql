@@ -53,7 +53,7 @@ code "TNMPathologicalStageGroup Code": '21902-2' from "LOINC"
 
 context Patient
 
-define "CancerDiseaseStatus":
+define "Cancer Disease Statuses":
 	[Observation: "CancerDiseaseStatus Code"]
 
 define "CancerGenomicsReport":
@@ -453,3 +453,18 @@ define function "Cancer Related Radiation Procedure Treatment Intent" (P Procedu
         )
     )
   
+//***** CancerDiseaseStatus ***********// 
+define function "Condition Cancer Disease Statuses" (C	Condition):
+//	Query Observation where code = LOINC 88040-1 and focus = Condition	[Observation]
+ "Cancer Disease Statuses" O  
+    where "Reference id"(O.focus) = C.id 
+
+define function "Latest Condition Cancer Disease Status" (C	Condition):
+//	first "Condition Cancer Disease Status"(Condition) SORT BY date desc	[Observation]
+    First ("Condition Cancer Disease Statuses"(C) )
+
+define function "Cancer Disease Status Data Value" (O	Observation):
+//	Observation.valueCodeableConcept	CodeableConcept
+    O.value 
+
+
