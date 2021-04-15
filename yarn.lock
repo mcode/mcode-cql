@@ -2018,9 +2018,10 @@ cql-execution@^2.2.0:
     "@lhncbc/ucum-lhc" "^4.1.3"
     luxon "^1.25.0"
 
-"cql-testing-harness@https://github.com/mcode/cql-testing-harness#add-testing-harness":
+cql-testing-harness@^0.0.1:
   version "0.0.1"
-  resolved "https://github.com/mcode/cql-testing-harness#94c41340194e7c7a2c8289de67258dcb783809ff"
+  resolved "https://registry.yarnpkg.com/cql-testing-harness/-/cql-testing-harness-0.0.1.tgz#cae4ce58781bf5ce4a4c05616856e4be6fbb24bb"
+  integrity sha512-jIqeQ+I+r7bBimMUHo3hqgXVoBFHk4qvjlfv0IXH4Ib4LjReWDYs/LkeIYXCIu81kAUaIQMNn1rcZ8zerf8Ihw==
   dependencies:
     cql-exec-fhir "^2.0.0"
     cql-execution "^2.2.0"
@@ -2243,9 +2244,9 @@ ecc-jsbn@~0.1.1:
     safer-buffer "^2.1.0"
 
 electron-to-chromium@^1.3.712:
-  version "1.3.713"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.713.tgz#4583efb17f2d1e9ec07a44c8004ea73c013ad146"
-  integrity sha512-HWgkyX4xTHmxcWWlvv7a87RHSINEcpKYZmDMxkUlHcY+CJcfx7xEfBHuXVsO1rzyYs1WQJ7EgDp2CoErakBIow==
+  version "1.3.717"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.717.tgz#78d4c857070755fb58ab64bcc173db1d51cbc25f"
+  integrity sha512-OfzVPIqD1MkJ7fX+yTl2nKyOE4FReeVfMCzzxQS+Kp43hZYwHwThlGP+EGIZRXJsxCM7dqo8Y65NOX/HP12iXQ==
 
 emitter-component@^1.1.1:
   version "1.1.1"
