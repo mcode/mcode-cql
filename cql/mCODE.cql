@@ -356,7 +356,27 @@ define function "Latest TNM Clinical Regional Nodes Categories" (C Condition):
     where "Is TNM Clinical Regional Nodes Category"(category)
       and category.status in {'final','amended','corrected'}
 
+//*********** Clinical Distant Metastases  Category ***********//
+define "TNM Clinical Distant Metastases Categories":
+  [Observation: "TNMClinicalDistantMetastasesCategory Code"]
 
+define function "Is TNM Clinical Distant Metastases Category" (O Observation):
+	O.code = "TNMClinicalDistantMetastasesCategory Code"
+
+define function "Current TNM Clinical Distant Metastases Categories" (C Condition):
+  flatten(("Current TNM Clinical Stage Groups"(C)) StageGroup
+    where StageGroup is not null
+    return( ("TNM Clinical Stage Group Categories"(StageGroup)) category
+      where ("Is TNM Clinical Distant Metastases Category" (category))
+      and category.status in {'final','amended','corrected'}
+    ))
+
+define function "Latest TNM Clinical Distant Metastases Categories" (C Condition):
+  ("TNM Clinical Stage Group Categories"(
+    "Latest TNM Clinical Stage Group"(C)
+  )) category
+    where "Is TNM Clinical Distant Metastases Category"(category)
+      and category.status in {'final','amended','corrected'}
 //**************************************//
 //*********** GENOMICS GROUP ***********//
 //**************************************//
