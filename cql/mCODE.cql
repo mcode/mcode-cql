@@ -338,7 +338,7 @@ define function "Earliest TNM Clinical Primary Tumor Categories" (C Condition):
 define "TNM Clinical Regional Nodes Categories":
   [Observation: "TNMClinicalRegionalNodesCategory Code"]
 
-define function "Is TNM Clinical Primary Tumor Category" (O Observation):
+define function "Is TNM Clinical Regional Nodes Category" (O Observation):
 	O.code = "TNMClinicalRegionalNodesCategory Code"
 
 define function "Current TNM Clinical Regional Nodes Categories" (C Condition):
@@ -349,7 +349,7 @@ define function "Current TNM Clinical Regional Nodes Categories" (C Condition):
       and category.status in {'final','amended','corrected'}
     ))
 
-define function "Latest TNM Clinical Primary Tumor Categories" (C Condition):
+define function "Latest TNM Clinical Regional Nodes Categories" (C Condition):
   ("TNM Clinical Stage Group Categories"(
     "Latest TNM Clinical Stage Group"(C)
   )) category
