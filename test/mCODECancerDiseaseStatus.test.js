@@ -15,8 +15,8 @@ beforeAll(() => {
   testSetup = setup('mCODECancerDiseaseStatusTest', elm, patientBundle, valueSetMap);
 });
 
-test('Can Identify CancerDiseaseStatus', () => {
-  const expr = testSetup.library.expressions['Test CancerDiseaseStatus'];
+test('Can Identify Cancer Disease Statuses', () => {
+  const expr = testSetup.library.expressions['Test Cancer Disease Statuses'];
   const values = expr.exec(testSetup.context);
   expect(values.id.value).toBe('mCODECancerDiseaseStatusExample01');
 });
@@ -27,18 +27,21 @@ test('Can Identify TestCondition', () => {
   expect(values).not.toBeNull();
   expect(values.id.value).toBe('f3be0f34-992b-48fb-ac47-f29b7f1365ef');
 });
+
 test('Can identify Test Cancer Disease Status Data Value"', () => {
   const expr = testSetup.library.expressions['Test Cancer Disease Status Data Value'];
   const values = expr.exec(testSetup.context);
   expect(values.coding[0].code.value).toBe('268910001');
 });
+
 test('Can identify Test Latest Condition Cancer Disease Status', () => {
   const expr = testSetup.library.expressions['Test Latest Condition Cancer Disease Status'];
   const values = expr.exec(testSetup.context);
-  expect(values.id.value).toBe('mCODECancerDiseaseStatusExample01');
+  expect(values.id.value).toBe('mCODECancerDiseaseStatusExample02');
 });
-test('Can identify Test Condition Cancer Disease Status', () => {
-  const expr = testSetup.library.expressions['Test Condition Cancer Disease Status'];
+
+test('Can identify Test Condition Cancer Disease Statuses', () => {
+  const expr = testSetup.library.expressions['Test Condition Cancer Disease Statuses'];
   const values = expr.exec(testSetup.context);
   expect(values.length).toBe(2);
 });
