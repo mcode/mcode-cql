@@ -53,7 +53,7 @@ test('Test Latest TNM Clinical Stage Group', () => {
   const values = expr.exec(testSetup.context);
 
   expect(values).not.toBeNull();
-  expect(values.id.value).toBe('d07680cd7040d712e15f332ffa5d6523843b65dc55ca72b215225252fed7335f');
+  expect(values.id.value).toBe('d07680cd7040d712e15f332ffa5d6523843b65dc55ca72b215225252fed7335f-2');
 });
 
 test('Test Earliest TNM Clinical Stage Group', () => {
