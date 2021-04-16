@@ -19,12 +19,14 @@ beforeAll(() => {
   );
 
   executionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
-  executionTestResults = execute(elm, patientBundle, valueSetMap, 'mCODECancerGeneticVariantTest');
-  setupResults = setup('mCODE', elm, patientBundle, valueSetMap);
+  //executionTestResults = execute(elm, patientBundle, valueSetMap, 'mCODECancerGeneticVariantTest');
+  //setupResults = setup('mCODE', elm, patientBundle, valueSetMap);
+  testSetup = setup('mCODECancerGeneticVariantTest', elm, patientBundle, valueSetMap);
   console.log(executionResults);
 });
 
 test('Can identify Cancer Genetic Variants', () => {
+  
   const result = executionResults.patientResults.mCODEPatientExample01['Cancer Genetic Variants'];
 
   expect(result).not.toBeNull();
@@ -32,22 +34,49 @@ test('Can identify Cancer Genetic Variants', () => {
 });
 
 test('Can identify Gene Studied', () => {
-  const functionRef = new FunctionRef({
-    type: 'FunctionRef',
-    name: 'Cancer Genetic Variant Gene Studied',
-    operand: [{ type: 'First', source: { type: 'ExpressionRef', name: 'Cancer Genetic Variants' } }],
+  const expr = testSetup.library.expressions['Test Gene Studied'];
+  const values = expr.exec(testSetup.context);
+  //const functionRef = new FunctionRef({
+  //  type: 'FunctionRef',
+  //  name: 'Cancer Genetic Variant Gene Studied',
+  //  operand: [{ type: 'First', source: { type: 'ExpressionRef', name: 'Cancer Genetic Variants' } }],
+  //});
+  //const values = functionRef.exec(setupResults.context);
+
+  expect(values).not.toBeNull();
+  expect(values.length).toBe(1);
+  expect(values[0].coding[0].code.value).toBe('HGNC:11389');
+});
+
+test('Can Filter Genetic Variants', () => {
+  //  const values = executionTestResults.patientResults.mCODEPatientExample01['Test Gene Studied'];
+    const expr = testSetup.library.expressions['Test Filter Cancer Genetic Variants'];
+    const values = expr.exec(testSetup.context); 
+    expect(values).not.toBeNull();
+    expect(values.length).toBe(1);
   });
-  const values = functionRef.exec(setupResults.context);
 
-  expect(values).not.toBeNull();
-  expect(values.length).toBe(1);
-  expect(values[0].coding[0].code.value).toBe('HGNC:11389');
-});
+  test('Can identify Gene Studied Test', () => {
+    //  const values = executionTestResults.patientResults.mCODEPatientExample01['Test Gene Studied'];
+      const expr = testSetup.library.expressions['Test Gene Studied'];
+      const values = expr.exec(testSetup.context); 
+      expect(values).not.toBeNull();
+      expect(values.length).toBe(1);
+      expect(values[0].coding[0].code.value).toBe('HGNC:11389');
+    });
 
-test('Can identify Gene Studied Test', () => {
-  const values = executionTestResults.patientResults.mCODEPatientExample01['Test Gene Studied'];
+    test('Can identify Genetic Variant Data Value', () => {
+      //  const values = executionTestResults.patientResults.mCODEPatientExample01['Test Gene Studied'];
+        const expr = testSetup.library.expressions['Test Genetic Variant Value'];
+        const values = expr.exec(testSetup.context); 
+        expect(values).not.toBeNull();
+      });
 
-  expect(values).not.toBeNull();
-  expect(values.length).toBe(1);
-  expect(values[0].coding[0].code.value).toBe('HGNC:11389');
-});
+      test('Can identify Genetic Variant Method', () => {
+        //  const values = executionTestResults.patientResults.mCODEPatientExample01['Test Gene Studied'];
+          const expr = testSetup.library.expressions['Test Genetic Variant Method'];
+          const values = expr.exec(testSetup.context); 
+          expect(values).not.toBeNull();
+        });
+
+
