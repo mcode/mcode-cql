@@ -2,12 +2,9 @@ const path = require('path');
 const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets } = require('../testing-harness/fixtureLoader');
 const { mapValueSets } = require('../testing-harness/valueSetMapper');
 const { execute, setup } = require('../testing-harness/execution');
-// eslint-disable-next-line import/order
-const { FunctionRef } = require('cql-execution/lib/elm/expressions');
 
 let executionResults;
-let executionTestResults;
-let setupResults;
+let testSetup;
 beforeAll(() => {
   // Set up necessary data for cql-execution
   const valueSets = defaultLoadValuesets();
@@ -19,14 +16,11 @@ beforeAll(() => {
   );
 
   executionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
-  //executionTestResults = execute(elm, patientBundle, valueSetMap, 'mCODECancerGeneticVariantTest');
-  //setupResults = setup('mCODE', elm, patientBundle, valueSetMap);
   testSetup = setup('mCODECancerGeneticVariantTest', elm, patientBundle, valueSetMap);
   console.log(executionResults);
 });
 
 test('Can identify Cancer Genetic Variants', () => {
-  
   const result = executionResults.patientResults.mCODEPatientExample01['Cancer Genetic Variants'];
 
   expect(result).not.toBeNull();
@@ -36,12 +30,6 @@ test('Can identify Cancer Genetic Variants', () => {
 test('Can identify Gene Studied', () => {
   const expr = testSetup.library.expressions['Test Gene Studied'];
   const values = expr.exec(testSetup.context);
-  //const functionRef = new FunctionRef({
-  //  type: 'FunctionRef',
-  //  name: 'Cancer Genetic Variant Gene Studied',
-  //  operand: [{ type: 'First', source: { type: 'ExpressionRef', name: 'Cancer Genetic Variants' } }],
-  //});
-  //const values = functionRef.exec(setupResults.context);
 
   expect(values).not.toBeNull();
   expect(values.length).toBe(1);
@@ -50,33 +38,22 @@ test('Can identify Gene Studied', () => {
 
 test('Can Filter Genetic Variants', () => {
   //  const values = executionTestResults.patientResults.mCODEPatientExample01['Test Gene Studied'];
-    const expr = testSetup.library.expressions['Test Filter Cancer Genetic Variants'];
-    const values = expr.exec(testSetup.context); 
-    expect(values).not.toBeNull();
-    expect(values.length).toBe(1);
-  });
+  const expr = testSetup.library.expressions['Test Filter Cancer Genetic Variants'];
+  const values = expr.exec(testSetup.context);
+  expect(values).not.toBeNull();
+  expect(values.length).toBe(1);
+});
 
-  test('Can identify Gene Studied Test', () => {
-    //  const values = executionTestResults.patientResults.mCODEPatientExample01['Test Gene Studied'];
-      const expr = testSetup.library.expressions['Test Gene Studied'];
-      const values = expr.exec(testSetup.context); 
-      expect(values).not.toBeNull();
-      expect(values.length).toBe(1);
-      expect(values[0].coding[0].code.value).toBe('HGNC:11389');
-    });
+test('Can identify Genetic Variant Data Value', () => {
+  const expr = testSetup.library.expressions['Test Genetic Variant Value'];
+  const values = expr.exec(testSetup.context);
+  expect(values).not.toBeNull();
+  expect(values.coding[0].code.value).toBe('LA9633-4');
+});
 
-    test('Can identify Genetic Variant Data Value', () => {
-      //  const values = executionTestResults.patientResults.mCODEPatientExample01['Test Gene Studied'];
-        const expr = testSetup.library.expressions['Test Genetic Variant Value'];
-        const values = expr.exec(testSetup.context); 
-        expect(values).not.toBeNull();
-      });
-
-      test('Can identify Genetic Variant Method', () => {
-        //  const values = executionTestResults.patientResults.mCODEPatientExample01['Test Gene Studied'];
-          const expr = testSetup.library.expressions['Test Genetic Variant Method'];
-          const values = expr.exec(testSetup.context); 
-          expect(values).not.toBeNull();
-        });
-
-
+test('Can identify Genetic Variant Method', () => {
+  const expr = testSetup.library.expressions['Test Genetic Variant Method'];
+  const values = expr.exec(testSetup.context);
+  expect(values).not.toBeNull();
+  expect(values.coding[0].code.value).toBe('LA26398-0');
+});
