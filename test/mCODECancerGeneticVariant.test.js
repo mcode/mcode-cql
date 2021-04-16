@@ -6,7 +6,6 @@ const { execute, setup } = require('../testing-harness/execution');
 let executionResults;
 let testSetup;
 beforeAll(() => {
-  // Set up necessary data for cql-execution
   const valueSets = defaultLoadValuesets();
   const valueSetMap = mapValueSets(valueSets);
   const elm = defaultLoadElm();
@@ -24,24 +23,23 @@ test('Can identify Cancer Genetic Variants', () => {
   const result = executionResults.patientResults.mCODEPatientExample01['Cancer Genetic Variants'];
 
   expect(result).not.toBeNull();
-  expect(result.length).toBe(1);
+  expect(result.length).toBe(2);
 });
 
-test('Can identify Gene Studied', () => {
-  const expr = testSetup.library.expressions['Test Gene Studied'];
+test('Can Filter Genetic Variants', () => {
+  const expr = testSetup.library.expressions['Test Filter Cancer Genetic Variants'];
+  const values = expr.exec(testSetup.context);
+  expect(values).not.toBeNull();
+  expect(values.length).toBe(2);
+});
+
+test('Can identify Cancer Genetic Variant Gene Studied', () => {
+  const expr = testSetup.library.expressions['Test Cancer Genetic Variant Gene Studied'];
   const values = expr.exec(testSetup.context);
 
   expect(values).not.toBeNull();
   expect(values.length).toBe(1);
   expect(values[0].coding[0].code.value).toBe('HGNC:11389');
-});
-
-test('Can Filter Genetic Variants', () => {
-  //  const values = executionTestResults.patientResults.mCODEPatientExample01['Test Gene Studied'];
-  const expr = testSetup.library.expressions['Test Filter Cancer Genetic Variants'];
-  const values = expr.exec(testSetup.context);
-  expect(values).not.toBeNull();
-  expect(values.length).toBe(1);
 });
 
 test('Can identify Genetic Variant Data Value', () => {

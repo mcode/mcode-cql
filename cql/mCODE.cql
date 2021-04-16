@@ -346,8 +346,8 @@ define "Cancer Genetic Variants":
     [Observation: "CancerGeneticVariant Code"]
 
 define function "Filter Cancer Genetic Variants"(Observations List<Observation>):
-        Observations O
-            where "Is Cancer Genetic Variant"(O)
+    Observations O
+      where "Is Cancer Genetic Variant"(O)
 
 define function "Is Cancer Genetic Variant"(O Observation):
     O.code = "CancerGeneticVariant Code"
@@ -360,8 +360,8 @@ define function "Cancer Genetic Variant Method"(O Observation): //genomics-17
 
 define function "Cancer Genetic Variant Gene Studied"(O Observation): //genomics-22
     O.component c
-        where c.code = "CancerGeneticVariant Gene Studied Code"
-        return all c.value
+      where c.code ~ "CancerGeneticVariant Gene Studied Code"
+      return all c.value
 
 //**************************************//
 //********** LABS/VITALS GROUP *********//
