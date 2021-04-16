@@ -27,7 +27,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "cql-testing-harness": "^0.0.1",
+    "cql-testing-harness": "^0.0.2",
     "dotenv": "^8.2.0"
   }
 }
