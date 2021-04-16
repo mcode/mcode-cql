@@ -54,9 +54,6 @@ code "Laboratory Category Code": 'laboratory' from "OBSCAT"
 
 context Patient
 
-define "CancerDiseaseStatus":
-	[Observation: "CancerDiseaseStatus Code"]
-
 define "CancerGenomicsReport":
 	[DiagnosticReport: "CancerGenomicsReport Code"]
 
@@ -452,3 +449,22 @@ define function "Cancer Related Radiation Procedure Treatment Intent" (P Procedu
         )
     )
   
+//**************************************//
+//************ Outcome GROUP ***********//
+//**************************************//
+
+//***** CancerDiseaseStatus ***********// 
+define "Cancer Disease Statuses":
+	[Observation: "CancerDiseaseStatus Code"]
+
+define function "Condition Cancer Disease Statuses" (C	Condition):
+ "Cancer Disease Statuses" O  
+    where "Reference id"(O.focus) = C.id
+
+define function "Latest Condition Cancer Disease Status" (C	Condition):
+    First (("Condition Cancer Disease Statuses"(C)) O
+      where O is not null
+      sort by effective.value desc)
+
+define function "Cancer Disease Status Data Value" (O	Observation):
+    O.value
