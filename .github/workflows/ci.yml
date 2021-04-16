@@ -47,13 +47,4 @@ jobs:
       - uses: borales/actions-yarn@v2.0.0
         with:
           cmd: install --frozen-lockfile
-      - run: chmod +x ./testing-harness/scripts/run_tests.sh
       - run: yarn test
-      # Defining a new ENV variable set for our testing-harness tests
-      - name: 'testing-harness tests'
-        env:
-          INPUT_CQL: ./testing-harness/test/fixtures/cql
-          OUTPUT_ELM: ./testing-harness/test/fixtures/elm
-          VALUESETS: ./testing-harness/test/fixtures/valuesets
-          PATIENTS: ./testing-harness/test/fixtures/patients
-        run: yarn test:testing-harness
