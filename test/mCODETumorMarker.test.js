@@ -1,4 +1,5 @@
-const { loadELM, loadJSONFixture, loadValueSets } = require('../testing-harness/fixtureLoader');
+const path = require('path');
+const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets } = require('../testing-harness/fixtureLoader');
 const { mapValueSets } = require('../testing-harness/valueSetMapper');
 const { setup } = require('../testing-harness/execution');
 const { execute } = require('../testing-harness/execution');
@@ -6,13 +7,15 @@ const { execute } = require('../testing-harness/execution');
 let testSetup;
 let executionResults;
 beforeAll(() => {
-  // Set up necessary data for cql-execution
-  const valueSets = loadValueSets('../valuesets');
+  const valueSets = defaultLoadValuesets();
+  const testValueSet = loadJSONFixture(
+    path.join(__dirname, './fixtures/valuesets/ValueSet-test-her2-tumor-marker-vs.json'),
+  );
+  valueSets.push(testValueSet);
   const valueSetMap = mapValueSets(valueSets);
-  const elm = loadELM();
+  const elm = defaultLoadElm();
 
-  elm.push(loadJSONFixture(__dirname, './fixtures/elm/mCODETumorMarker.test.json'));
-  const patientBundle = loadJSONFixture(__dirname, './fixtures/patients/Bundle-mCODECQLExample01.json');
+  const patientBundle = loadJSONFixture(path.join(__dirname, './fixtures/patients/Bundle-mCODECQLExample01.json'));
 
   testSetup = setup('mCODETumorMarkerTest', elm, patientBundle, valueSetMap);
   executionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
@@ -40,9 +43,4 @@ test('Can identify Tumor Marker Value', () => {
   const values = expr.exec(testSetup.context);
   expect(values).not.toBeNull();
   expect(values.coding[0].code.value).toBe('260385009');
-});
-test('Can Pass Value Set ', () => {
-  const expr = testSetup.library.expressions['Test Value Set'];
-  const values = expr.exec(testSetup.context);
-  expect(values).not.toBeNull();
 });

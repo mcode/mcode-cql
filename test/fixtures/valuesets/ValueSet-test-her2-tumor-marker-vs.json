@@ -1,0 +1,22 @@
+{
+  "resourceType": "ValueSet",
+  "id": "test-her2-tumor-marker-vs",
+  "url": "test-her2-tumor-marker-vs",
+  "version": "1.0.0",
+  "name": "TestHer2TumorMarker",
+  "title": "Test Her2 Tumor Marker",
+  "status": "active",
+  "date": "2020-03-18T16:05:09+00:00",
+  "compose": {
+    "include": [
+      {
+        "system": "http://loinc.org",
+        "concept": [
+          { "code": "85319-2", "display": "HER2 [Presence] in Breast cancer specimen by Immune stain" },
+          { "code": "85318-4", "display": "HER2 [Presence] in Breast cancer specimen by FISH" },
+          { "code": "48676-1", "display": "HER2 [Interpretation] in Tissue" }
+        ]
+      }
+    ]
+  }
+}
