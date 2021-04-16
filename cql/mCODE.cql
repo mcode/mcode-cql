@@ -309,7 +309,7 @@ define "TNM Clinical Primary Tumor Categories":
   [Observation: "TNMClinicalPrimaryTumorCategory Code"]
 
 define function "Is TNM Clinical Primary Tumor Category" (O Observation):
-	O.code = "TNMClinicalPrimaryTumorCategory Code"
+	O.code ~ "TNMClinicalPrimaryTumorCategory Code"
 
 define function "Current TNM Clinical Primary Tumor Categories" (C Condition):
   flatten(("Current TNM Clinical Stage Groups"(C)) StageGroup
@@ -339,7 +339,7 @@ define "TNM Clinical Regional Nodes Categories":
   [Observation: "TNMClinicalRegionalNodesCategory Code"]
 
 define function "Is TNM Clinical Regional Nodes Category" (O Observation):
-	O.code = "TNMClinicalRegionalNodesCategory Code"
+	O.code ~ "TNMClinicalRegionalNodesCategory Code"
 
 define function "Current TNM Clinical Regional Nodes Categories" (C Condition):
   flatten(("Current TNM Clinical Stage Groups"(C)) StageGroup
@@ -361,7 +361,7 @@ define "TNM Clinical Distant Metastases Categories":
   [Observation: "TNMClinicalDistantMetastasesCategory Code"]
 
 define function "Is TNM Clinical Distant Metastases Category" (O Observation):
-	O.code = "TNMClinicalDistantMetastasesCategory Code"
+	O.code ~ "TNMClinicalDistantMetastasesCategory Code"
 
 define function "Current TNM Clinical Distant Metastases Categories" (C Condition):
   flatten(("Current TNM Clinical Stage Groups"(C)) StageGroup

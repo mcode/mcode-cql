@@ -514,6 +514,62 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:72f00994860c396a7905153220ad183b16740c840b3719b46bb200c2061864a3-2",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "72f00994860c396a7905153220ad183b16740c840b3719b46bb200c2061864a3-2",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-clinical-distant-metastases-category"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "survey"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "21907-1"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:123"
+        },
+        "method": {
+          "coding": [
+            {
+              "system": "http://ncimeta.nci.nih.gov",
+              "code": "C146985"
+            }
+          ]
+        },
+        "effectiveDateTime": "2020-02-01",
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://cancerstaging.org",
+              "code": "cM0"
+            }
+          ]
+        },
+        "focus": [
+          {
+            "reference": "urn:uuid:conditionId-1"
+          }
+        ]
+      }
+    },
+    {
       "fullUrl": "urn:uuid:891fbf6bd0bdf928474c239da9bd6a59f042974b3a801c7d8c1ef483ace93f05",
       "resource": {
         "resourceType": "Observation",
