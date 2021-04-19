@@ -1,5 +1,4 @@
 node_modules
-.env
 .vscode
 test/fixtures/elm/mCODE.json
 test/fixtures/elm/FHIRHelpers-4.0.0.json
