@@ -261,7 +261,7 @@ define "TNM Clinical Stage Groups":
   [Observation: "TNMClinicalStageGroup Code"]
 
 define function "Is TNM Clinical Stage Group" (O Observation):
-	O.code = "TNMClinicalStageGroup Code"
+	O.code ~ "TNMClinicalStageGroup Code"
   
 define function "Current TNM Clinical Stage Groups" (C Condition):
   flatten(C.stage.assessment Assessment
@@ -302,7 +302,7 @@ define "TNM Pathological Stage Groups":
   [Observation: "TNMPathologicalStageGroup Code"]
 
 define function "Is TNM Pathological Stage Group" (O Observation):
-	O.code = "TNMPathologicalStageGroup Code"
+	O.code ~ "TNMPathologicalStageGroup Code"
   
 define function "Current TNM Pathological Stage Groups" (C Condition):
   flatten(C.stage.assessment Assessment
@@ -470,6 +470,29 @@ define function "Latest TNM Clinical Distant Metastases Categories" (C Condition
   )) category
     where "Is TNM Clinical Distant Metastases Category"(category)
       and category.status in {'final','amended','corrected'}
+
+//*********** Pathological Distant Metastases  Category ***********//
+define "TNM Pathological Distant Metastases Categories":
+  [Observation: "TNMPathologicalDistantMetastasesCategory Code"]
+
+define function "Is TNM Pathological Distant Metastases Category" (O Observation):
+	O.code ~ "TNMPathologicalDistantMetastasesCategory Code"
+
+define function "Current TNM Pathological Distant Metastases Categories" (C Condition):
+  flatten(("Current TNM Pathological Stage Groups"(C)) StageGroup
+    where StageGroup is not null
+    return( ("TNM Pathological Stage Group Categories"(StageGroup)) category
+      where ("Is TNM Pathological Distant Metastases Category" (category))
+      and category.status in {'final','amended','corrected'}
+    ))
+
+define function "Latest TNM Pathological Distant Metastases Categories" (C Condition):
+  ("TNM Pathological Stage Group Categories"(
+    "Latest TNM Pathological Stage Group"(C)
+  )) category
+    where "Is TNM Pathological Distant Metastases Category"(category)
+      and category.status in {'final','amended','corrected'}
+
 //**************************************//
 //*********** GENOMICS GROUP ***********//
 //**************************************//
@@ -484,7 +507,7 @@ define function "Filter Cancer Genetic Variants"(Observations List<Observation>)
             where "Is Cancer Genetic Variant"(O)
 
 define function "Is Cancer Genetic Variant"(O Observation):
-    O.code = "CancerGeneticVariant Code"
+    O.code ~ "CancerGeneticVariant Code"
 
 define function "Cancer Genetic Variant Data Value"(O Observation): //genomics-16
     O.value
@@ -494,7 +517,7 @@ define function "Cancer Genetic Variant Method"(O Observation): //genomics-17
 
 define function "Cancer Genetic Variant Gene Studied"(O Observation): //genomics-22
     O.component c
-        where c.code = "CancerGeneticVariant Gene Studied Code"
+        where c.code ~ "CancerGeneticVariant Gene Studied Code"
         return all c.value
 
 //**************************************//
