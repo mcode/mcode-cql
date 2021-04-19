@@ -6,7 +6,10 @@
     "test": "test"
   },
   "jest": {
-    "verbose": true
+    "verbose": true,
+    "setupFiles": [
+      "./test/jest.config.js"
+    ]
   },
   "scripts": {
     "lint": "eslint \"**/*.js\"",
@@ -18,6 +21,8 @@
     "translate": "translate-cql"
   },
   "devDependencies": {
+    "cql-exec-fhir": "^2.0.0",
+    "cql-execution": "^2.2.0",
     "eslint": "^7.20.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
