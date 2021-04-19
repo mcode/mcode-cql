@@ -18,7 +18,7 @@ beforeAll(() => {
   const patientBundle = loadJSONFixture(path.join(__dirname, './fixtures/patients/Bundle-mCODECQLExample01.json'));
 
   testSetup = setup('mCODETumorMarkerTest', elm, patientBundle, valueSetMap);
-//  executionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
+  //  executionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
 });
 test('Can Identify Tumor Marker Test', () => {
   const expr = testSetup.library.expressions['Test Tumor Marker'];
