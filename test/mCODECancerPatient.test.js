@@ -15,7 +15,6 @@ beforeAll(() => {
   const patientBundle = loadJSONFixture(path.join(__dirname, './fixtures/patients/Bundle-mCODECQLExample01.json'));
 
   executionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
-  console.debug(executionResults);
 });
 
 test('Can identify Patient DOB', () => {

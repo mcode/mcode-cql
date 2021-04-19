@@ -223,7 +223,7 @@ define function "Primary Cancer Condition Body Site Laterality" (BodySite Codeab
       where
         Laterality.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-laterality'
       return (
-        Laterality.value as FHIR.CodeableConcept // enfore valueCodeableConcept only
+        Laterality.value as FHIR.CodeableConcept // enforce valueCodeableConcept only
       )
     )
 
@@ -261,7 +261,7 @@ define "TNM Clinical Stage Groups":
   [Observation: "TNMClinicalStageGroup Code"]
 
 define function "Is TNM Clinical Stage Group" (O Observation):
-	O.code = "TNMClinicalStageGroup Code"
+	O.code ~ "TNMClinicalStageGroup Code"
   
 define function "Current TNM Clinical Stage Groups" (C Condition):
   flatten(C.stage.assessment Assessment
@@ -296,6 +296,46 @@ define function "TNM Clinical Stage Group Value" (O Observation):             //
 define function "TNM Clinical Stage Group Staging System" (O Observation):             // disease-16
   O.method
 
+//*********** TNM Pathological Stage Group ***********//
+
+define "TNM Pathological Stage Groups":
+  [Observation: "TNMPathologicalStageGroup Code"]
+
+define function "Is TNM Pathological Stage Group" (O Observation):
+	O.code ~ "TNMPathologicalStageGroup Code"
+  
+define function "Current TNM Pathological Stage Groups" (C Condition):
+  flatten(C.stage.assessment Assessment
+    where Assessment is not null
+    return (
+      "TNM Pathological Stage Groups" StageGroup
+        where StageGroup.id = "Reference id"(Assessment)
+    )
+  )  
+
+define function "Latest TNM Pathological Stage Group" (C Condition):
+  First([Observation] StageGroup 
+    where "Is TNM Pathological Stage Group"(StageGroup)
+      and C.id = "Reference id"(StageGroup.focus)
+    sort by effective.value desc)
+
+define function "Earliest TNM Pathological Stage Group" (C Condition):
+  First([Observation] StageGroup 
+    where "Is TNM Pathological Stage Group"(StageGroup)
+      and C.id = "Reference id"(StageGroup.focus)
+    sort by effective.value asc)
+
+define function "TNM Pathological Stage Group Categories" (O Observation):
+    Flatten(O.hasMember h
+      return([Observation] member where member.id = "Reference id"(h as FHIR.Reference))
+    )
+
+define function "TNM Pathological Stage Group Value" (O Observation):             // disease-15
+  O.value as FHIR.CodeableConcept // enforce valueCodeableConcept only
+
+define function "TNM Pathological Stage Group Staging System" (O Observation):             // disease-16
+  O.method
+
 // get id from a reference string - this should be in a utility library
 // will fail with uri schemes that are not urn or absolute/relative URL
 define function "Reference id" (ref FHIR.Reference):
@@ -309,7 +349,7 @@ define "TNM Clinical Primary Tumor Categories":
   [Observation: "TNMClinicalPrimaryTumorCategory Code"]
 
 define function "Is TNM Clinical Primary Tumor Category" (O Observation):
-	O.code = "TNMClinicalPrimaryTumorCategory Code"
+	O.code ~ "TNMClinicalPrimaryTumorCategory Code"
 
 define function "Current TNM Clinical Primary Tumor Categories" (C Condition):
   flatten(("Current TNM Clinical Stage Groups"(C)) StageGroup
@@ -333,6 +373,125 @@ define function "Earliest TNM Clinical Primary Tumor Categories" (C Condition):
     where "Is TNM Clinical Primary Tumor Category"(category)
       and category.status in {'final','amended','corrected'}      
 
+//*********** TNM Pathological Primary Tumor Category ***********//
+
+define "TNM Pathological Primary Tumor Categories":
+  [Observation: "TNMPathologicalPrimaryTumorCategory Code"]
+
+define function "Is TNM Pathological Primary Tumor Category" (O Observation):
+	O.code ~ "TNMPathologicalPrimaryTumorCategory Code"
+
+define function "Current TNM Pathological Primary Tumor Categories" (C Condition):
+  flatten(("Current TNM Pathological Stage Groups"(C)) StageGroup
+    where StageGroup is not null
+    return( ("TNM Pathological Stage Group Categories"(StageGroup)) category
+      where ("Is TNM Pathological Primary Tumor Category" (category))
+      and category.status in {'final','amended','corrected'}
+    ))
+
+define function "Latest TNM Pathological Primary Tumor Categories" (C Condition):
+  ("TNM Pathological Stage Group Categories"(
+    "Latest TNM Pathological Stage Group"(C)
+  )) category
+    where "Is TNM Pathological Primary Tumor Category"(category)
+      and category.status in {'final','amended','corrected'}
+
+define function "Earliest TNM Pathological Primary Tumor Categories" (C Condition):
+  ("TNM Pathological Stage Group Categories"(
+    "Earliest TNM Pathological Stage Group"(C)
+  )) category
+    where "Is TNM Pathological Primary Tumor Category"(category)
+      and category.status in {'final','amended','corrected'}      
+
+
+//*********** Clinical Regional Nodes Category ***********//
+define "TNM Clinical Regional Nodes Categories":
+  [Observation: "TNMClinicalRegionalNodesCategory Code"]
+
+define function "Is TNM Clinical Regional Nodes Category" (O Observation):
+	O.code ~ "TNMClinicalRegionalNodesCategory Code"
+
+define function "Current TNM Clinical Regional Nodes Categories" (C Condition):
+  flatten(("Current TNM Clinical Stage Groups"(C)) StageGroup
+    where StageGroup is not null
+    return( ("TNM Clinical Stage Group Categories"(StageGroup)) category
+      where ("Is TNM Clinical Regional Nodes Category" (category))
+      and category.status in {'final','amended','corrected'}
+    ))
+
+define function "Latest TNM Clinical Regional Nodes Categories" (C Condition):
+  ("TNM Clinical Stage Group Categories"(
+    "Latest TNM Clinical Stage Group"(C)
+  )) category
+    where "Is TNM Clinical Regional Nodes Category"(category)
+      and category.status in {'final','amended','corrected'}
+
+//*********** Pathological Regional Nodes Category ***********//
+define "TNM Pathological Regional Nodes Categories":
+  [Observation: "TNMPathologicalRegionalNodesCategory Code"]
+
+define function "Is TNM Pathological Regional Nodes Category" (O Observation):
+	O.code ~ "TNMPathologicalRegionalNodesCategory Code"
+
+define function "Current TNM Pathological Regional Nodes Categories" (C Condition):
+  flatten(("Current TNM Pathological Stage Groups"(C)) StageGroup
+    where StageGroup is not null
+    return( ("TNM Pathological Stage Group Categories"(StageGroup)) category
+      where ("Is TNM Pathological Regional Nodes Category" (category))
+      and category.status in {'final','amended','corrected'}
+    ))
+
+define function "Latest TNM Pathological Regional Nodes Categories" (C Condition):
+  ("TNM Pathological Stage Group Categories"(
+    "Latest TNM Pathological Stage Group"(C)
+  )) category
+    where "Is TNM Pathological Regional Nodes Category"(category)
+      and category.status in {'final','amended','corrected'}
+
+//*********** Clinical Distant Metastases Category ***********//
+define "TNM Clinical Distant Metastases Categories":
+  [Observation: "TNMClinicalDistantMetastasesCategory Code"]
+
+define function "Is TNM Clinical Distant Metastases Category" (O Observation):
+	O.code ~ "TNMClinicalDistantMetastasesCategory Code"
+
+define function "Current TNM Clinical Distant Metastases Categories" (C Condition):
+  flatten(("Current TNM Clinical Stage Groups"(C)) StageGroup
+    where StageGroup is not null
+    return( ("TNM Clinical Stage Group Categories"(StageGroup)) category
+      where ("Is TNM Clinical Distant Metastases Category" (category))
+      and category.status in {'final','amended','corrected'}
+    ))
+
+define function "Latest TNM Clinical Distant Metastases Categories" (C Condition):
+  ("TNM Clinical Stage Group Categories"(
+    "Latest TNM Clinical Stage Group"(C)
+  )) category
+    where "Is TNM Clinical Distant Metastases Category"(category)
+      and category.status in {'final','amended','corrected'}
+
+//*********** Pathological Distant Metastases Category ***********//
+define "TNM Pathological Distant Metastases Categories":
+  [Observation: "TNMPathologicalDistantMetastasesCategory Code"]
+
+define function "Is TNM Pathological Distant Metastases Category" (O Observation):
+	O.code ~ "TNMPathologicalDistantMetastasesCategory Code"
+
+define function "Current TNM Pathological Distant Metastases Categories" (C Condition):
+  flatten(("Current TNM Pathological Stage Groups"(C)) StageGroup
+    where StageGroup is not null
+    return( ("TNM Pathological Stage Group Categories"(StageGroup)) category
+      where ("Is TNM Pathological Distant Metastases Category" (category))
+      and category.status in {'final','amended','corrected'}
+    ))
+
+define function "Latest TNM Pathological Distant Metastases Categories" (C Condition):
+  ("TNM Pathological Stage Group Categories"(
+    "Latest TNM Pathological Stage Group"(C)
+  )) category
+    where "Is TNM Pathological Distant Metastases Category"(category)
+      and category.status in {'final','amended','corrected'}
+
 //**************************************//
 //*********** GENOMICS GROUP ***********//
 //**************************************//
@@ -347,7 +506,7 @@ define function "Filter Cancer Genetic Variants"(Observations List<Observation>)
       where "Is Cancer Genetic Variant"(O)
 
 define function "Is Cancer Genetic Variant"(O Observation):
-    O.code = "CancerGeneticVariant Code"
+    O.code ~ "CancerGeneticVariant Code"
 
 define function "Cancer Genetic Variant Data Value"(O Observation): //genomics-16
     O.value

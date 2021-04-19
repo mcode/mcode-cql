@@ -90,6 +90,9 @@
             "assessment": [
               {
                 "reference": "urn:uuid:d07680cd7040d712e15f332ffa5d6523843b65dc55ca72b215225252fed7335f"
+              },
+              {
+                "reference": "urn:uuid:mCODETNMPathologicalStageGroupExample01"
               }
             ]
           }
@@ -514,6 +517,62 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:72f00994860c396a7905153220ad183b16740c840b3719b46bb200c2061864a3-2",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "72f00994860c396a7905153220ad183b16740c840b3719b46bb200c2061864a3-2",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-clinical-distant-metastases-category"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "survey"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "21907-1"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:123"
+        },
+        "method": {
+          "coding": [
+            {
+              "system": "http://ncimeta.nci.nih.gov",
+              "code": "C146985"
+            }
+          ]
+        },
+        "effectiveDateTime": "2020-02-01",
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://cancerstaging.org",
+              "code": "cM0"
+            }
+          ]
+        },
+        "focus": [
+          {
+            "reference": "urn:uuid:conditionId-1"
+          }
+        ]
+      }
+    },
+    {
       "fullUrl": "urn:uuid:891fbf6bd0bdf928474c239da9bd6a59f042974b3a801c7d8c1ef483ace93f05",
       "resource": {
         "resourceType": "Observation",
@@ -570,6 +629,62 @@
       }
     },
     {
+      "fullUrl": "urn:uuid:891fbf6bd0bdf928474c239da9bd6a59f042974b3a801c7d8c1ef483ace93f05-2",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "891fbf6bd0bdf928474c239da9bd6a59f042974b3a801c7d8c1ef483ace93f05-2",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-clinical-regional-nodes-category"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "survey"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "21906-3"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:123"
+        },
+        "method": {
+          "coding": [
+            {
+              "system": "http://ncimeta.nci.nih.gov",
+              "code": "C146985"
+            }
+          ]
+        },
+        "effectiveDateTime": "2020-02-01",
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://cancerstaging.org",
+              "code": "cN3"
+            }
+          ]
+        },
+        "focus": [
+          {
+            "reference": "urn:uuid:conditionId-1"
+          }
+        ]
+      }
+    },
+    {
       "fullUrl": "urn:uuid:d07680cd7040d712e15f332ffa5d6523843b65dc55ca72b215225252fed7335f",
       "resource": {
         "resourceType": "Observation",
@@ -610,6 +725,73 @@
           "reference": "urn:uuid:123"
         },
         "effectiveDateTime": "2020-01-01",
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://cancerstaging.org",
+              "code": "3C"
+            }
+          ]
+        },
+        "focus": [
+          {
+            "reference": "urn:uuid:conditionId-1"
+          }
+        ],
+        "hasMember": [
+          {
+            "reference": "urn:uuid:a121869e84dc63c7b6e98b6f299e168a9d212048a1c05ddc8ea06ac01427a74e"
+          },
+          {
+            "reference": "urn:uuid:72f00994860c396a7905153220ad183b16740c840b3719b46bb200c2061864a3"
+          },
+          {
+            "reference": "urn:uuid:891fbf6bd0bdf928474c239da9bd6a59f042974b3a801c7d8c1ef483ace93f05"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:d07680cd7040d712e15f332ffa5d6523843b65dc55ca72b215225252fed7335f-2",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "d07680cd7040d712e15f332ffa5d6523843b65dc55ca72b215225252fed7335f-2",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-clinical-stage-group"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "survey"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "21908-9"
+            }
+          ]
+        },
+        "method": {
+          "coding": [
+            {
+              "system": "http://ncimeta.nci.nih.gov",
+              "code": "C146985"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:123"
+        },
+        "effectiveDateTime": "2020-02-01",
         "valueCodeableConcept": {
           "coding": [
             {
@@ -701,6 +883,483 @@
             "reference": "urn:uuid:891fbf6bd0bdf928474c239da9bd6a59f042974b3a801c7d8c1ef483ace93f05"
           }
         ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:mCODETNMPathologicalStageGroupExample01",
+      "resource":
+      {
+      "resourceType": "Observation",
+      "id": "mCODETNMPathologicalStageGroupExample01",
+      "meta": {
+        "profile": [
+          "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-pathological-stage-group"
+        ]
+      },
+      "status": "final",
+      "category": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+              "code": "laboratory"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "coding": [
+          {
+            "system": "http://loinc.org",
+            "code": "21902-2"
+          }
+        ]
+      },
+      "subject": {
+        "reference": "urn:uuid:123"
+      },
+      "effectiveDateTime": "2019-04-01",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://cancerstaging.org",
+            "code": "3C"
+          }
+        ]
+      },
+      "method": {
+        "coding": [
+          {
+            "system": "http://ncimeta.nci.nih.gov",
+            "code": "C146985"
+          }
+        ]
+      },
+      "focus": [
+        {
+          "reference": "urn:uuid:conditionId-1"
+        }
+      ],
+      "hasMember": [
+        {
+          "reference": "urn:uuid:mCODETNMPathologicalPrimaryTumorCategoryExample01"
+        },
+        {
+          "reference": "urn:uuid:mCODETNMPathologicalRegionalNodesCategoryExample01"
+        },
+        {
+          "reference": "urn:uuid:mCODETNMPathologicalDistantMetastasesCategoryExample01"
+        }
+      ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:mCODETNMPathologicalPrimaryTumorCategoryExample01",
+      "resource":
+      {
+        "resourceType": "Observation",
+        "id": "mCODETNMPathologicalPrimaryTumorCategoryExample01",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-pathological-primary-tumor-category"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "21899-0"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:123"
+        },
+        "effectiveDateTime": "2019-04-01",
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://cancerstaging.org",
+              "code": "pT3"
+            }
+          ]
+        },
+        "method": {
+          "coding": [
+            {
+              "system": "http://ncimeta.nci.nih.gov",
+              "code": "C146985"
+            }
+          ]
+        },
+        "focus": [
+          {
+            "reference": "urn:uuid:conditionId-1"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:mCODETNMPathologicalRegionalNodesCategoryExample01",
+      "resource":
+      {
+        "resourceType": "Observation",
+        "id": "mCODETNMPathologicalRegionalNodesCategoryExample01",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-pathological-regional-nodes-category"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "21900-6"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:123"
+        },
+        "effectiveDateTime": "2019-04-01",
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://cancerstaging.org",
+              "code": "pN3"
+            }
+          ]
+        },
+        "method": {
+          "coding": [
+            {
+              "system": "http://ncimeta.nci.nih.gov",
+              "code": "C146985"
+            }
+          ]
+        },
+        "focus": [
+          {
+            "reference": "urn:uuid:conditionId-1"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:mCODETNMPathologicalDistantMetastasesCategoryExample01",
+      "resource":
+      {
+        "resourceType": "Observation",
+        "id": "mCODETNMPathologicalDistantMetastasesCategoryExample01",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-pathological-distant-metastases-category"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "21901-4"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:123"
+        },
+        "effectiveDateTime": "2019-04-01",
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://cancerstaging.org",
+              "code": "pM0"
+            }
+          ]
+        },
+        "method": {
+          "coding": [
+            {
+              "system": "http://ncimeta.nci.nih.gov",
+              "code": "C146985"
+            }
+          ]
+        },
+        "focus": [
+          {
+            "reference": "urn:uuid:conditionId-1"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:mCODETNMPathologicalStageGroupExample02",
+      "resource":
+      {
+      "resourceType": "Observation",
+      "id": "mCODETNMPathologicalStageGroupExample02",
+      "meta": {
+        "profile": [
+          "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-pathological-stage-group"
+        ]
+      },
+      "status": "final",
+      "category": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+              "code": "laboratory"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "coding": [
+          {
+            "system": "http://loinc.org",
+            "code": "21902-2"
+          }
+        ]
+      },
+      "subject": {
+        "reference": "urn:uuid:123"
+      },
+      "effectiveDateTime": "2019-04-02",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://cancerstaging.org",
+            "code": "3B"
+          }
+        ]
+      },
+      "method": {
+        "coding": [
+          {
+            "system": "http://ncimeta.nci.nih.gov",
+            "code": "C146985"
+          }
+        ]
+      },
+      "focus": [
+        {
+          "reference": "urn:uuid:conditionId-1"
+        }
+      ],
+      "hasMember": [
+        {
+          "reference": "urn:uuid:mCODETNMPathologicalPrimaryTumorCategoryExample02"
+        },
+        {
+          "reference": "urn:uuid:mCODETNMPathologicalRegionalNodesCategoryExample02"
+        },
+        {
+          "reference": "urn:uuid:mCODETNMPathologicalDistantMetastasesCategoryExample02"
+        }
+      ]
+      }
+     },
+     {
+      "fullUrl": "urn:uuid:mCODETNMPathologicalPrimaryTumorCategoryExample02",
+      "resource":
+      {
+        "resourceType": "Observation",
+        "id": "mCODETNMPathologicalPrimaryTumorCategoryExample02",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-pathological-primary-tumor-category"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "21899-0"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:123"
+        },
+        "effectiveDateTime": "2019-05-01",
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://cancerstaging.org",
+              "code": "pT3"
+            }
+          ]
+        },
+        "method": {
+          "coding": [
+            {
+              "system": "http://ncimeta.nci.nih.gov",
+              "code": "C146985"
+            }
+          ]
+        },
+        "focus": [
+          {
+            "reference": "urn:uuid:conditionId-1"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:mCODETNMPathologicalRegionalNodesCategoryExample02",
+      "resource":
+      {
+        "resourceType": "Observation",
+        "id": "mCODETNMPathologicalRegionalNodesCategoryExample02",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-pathological-regional-nodes-category"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: mCODETNMPathologicalRegionalNodesCategoryExample01</p><p><b>meta</b>: </p><p><b>status</b>: final</p><p><b>category</b>: Laboratory <span style=\"background: LightGoldenRodYellow\">(Details : {http://terminology.hl7.org/CodeSystem/observation-category code 'laboratory' = 'Laboratory)</span></p><p><b>code</b>: Regional lymph nodes.pathology [Class] Cancer <span style=\"background: LightGoldenRodYellow\">(Details : {LOINC code '21900-6' = 'Regional lymph nodes.pathology [Class] Cancer)</span></p><p><b>subject</b>: <a href=\"{{[type]}}-{{[id]}}.html\">Generated Summary: id: mCODEPatientExample01; Medical record number = m123 (USUAL); John B. Anyperson ; gender: male; birthDate: 1951-01-20</a></p><p><b>effective</b>: Apr 1, 2019 12:00:00 AM</p><p><b>value</b>: pN3 <span style=\"background: LightGoldenRodYellow\">(Details : {http://cancerstaging.org code 'pN3' = 'pN3)</span></p><p><b>method</b>: C146985 <span style=\"background: LightGoldenRodYellow\">(Details : {http://ncimeta.nci.nih.gov code 'C146985' = 'C146985)</span></p></div>"
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "21900-6"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:123"
+        },
+        "effectiveDateTime": "2019-05-01",
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://cancerstaging.org",
+              "code": "pN3"
+            }
+          ]
+        },
+        "method": {
+          "coding": [
+            {
+              "system": "http://ncimeta.nci.nih.gov",
+              "code": "C146985"
+            }
+          ]
+        },
+        "focus": [
+          {
+            "reference": "urn:uuid:conditionId-1"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:mCODETNMPathologicalDistantMetastasesCategoryExample02",
+      "resource":
+      {
+        "resourceType": "Observation",
+        "id": "mCODETNMPathologicalDistantMetastasesCategoryExample02",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-pathological-distant-metastases-category"
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "21901-4"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:123"
+        },
+        "effectiveDateTime": "2019-05-01",
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://cancerstaging.org",
+              "code": "pM0"
+            }
+          ]
+        },
+        "method": {
+          "coding": [
+            {
+              "system": "http://ncimeta.nci.nih.gov",
+              "code": "C146985"
+            }
+          ]
+        }
       }
     },
     {
