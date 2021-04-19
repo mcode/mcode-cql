@@ -296,6 +296,47 @@ define function "TNM Clinical Stage Group Value" (O Observation):             //
 define function "TNM Clinical Stage Group Staging System" (O Observation):             // disease-16
   O.method
 
+//*********** TNM Pathological Stage Group ***********//
+
+define "TNM Pathological Stage Groups":
+  [Observation: "TNMPathologicalStageGroup Code"]
+
+define function "Is TNM Pathological Stage Group" (O Observation):
+	O.code = "TNMPathologicalStageGroup Code"
+  
+define function "Current TNM Pathological Stage Groups" (C Condition):
+  flatten(C.stage.assessment Assessment
+    where Assessment is not null
+    return (
+      "TNM Pathological Stage Groups" StageGroup
+        where StageGroup.id = "Reference id"(Assessment)
+    )
+  )  
+
+define function "Latest TNM Pathological Stage Group" (C Condition):
+  First([Observation] StageGroup 
+    where "Is TNM Pathological Stage Group"(StageGroup)
+      and C.id = "Reference id"(StageGroup.focus)
+    sort by effective.value desc)
+
+define function "Earliest TNM Pathological Stage Group" (C Condition):
+  First([Observation] StageGroup 
+    where "Is TNM Pathological Stage Group"(StageGroup)
+      and C.id = "Reference id"(StageGroup.focus)
+    sort by effective.value asc)
+
+// Returns [Observation] for all hasMember references from an Observation
+define function "TNM Pathological Stage Group Categories" (O Observation):
+    Flatten(O.hasMember h
+      return([Observation] member where member.id = "Reference id"(h as FHIR.Reference))
+    )
+
+define function "TNM Pathological Stage Group Value" (O Observation):             // disease-15
+  O.value as FHIR.CodeableConcept // enfore valueCodeableConcept only
+
+define function "TNM Pathological Stage Group Staging System" (O Observation):             // disease-16
+  O.method
+
 // get id from a reference string - this should be in a utility library
 // will fail with uri schemes that are not urn or absolute/relative URL
 define function "Reference id" (ref FHIR.Reference):
