@@ -1002,7 +1002,12 @@
               "code": "C146985"
             }
           ]
-        }
+        },
+        "focus": [
+          {
+            "reference": "urn:uuid:conditionId-1"
+          }
+        ]
       }
     },
     {
@@ -1054,7 +1059,12 @@
               "code": "C146985"
             }
           ]
-        }
+        },
+        "focus": [
+          {
+            "reference": "urn:uuid:conditionId-1"
+          }
+        ]
       }
     },
     {
@@ -1106,7 +1116,12 @@
               "code": "C146985"
             }
           ]
-        }
+        },
+        "focus": [
+          {
+            "reference": "urn:uuid:conditionId-1"
+          }
+        ]
       }
     },
     {
@@ -1226,7 +1241,12 @@
               "code": "C146985"
             }
           ]
-        }
+        },
+        "focus": [
+          {
+            "reference": "urn:uuid:conditionId-1"
+          }
+        ]
       }
     },
     {
@@ -1282,7 +1302,12 @@
               "code": "C146985"
             }
           ]
-        }
+        },
+        "focus": [
+          {
+            "reference": "urn:uuid:conditionId-1"
+          }
+        ]
       }
     },
     {

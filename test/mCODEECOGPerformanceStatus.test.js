@@ -16,7 +16,7 @@ beforeAll(() => {
   const patientBundle = loadJSONFixture(path.join(__dirname, './fixtures/patients/Bundle-mCODECQLExample01.json'));
 
   executionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
-  console.log(executionResults);
+  // console.log(executionResults);
 });
 
 test('Can Get ECOG Performance Statuses', () => {

@@ -374,6 +374,36 @@ define function "Earliest TNM Clinical Primary Tumor Categories" (C Condition):
     where "Is TNM Clinical Primary Tumor Category"(category)
       and category.status in {'final','amended','corrected'}      
 
+//*********** TNM Pathological Primary Tumor Category ***********//
+
+define "TNM Pathological Primary Tumor Categories":
+  [Observation: "TNMPathologicalPrimaryTumorCategory Code"]
+
+define function "Is TNM Pathological Primary Tumor Category" (O Observation):
+	O.code ~ "TNMPathologicalPrimaryTumorCategory Code"
+
+define function "Current TNM Pathological Primary Tumor Categories" (C Condition):
+  flatten(("Current TNM Pathological Stage Groups"(C)) StageGroup
+    where StageGroup is not null
+    return( ("TNM Pathological Stage Group Categories"(StageGroup)) category
+      where ("Is TNM Pathological Primary Tumor Category" (category))
+      and category.status in {'final','amended','corrected'}
+    ))
+
+define function "Latest TNM Pathological Primary Tumor Categories" (C Condition):
+  ("TNM Pathological Stage Group Categories"(
+    "Latest TNM Pathological Stage Group"(C)
+  )) category
+    where "Is TNM Pathological Primary Tumor Category"(category)
+      and category.status in {'final','amended','corrected'}
+
+define function "Earliest TNM Pathological Primary Tumor Categories" (C Condition):
+  ("TNM Pathological Stage Group Categories"(
+    "Earliest TNM Pathological Stage Group"(C)
+  )) category
+    where "Is TNM Pathological Primary Tumor Category"(category)
+      and category.status in {'final','amended','corrected'}      
+
 
 //*********** Clinical Regional Nodes Category ***********//
 define "TNM Clinical Regional Nodes Categories":
