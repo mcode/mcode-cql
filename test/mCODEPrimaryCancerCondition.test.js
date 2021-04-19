@@ -14,7 +14,6 @@ beforeAll(() => {
   const patientBundle = loadJSONFixture(path.join(__dirname, './fixtures/patients/mcode-extraction-patient-1.json'));
 
   executionResults = execute(elm, patientBundle, valueSetMap, 'mCODEPrimaryCancerConditionTest');
-  // console.log(executionResults);
 });
 
 test('Test Primary Cancer Condition Body Sites', () => {

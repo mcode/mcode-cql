@@ -19,7 +19,6 @@ beforeAll(() => {
 
   testSetup = setup('mCODETumorMarkerTest', elm, patientBundle, valueSetMap);
   executionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
-  // console.log(executionResults);
 });
 test('Can Identify Tumor Marker Test', () => {
   const expr = testSetup.library.expressions['Test Tumor Marker'];

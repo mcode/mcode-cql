@@ -4,6 +4,7 @@ const { mapValueSets } = require('../testing-harness/valueSetMapper');
 const { setup } = require('../testing-harness/execution');
 
 let testSetup;
+let mCodeTestSetup;
 beforeAll(() => {
   // Set up necessary data for cql-execution
   const valueSets = defaultLoadValuesets();
