@@ -223,7 +223,7 @@ define function "Primary Cancer Condition Body Site Laterality" (BodySite Codeab
       where
         Laterality.url.value = 'http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-laterality'
       return (
-        Laterality.value as FHIR.CodeableConcept // enfore valueCodeableConcept only
+        Laterality.value as FHIR.CodeableConcept // enforce valueCodeableConcept only
       )
     )
 
@@ -325,14 +325,13 @@ define function "Earliest TNM Pathological Stage Group" (C Condition):
       and C.id = "Reference id"(StageGroup.focus)
     sort by effective.value asc)
 
-// Returns [Observation] for all hasMember references from an Observation
 define function "TNM Pathological Stage Group Categories" (O Observation):
     Flatten(O.hasMember h
       return([Observation] member where member.id = "Reference id"(h as FHIR.Reference))
     )
 
 define function "TNM Pathological Stage Group Value" (O Observation):             // disease-15
-  O.value as FHIR.CodeableConcept // enfore valueCodeableConcept only
+  O.value as FHIR.CodeableConcept // enforce valueCodeableConcept only
 
 define function "TNM Pathological Stage Group Staging System" (O Observation):             // disease-16
   O.method
@@ -449,7 +448,7 @@ define function "Latest TNM Pathological Regional Nodes Categories" (C Condition
     where "Is TNM Pathological Regional Nodes Category"(category)
       and category.status in {'final','amended','corrected'}
 
-//*********** Clinical Distant Metastases  Category ***********//
+//*********** Clinical Distant Metastases Category ***********//
 define "TNM Clinical Distant Metastases Categories":
   [Observation: "TNMClinicalDistantMetastasesCategory Code"]
 
@@ -471,7 +470,7 @@ define function "Latest TNM Clinical Distant Metastases Categories" (C Condition
     where "Is TNM Clinical Distant Metastases Category"(category)
       and category.status in {'final','amended','corrected'}
 
-//*********** Pathological Distant Metastases  Category ***********//
+//*********** Pathological Distant Metastases Category ***********//
 define "TNM Pathological Distant Metastases Categories":
   [Observation: "TNMPathologicalDistantMetastasesCategory Code"]
 

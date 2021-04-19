@@ -8,7 +8,7 @@ context Patient
 
 define "Test Observation":
     singleton from ([Observation] o
-        where o.id = 'mCODETNMPathologicalDistantMetastesesCategoryExample01')
+        where o.id = 'mCODETNMPathologicalDistantMetastasesCategoryExample01')
 
 define "Test Condition":
     singleton from ([Condition] c

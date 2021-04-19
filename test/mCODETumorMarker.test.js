@@ -31,7 +31,7 @@ test('Can identify Tumor Markers By Value Set', () => {
   expect(values).not.toBeNull();
   expect(values.length).toBe(2);
 });
-test('Can identify Tumor Marker Code"', () => {
+test('Can identify Tumor Marker Code', () => {
   const expr = testSetup.library.expressions['Test Tumor Marker Code'];
   const values = expr.exec(testSetup.context);
   expect(values).not.toBeNull();
