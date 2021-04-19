@@ -1,11 +1,9 @@
 const path = require('path');
-const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets } = require('../testing-harness/fixtureLoader');
-const { mapValueSets } = require('../testing-harness/valueSetMapper');
-const { setup } = require('../testing-harness/execution');
-// const { execute } = require('../testing-harness/execution');
+// eslint-disable-next-line object-curly-newline
+const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets, mapValueSets } = require('cql-testing-harness');
+const { setup } = require('./setup');
 
 let testSetup;
-// let executionResults;
 beforeAll(() => {
   const valueSets = defaultLoadValuesets();
   const testValueSet = loadJSONFixture(
@@ -18,7 +16,6 @@ beforeAll(() => {
   const patientBundle = loadJSONFixture(path.join(__dirname, './fixtures/patients/Bundle-mCODECQLExample01.json'));
 
   testSetup = setup('mCODETumorMarkerTest', elm, patientBundle, valueSetMap);
-  //  executionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
 });
 test('Can Identify Tumor Marker Test', () => {
   const expr = testSetup.library.expressions['Test Tumor Marker'];

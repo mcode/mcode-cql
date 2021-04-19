@@ -1,13 +1,8 @@
 const path = require('path');
-const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets } = require('../testing-harness/fixtureLoader');
-const { mapValueSets } = require('../testing-harness/valueSetMapper');
-const { execute } = require('../testing-harness/execution');
-
-// eslint-disable-next-line import/order
-// const { FunctionRef } = require('cql-execution/lib/elm/expressions');
+// eslint-disable-next-line object-curly-newline
+const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets, mapValueSets, execute } = require('cql-testing-harness');
 
 let executionResults;
-
 beforeAll(() => {
   // Set up necessary data for cql-execution
   const valueSets = defaultLoadValuesets();

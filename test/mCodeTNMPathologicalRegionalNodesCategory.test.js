@@ -1,7 +1,7 @@
 const path = require('path');
-const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets } = require('../testing-harness/fixtureLoader');
-const { mapValueSets } = require('../testing-harness/valueSetMapper');
-const { setup } = require('../testing-harness/execution');
+// eslint-disable-next-line object-curly-newline
+const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets, mapValueSets } = require('cql-testing-harness');
+const { setup } = require('./setup');
 
 let mCodeTestSetup;
 let testSetup;

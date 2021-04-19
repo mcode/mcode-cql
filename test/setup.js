@@ -45,22 +45,6 @@ function setup(libraryID, elmJSONs, patientBundles, valueSetMap, parameters = {}
   return testSetup;
 }
 
-/**
- *
- * @param {Array} elmJSONs array of ELM JSON objects
- * @param {Object} patientBundles array of patient records to execute against
- * @param {Object} valueSetMap valueSetMap for CodeService
- * @param {String} libraryID the library ID of the cql library corresponding to the ELM
- * @returns {Object} cql-execution-results
- */
-function execute(elmJSONs, patientBundles, valueSetMap, libraryID = 'mCODE') {
-  // 'main' ELM is the mcode library
-  const testSetup = setup(libraryID, elmJSONs, patientBundles, valueSetMap);
-
-  return testSetup.executor.exec(testSetup.patientSource);
-}
-
 module.exports = {
-  execute,
   setup,
 };
