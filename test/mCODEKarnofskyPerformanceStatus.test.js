@@ -1,5 +1,4 @@
 const path = require('path');
-// eslint-disable-next-line object-curly-newline
 const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets, mapValueSets, execute } = require('cql-testing-harness');
 
 let executionResults;
@@ -27,7 +26,6 @@ test('Can Get Most Recent Karnofsky Performance Status Data Value', () => {
 });
 
 test('Can Get Most Recent Karnofsky Performance Status Data Value', () => {
-  // eslint-disable-next-line operator-linebreak
   const values =
     executionResults.patientResults.mCODECQLExample01['Most Recent Karnofsky Performance Status Data Value'];
   expect(values).not.toBeNull();

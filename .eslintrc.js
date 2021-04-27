@@ -4,7 +4,7 @@ module.exports = {
     es2020: true,
     jest: true,
   },
-  extends: ['airbnb-base'],
+  extends: ['airbnb-base', 'prettier'],
   parserOptions: {
     ecmaVersion: 11,
   },

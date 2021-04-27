@@ -1,5 +1,4 @@
 const path = require('path');
-// eslint-disable-next-line object-curly-newline
 const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets, mapValueSets, execute } = require('cql-testing-harness');
 const { setup } = require('./setup');
 
