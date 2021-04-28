@@ -8,7 +8,7 @@
   "jest": {
     "verbose": true,
     "setupFiles": [
-      "./test/jest.config.js"
+      "dotenv/config"
     ]
   },
   "scripts": {
