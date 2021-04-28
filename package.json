@@ -33,7 +33,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "cql-testing-harness": "^0.0.2",
+    "cql-testing-harness": "git+https://github.com/mcode/cql-testing-harness#exit-with-error-code",
     "dotenv": "^8.2.0"
   }
 }
