@@ -18,7 +18,6 @@ beforeAll(() => {
 test('Test Observation', () => {
   const expr = testSetup.library.expressions['Test Observation'];
   const values = expr.exec(testSetup.context);
-  console.log(values);
   expect(values).not.toBeNull();
   expect(values.id.value).toBe('mCODETNMPathologicalPrimaryTumorCategoryExample01');
 });

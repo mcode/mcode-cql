@@ -19,7 +19,6 @@ beforeAll(() => {
   const patientBundles = defaultLoadPatients();
 
   executionResults = execute(elm, patientBundles, valueSetMap);
-  console.log(executionResults);
 });
 
 test('Can identify PrimaryCancerConditions', () => {});

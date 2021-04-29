@@ -15,7 +15,6 @@ beforeAll(() => {
 
   executionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
   testSetup = setup('mCODECancerGeneticVariantTest', elm, patientBundle, valueSetMap);
-  console.log(executionResults);
 });
 
 test('Can identify Cancer Genetic Variants', () => {
