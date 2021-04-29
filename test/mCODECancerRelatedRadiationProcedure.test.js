@@ -1,8 +1,7 @@
 const path = require('path');
-const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets, mapValueSets } = require('cql-testing-harness');
-const { setup } = require('./setup');
+const { execute, defaultLoadElm, loadJSONFixture, defaultLoadValuesets, mapValueSets } = require('cql-testing-harness');
 
-let testSetup;
+let executionResults;
 beforeAll(() => {
   // Set up necessary data for cql-execution
   const valueSets = defaultLoadValuesets(defaultLoadValuesets);
@@ -11,22 +10,22 @@ beforeAll(() => {
 
   const patientBundle = loadJSONFixture(path.join(__dirname, './fixtures/patients/Bundle-mCODECQLExample01.json'));
 
-  testSetup = setup('mCODECancerRelatedRadiationProcedureTest', elm, patientBundle, valueSetMap);
+  executionResults = execute(elm, patientBundle, valueSetMap, 'mCODECancerRelatedRadiationProcedureTest');
 });
+
+const patientId = 'mCODECQLExample01';
+
 test('Can Identify CancerRelatedRadiationProcedure', () => {
-  const expr = testSetup.library.expressions['Test CancerRelatedRadiationProcedure'];
-  const values = expr.exec(testSetup.context);
-  expect(values).not.toBeNull();
+  const expr = executionResults.patientResults[patientId]['Test CancerRelatedRadiationProcedure'];
+  expect(expr.values).not.toBeNull();
 });
 test('Can Identify Cancer Related Radiation Procedure Code', () => {
-  const expr = testSetup.library.expressions['Test CancerRelatedRadiationProcedure Code'];
-  const values = expr.exec(testSetup.context);
-  expect(values.coding[0].code.value).toBe('152198000');
+  const expr = executionResults.patientResults[patientId]['Test CancerRelatedRadiationProcedure Code'];
+  expect(expr.coding[0].code.value).toBe('152198000');
 });
 
 test('Can identify Test CancerRelatedRadiationProcedure Treatment Intent', () => {
-  const expr = testSetup.library.expressions['Test CancerRelatedRadiationProcedure Treatment Intent'];
-  const values = expr.exec(testSetup.context);
-  expect(values).not.toBeNull();
-  expect(values[0].code.value).toBe('373808002');
+  const expr = executionResults.patientResults[patientId]['Test CancerRelatedRadiationProcedure Treatment Intent'];
+  expect(expr).not.toBeNull();
+  expect(expr[0].code.value).toBe('373808002');
 });
