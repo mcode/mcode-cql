@@ -51,7 +51,7 @@ yarn test -n
 
 The unit tests will make assertions based on the execution results of the mCODE CQL for a given patient. Before any unit tests are run, the CQL is executed using [cql-execution](https://github.com/cqframework/cql-execution/) and [cql-exec-fhir](https://github.com/cqframework/cql-exec-fhir), and the execution results are stored in a variable to be used for assertions in the unit tests.
 
-To run only the unit tests with the existing ELM in `OUTPUT_ELM` (and not re-translate the CQL):
+To run only the unit tests with the existing ELM in the `OUTPUT_ELM` directory (and not re-translate the CQL):
 
 ``` bash
 yarn test:unit
