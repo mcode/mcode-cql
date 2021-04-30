@@ -75,7 +75,7 @@ docker stop cql-translation-service
 The default URL used for the translation service is `http://localhost:8080/cql/translator`, however that can be configured by setting the `TRANSLATION_SERVICE_URL` node environment variable. This variable can be set by modifying the `TRANSLATION_SERVICE_URL` value in your `.env` file, or by providing a new value at runtime like so:
 
 ``` bash
-TRANSLATION_SERVICE_URL=http://preferredURL.com yarn translate
+TRANSLATION_SERVICE_URL=http://example.com/cql/translator yarn translate
 ```
 
 When translating CQL with a custom URL, `yarn test` should be run with the `-n` flag to prevent the testing harness from starting a new docker container.
