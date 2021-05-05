@@ -10,7 +10,7 @@ beforeAll(() => {
 
   const patientBundle = loadJSONFixture(path.join(__dirname, './fixtures/patients/Bundle-mCODECQLExample01.json'));
 
-  executionResults = execute(elm, [patientBundle], valueSetMap, 'mCODECancerDiseaseStatusTest');
+  executionResults = execute(elm, patientBundle, valueSetMap, 'mCODECancerDiseaseStatusTest');
 });
 
 const patientId = 'mCODECQLExample01';

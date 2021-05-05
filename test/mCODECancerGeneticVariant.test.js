@@ -12,8 +12,8 @@ beforeAll(() => {
     path.join(__dirname, './fixtures/patients/Bundle-mCODECancerGeneticVariantExample01.json'),
   );
 
-  mCODEExecutionResults = execute(elm, [patientBundle], valueSetMap, 'mCODE');
-  executionResults = execute(elm, [patientBundle], valueSetMap, 'mCODECancerGeneticVariantTest');
+  mCODEExecutionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
+  executionResults = execute(elm, patientBundle, valueSetMap, 'mCODECancerGeneticVariantTest');
 });
 
 const patientId = 'mCODEPatientExample01';
