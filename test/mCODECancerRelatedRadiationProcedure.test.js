@@ -4,7 +4,7 @@ const { execute, defaultLoadElm, loadJSONFixture, defaultLoadValuesets, mapValue
 let executionResults;
 beforeAll(() => {
   // Set up necessary data for cql-execution
-  const valueSets = defaultLoadValuesets(defaultLoadValuesets);
+  const valueSets = defaultLoadValuesets();
   const valueSetMap = mapValueSets(valueSets);
   const elm = defaultLoadElm();
 

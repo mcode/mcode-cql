@@ -3,6 +3,7 @@ const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets, mapValueSets, exe
 
 let executionResults;
 beforeAll(() => {
+  // Set up necessary data for cql-execution
   const valueSets = defaultLoadValuesets();
   const valueSetMap = mapValueSets(valueSets);
   const elm = defaultLoadElm();
