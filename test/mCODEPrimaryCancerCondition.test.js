@@ -1,11 +1,9 @@
 const path = require('path');
-// eslint-disable-next-line object-curly-newline
 const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets, mapValueSets, execute } = require('cql-testing-harness');
-// eslint-disable-next-line import/order
-const { Date } = require('cql-execution/lib/datatypes/datetime');
 
 let executionResults;
 beforeAll(() => {
+  // Set up necessary data for cql-execution
   const valueSets = defaultLoadValuesets();
   const valueSetMap = mapValueSets(valueSets);
   const elm = defaultLoadElm();
@@ -48,7 +46,14 @@ test('Test Primary Cancer Condition Date of Diagnosis', () => {
   const values = executionResults.patientResults['123']['Test Primary Cancer Condition Date of Diagnosis'];
 
   expect(values.value).not.toBeNull();
-  expect(values.value.sameAs(Date.parse('2020-07-12'), Date.Unit.DAY)).toBe(true);
+
+  const foundDate = new Date(values.value);
+  const desiredDate = new Date('2020-07-12');
+
+  // Should be on same day, ignoring timestamp
+  expect(foundDate.getFullYear()).toEqual(desiredDate.getFullYear());
+  expect(foundDate.getMonth()).toEqual(desiredDate.getMonth());
+  expect(foundDate.getDate()).toEqual(desiredDate.getDate());
 });
 
 test('Test Primary Cancer Condition Histology Morphology Behavior', () => {

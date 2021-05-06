@@ -1,10 +1,8 @@
 const path = require('path');
-// eslint-disable-next-line object-curly-newline
-const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets, mapValueSets } = require('cql-testing-harness');
-const { setup } = require('./setup');
+const { execute, defaultLoadElm, loadJSONFixture, defaultLoadValuesets, mapValueSets } = require('cql-testing-harness');
 
-let mCodeTestSetup;
-let testSetup;
+let mCODEExecutionResults;
+let executionResults;
 beforeAll(() => {
   // Set up necessary data for cql-execution
   const valueSets = defaultLoadValuesets();
@@ -13,50 +11,47 @@ beforeAll(() => {
 
   const patientBundle = loadJSONFixture(path.join(__dirname, './fixtures/patients/mcode-extraction-patient-1.json'));
 
-  mCodeTestSetup = setup('mCODE', elm, patientBundle, valueSetMap);
-  testSetup = setup('mCodeTNMClinicalPrimaryTumorCategoryTest', elm, patientBundle, valueSetMap);
+  mCODEExecutionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
+  executionResults = execute(elm, patientBundle, valueSetMap, 'mCodeTNMClinicalPrimaryTumorCategoryTest');
 });
 
-test('Test TNM Clinical Primary Tumor Categories', () => {
-  const expr = mCodeTestSetup.library.expressions['TNM Clinical Primary Tumor Categories'];
-  const values = expr.exec(mCodeTestSetup.context);
+const patientId = '123';
 
-  expect(values).not.toBeNull();
-  expect(values.length).toBe(1);
-  expect(values[0].id.value).toBe('a121869e84dc63c7b6e98b6f299e168a9d212048a1c05ddc8ea06ac01427a74e');
+test('Test TNM Clinical Primary Tumor Categories', () => {
+  const expr = mCODEExecutionResults.patientResults[patientId]['TNM Clinical Primary Tumor Categories'];
+
+  expect(expr).not.toBeNull();
+  expect(expr.length).toBe(1);
+  expect(expr[0].id.value).toBe('a121869e84dc63c7b6e98b6f299e168a9d212048a1c05ddc8ea06ac01427a74e');
 });
 
 test('Test Is TNM Clinical Primary Tumor Category', () => {
-  const expr = testSetup.library.expressions['Test Is TNM Clinical Primary Tumor Category'];
-  const values = expr.exec(testSetup.context);
+  const expr = executionResults.patientResults[patientId]['Test Is TNM Clinical Primary Tumor Category'];
 
-  expect(values).not.toBeNull();
-  expect(values).toBe(true);
+  expect(expr).not.toBeNull();
+  expect(expr).toBe(true);
 });
 
 test('Test Current TNM Clinical Primary Tumor Categories', () => {
-  const expr = testSetup.library.expressions['Test Current TNM Clinical Primary Tumor Categories'];
-  const values = expr.exec(testSetup.context);
+  const expr = executionResults.patientResults[patientId]['Test Current TNM Clinical Primary Tumor Categories'];
 
-  expect(values).not.toBeNull();
-  expect(values.length).toBe(1);
-  expect(values[0].id.value).toBe('a121869e84dc63c7b6e98b6f299e168a9d212048a1c05ddc8ea06ac01427a74e');
+  expect(expr).not.toBeNull();
+  expect(expr.length).toBe(1);
+  expect(expr[0].id.value).toBe('a121869e84dc63c7b6e98b6f299e168a9d212048a1c05ddc8ea06ac01427a74e');
 });
 
 test('Test Latest TNM Clinical Primary Tumor Categories', () => {
-  const expr = testSetup.library.expressions['Test Latest TNM Clinical Primary Tumor Categories'];
-  const values = expr.exec(testSetup.context);
+  const expr = executionResults.patientResults[patientId]['Test Latest TNM Clinical Primary Tumor Categories'];
 
-  expect(values).not.toBeNull();
-  expect(values.length).toBe(1);
-  expect(values[0].id.value).toBe('a121869e84dc63c7b6e98b6f299e168a9d212048a1c05ddc8ea06ac01427a74e');
+  expect(expr).not.toBeNull();
+  expect(expr.length).toBe(1);
+  expect(expr[0].id.value).toBe('a121869e84dc63c7b6e98b6f299e168a9d212048a1c05ddc8ea06ac01427a74e');
 });
 
 test('Test Earliest TNM Clinical Primary Tumor Categories', () => {
-  const expr = testSetup.library.expressions['Test Earliest TNM Clinical Primary Tumor Categories'];
-  const values = expr.exec(testSetup.context);
+  const expr = executionResults.patientResults[patientId]['Test Earliest TNM Clinical Primary Tumor Categories'];
 
-  expect(values).not.toBeNull();
-  expect(values.length).toBe(1);
-  expect(values[0].id.value).toBe('a121869e84dc63c7b6e98b6f299e168a9d212048a1c05ddc8ea06ac01427a74e');
+  expect(expr).not.toBeNull();
+  expect(expr.length).toBe(1);
+  expect(expr[0].id.value).toBe('a121869e84dc63c7b6e98b6f299e168a9d212048a1c05ddc8ea06ac01427a74e');
 });

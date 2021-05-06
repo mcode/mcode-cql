@@ -1,10 +1,8 @@
 const path = require('path');
-// eslint-disable-next-line object-curly-newline
-const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets, mapValueSets } = require('cql-testing-harness');
-const { setup } = require('./setup');
+const { execute, defaultLoadElm, loadJSONFixture, defaultLoadValuesets, mapValueSets } = require('cql-testing-harness');
 
-let mCodeTestSetup;
-let testSetup;
+let mCODEExecutionResults;
+let executionResults;
 beforeAll(() => {
   // Set up necessary data for cql-execution
   const valueSets = defaultLoadValuesets();
@@ -13,41 +11,39 @@ beforeAll(() => {
 
   const patientBundle = loadJSONFixture(path.join(__dirname, './fixtures/patients/mcode-extraction-patient-1.json'));
 
-  mCodeTestSetup = setup('mCODE', elm, patientBundle, valueSetMap);
-  testSetup = setup('mCodeTNMPathologicalRegionalNodesCategoryTest', elm, patientBundle, valueSetMap);
+  mCODEExecutionResults = execute(elm, patientBundle, valueSetMap, 'mCODE');
+  executionResults = execute(elm, patientBundle, valueSetMap, 'mCodeTNMPathologicalRegionalNodesCategoryTest');
 });
 
-test('Test TNM Pathological Regional Nodes Categories', () => {
-  const expr = mCodeTestSetup.library.expressions['TNM Pathological Regional Nodes Categories'];
-  const values = expr.exec(mCodeTestSetup.context);
+const patientId = '123';
 
-  expect(values).not.toBeNull();
-  expect(values.length).toBe(2);
-  expect(values[0].id.value).toBe('mCODETNMPathologicalRegionalNodesCategoryExample01');
+test('Test TNM Pathological Regional Nodes Categories', () => {
+  const expr = mCODEExecutionResults.patientResults[patientId]['TNM Pathological Regional Nodes Categories'];
+
+  expect(expr).not.toBeNull();
+  expect(expr.length).toBe(2);
+  expect(expr[0].id.value).toBe('mCODETNMPathologicalRegionalNodesCategoryExample01');
 });
 
 test('Test Is TNM Pathological Regional Nodes Category', () => {
-  const expr = testSetup.library.expressions['Test Is TNM Pathological Regional Nodes Category'];
-  const values = expr.exec(testSetup.context);
+  const expr = executionResults.patientResults[patientId]['Test Is TNM Pathological Regional Nodes Category'];
 
-  expect(values).not.toBeNull();
-  expect(values).toBe(true);
+  expect(expr).not.toBeNull();
+  expect(expr).toBe(true);
 });
 
 test('Test Current TNM Pathological Regional Nodes Categories', () => {
-  const expr = testSetup.library.expressions['Test Current TNM Pathological Regional Nodes Categories'];
-  const values = expr.exec(testSetup.context);
+  const expr = executionResults.patientResults[patientId]['Test Current TNM Pathological Regional Nodes Categories'];
 
-  expect(values).not.toBeNull();
-  expect(values.length).toBe(1);
-  expect(values[0].id.value).toBe('mCODETNMPathologicalRegionalNodesCategoryExample01');
+  expect(expr).not.toBeNull();
+  expect(expr.length).toBe(1);
+  expect(expr[0].id.value).toBe('mCODETNMPathologicalRegionalNodesCategoryExample01');
 });
 
 test('Test Latest TNM Pathological Regional Nodes Categories', () => {
-  const expr = testSetup.library.expressions['Test Latest TNM Pathological Regional Nodes Categories'];
-  const values = expr.exec(testSetup.context);
+  const expr = executionResults.patientResults[patientId]['Test Latest TNM Pathological Regional Nodes Categories'];
 
-  expect(values).not.toBeNull();
-  expect(values.length).toBe(1);
-  expect(values[0].id.value).toBe('mCODETNMPathologicalRegionalNodesCategoryExample02');
+  expect(expr).not.toBeNull();
+  expect(expr.length).toBe(1);
+  expect(expr[0].id.value).toBe('mCODETNMPathologicalRegionalNodesCategoryExample02');
 });

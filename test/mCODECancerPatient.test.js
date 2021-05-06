@@ -1,7 +1,5 @@
 const path = require('path');
-// eslint-disable-next-line object-curly-newline
 const { defaultLoadElm, loadJSONFixture, defaultLoadValuesets, mapValueSets, execute } = require('cql-testing-harness');
-// eslint-disable-next-line import/order
 const { Date } = require('cql-execution/lib/datatypes/datetime');
 
 let executionResults;

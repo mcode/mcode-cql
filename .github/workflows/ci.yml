@@ -10,10 +10,10 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - uses: borales/actions-yarn@v2.0.0
+      - uses: borales/actions-yarn@v2.0.2
         with:
           cmd: install --frozen-lockfile
-      - uses: borales/actions-yarn@v2.0.0
+      - uses: borales/actions-yarn@v2.0.2
         with:
           cmd: lint
   prettier:
@@ -24,10 +24,10 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - uses: borales/actions-yarn@v2.0.0
+      - uses: borales/actions-yarn@v2.0.2
         with:
           cmd: install --frozen-lockfile
-      - uses: borales/actions-yarn@v2.0.0
+      - uses: borales/actions-yarn@v2.0.2
         with:
           cmd: prettier
   test:
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TRANSLATION_SERVICE_URL: http://localhost:8080/cql/translator
-      INPUT_CQL: ./cql
+      INPUT_CQL: ./cql,./test/fixtures/cql
       OUTPUT_ELM: ./output-elm
       VALUESETS: ./valuesets
       PATIENTS: ./test/fixtures/patients
@@ -44,7 +44,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - uses: borales/actions-yarn@v2.0.0
+      - uses: borales/actions-yarn@v2.0.2
         with:
           cmd: install --frozen-lockfile
       - run: yarn test
