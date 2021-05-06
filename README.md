@@ -62,7 +62,7 @@ yarn test:unit
 To only translate the CQL and not do the rest of the build/test steps, spin up a `cql-translation-service` docker container and run the `translate` script:
 
 ``` bash
-docker run --name cql-translation-service --rm -d -p 8080:8080 cqframework/cql-translation-service:latest
+docker run --name cql-translation-service --rm -d -p 8080:8080 cqframework/cql-translation-service:v1.5.2
 yarn translate
 ```
 
