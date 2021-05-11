@@ -365,6 +365,9 @@
           ],
           "focus": [
             {
+              "reference": "Condition/extratest"
+            },
+            {
               "reference": "Condition/f3be0f34-992b-48fb-ac47-f29b7f1365ef"
             }
           ],

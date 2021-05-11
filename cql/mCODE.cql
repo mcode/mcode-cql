@@ -275,13 +275,13 @@ define function "Current TNM Clinical Stage Groups" (C Condition):
 define function "Latest TNM Clinical Stage Group" (C Condition):
   First([Observation] StageGroup 
     where "Is TNM Clinical Stage Group"(StageGroup)
-      and C.id = "Reference id"(StageGroup.focus)
+      and C.id in "Reference ids"(StageGroup.focus)
     sort by effective.value desc)
 
 define function "Earliest TNM Clinical Stage Group" (C Condition):
   First([Observation] StageGroup 
     where "Is TNM Clinical Stage Group"(StageGroup)
-      and C.id = "Reference id"(StageGroup.focus)
+      and C.id in "Reference ids"(StageGroup.focus)
     sort by effective.value asc)
 
 // Returns [Observation] for all hasMember references from an Observation
@@ -316,13 +316,13 @@ define function "Current TNM Pathological Stage Groups" (C Condition):
 define function "Latest TNM Pathological Stage Group" (C Condition):
   First([Observation] StageGroup 
     where "Is TNM Pathological Stage Group"(StageGroup)
-      and C.id = "Reference id"(StageGroup.focus)
+      and C.id in "Reference ids"(StageGroup.focus)
     sort by effective.value desc)
 
 define function "Earliest TNM Pathological Stage Group" (C Condition):
   First([Observation] StageGroup 
     where "Is TNM Pathological Stage Group"(StageGroup)
-      and C.id = "Reference id"(StageGroup.focus)
+      and C.id in "Reference ids"(StageGroup.focus)
     sort by effective.value asc)
 
 define function "TNM Pathological Stage Group Categories" (O Observation):
@@ -342,6 +342,10 @@ define function "Reference id" (ref FHIR.Reference):
   if StartsWith(ref.reference, 'urn:')
   then Last(Split(ref.reference, ':'))
   else Last(Split(ref.reference, '/'))
+
+ define function "Reference ids" (References List<FHIR.Reference>):
+  References ref
+    return "Reference id"(ref)
 
 //*********** TNM Clinical Primary Tumor Category ***********//
 
@@ -618,7 +622,7 @@ define "Cancer Disease Statuses":
 
 define function "Condition Cancer Disease Statuses" (C	Condition):
  "Cancer Disease Statuses" O  
-    where "Reference id"(O.focus) = C.id
+    where C.id in "Reference ids"(O.focus)
 
 define function "Latest Condition Cancer Disease Status" (C	Condition):
     First (("Condition Cancer Disease Statuses"(C)) O
