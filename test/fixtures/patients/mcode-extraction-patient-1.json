@@ -802,6 +802,9 @@
         },
         "focus": [
           {
+            "reference": "urn:uuid:conditionId-extratest"
+          },
+          {
             "reference": "urn:uuid:conditionId-1"
           }
         ],
@@ -868,6 +871,9 @@
           ]
         },
         "focus": [
+          {
+            "reference": "urn:uuid:conditionId-extratest"
+          },
           {
             "reference": "urn:uuid:conditionId-1"
           }
